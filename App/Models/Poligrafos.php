@@ -1,0 +1,44 @@
+<?php
+    class Poligrafos {
+        // Atributos
+        private $PDO;
+        // Constructor
+        public function __construct() {
+            require_once "Conexion.php";
+            $Conexion = new Conexion();
+            $this->PDO = $Conexion->Conexion();
+        }
+        
+        // Métodos
+        public function Poligrafos($ID_Usuario){
+            $sql = "SELECT Nombre, Fecha_Realizado, Documento FROM poligrafos WHERE ID_Usuario = :ID_Usuario ORDER BY ID DESC";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID_Usuario', $ID_Usuario);
+            $stmt->execute();
+            $DataPoligrafos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $DataPoligrafos;
+
+        }
+              
+        public function IngresarPoligrafos($ID, $Nombre, $Fecha_Realizado, $NombreDocumento, $Fecha_Creado) {
+            $sql = "INSERT INTO poligrafos (ID_Usuario, Nombre, Fecha_Realizado, Documento, Fecha_Creado) 
+                    VALUES (:ID, :Nombre, :Fecha_Realizado, :NombreDocumento, :Fecha_Creado)";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID', $ID);
+            $stmt->bindParam(':Nombre', $Nombre);
+            $stmt->bindParam(':Fecha_Realizado', $Fecha_Realizado);
+            $stmt->bindParam(':NombreDocumento', $NombreDocumento);
+            $stmt->bindParam(':Fecha_Creado', $Fecha_Creado);
+            $stmt->execute();
+            return $this->PDO->lastInsertId();
+        }
+
+        public function ActualizarNombreDocumento($ID, $NombreDocumento) {
+            $sql = "UPDATE poligrafos SET Documento = :NombreDocumento WHERE ID = :ID";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':NombreDocumento', $NombreDocumento);
+            $stmt->bindParam(':ID', $ID);
+            return $stmt->execute();
+        }
+    }
+?>

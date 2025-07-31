@@ -1,0 +1,28 @@
+<?php
+    return[
+        'Empleados/Inicio' => 'Views/Templates/Empleados/Usuarios/Inicio.php',
+        'Empleados/Registrar' => 'Views/Templates/Empleados/Usuarios/Registrar.php',
+        'Empleados/Editar' => 'Views/Templates/Empleados/Usuarios/Editar.php',
+        'Empleados/EditarC' => 'Views/Templates/Empleados/Usuarios/EditarC.php',
+        'Empleados/Eliminar' => 'Views/Templates/Empleados/Usuarios/Eliminar.php',
+        'Empleados/Ver' => 'Views/Templates/Empleados/Usuarios/Ver.php',
+        'Empleados/Eliminados' => 'Views/Templates/Empleados/Usuarios/Eliminados.php',
+        'Empleados/Activar' => 'Views/Templates/Empleados/Usuarios/Activar.php',
+        'Empleados/Excel' => 'Views/Templates/Empleados/Usuarios/Excel.php',
+        'Empleados/ExcelI' => 'Views/Templates/Empleados/Usuarios/ExcelI.php',
+        'Empleados/Informe' => 'Views/Templates/Empleados/Usuarios/Informe.php',
+        'Empleados/InformeI' => 'Views/Templates/Empleados/Usuarios/InformeI.php',
+        'Empleados/InformeActivos' => 'Views/Templates/Empleados/Usuarios/InformeActivos.php',
+        'Empleados/InformeInactivos' => 'Views/Templates/Empleados/Usuarios/InformeInactivos.php',
+        'Empleados/Carnet' => 'Views/Templates/Empleados/Usuarios/Carnet.php',
+        'Empleados/Diseno' => 'Views/Templates/Empleados/Usuarios/Diseño.php',
+        'Empleados/FamiliaRegistrar' => 'Views/Templates/Empleados/Familia/Registrar.php',
+        'Empleados/ExamenesRegistrar' => 'Views/Templates/Empleados/Examenes/Registrar.php',
+        'Empleados/ContactosRegistrar' => 'Views/Templates/Empleados/Contactos/Registrar.php',
+        'Empleados/EliminarContacto' => 'Views/Templates/Empleados/Contactos/Eliminar.php',
+        'Empleados/PoligrafosRegistrar' => 'Views/Templates/Empleados/Poligrafos/Registrar.php',
+        'Empleados/CertificadosMontacargasRegistrar' => 'Views/Templates/Empleados/CertificadosMontacargas/Registrar.php',
+        'Empleados/ComparendosRegistrar' => 'Views/Templates/Empleados/Comparendos/Registrar.php',
+        'Empleados/ComparendosEditar' => 'Views/Templates/Empleados/Comparendos/Editar.php',
+    ];
+?>

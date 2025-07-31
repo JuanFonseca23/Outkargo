@@ -1,0 +1,416 @@
+<hr>
+    <table border="1">
+        <tr>
+            <th class="text-izquierda">NOMBRE DEL RESPONSABLE DE LA INSPECCIÓN:</th>
+            <td><input type="text" name="nombre_inspector" class="form-control" placeholder="Ingrese el nombre" required></td>
+            <th class="text-izquierda">FECHA:</th>
+            <td><input type="date" name="fecha_inspeccion" class="form-control" required></td>
+        </tr>
+        <tr>
+            <th class="text-izquierda">NOMBRE DEL RESPONSABLE DEL ÁREA:</th>
+            <td><input type="text" name="nombre_responsable_area" class="form-control" placeholder="Ingrese el nombre"></td>
+            <th class="text-izquierda">ÁREA:</th>
+            <td><?= $_GET['Area'] ?></td>
+        </tr>
+        <tr>
+            <th class="text-izquierda">HORA DE INICIO DE INSPECCIÓN:</th>
+            <td><input type="time" name="hora_inicio" class="form-control" required></td>
+            <th class="text-izquierda">HORA FINAL DE INSPECCIÓN:</th>
+            <td><input type="time" name="hora_final" class="form-control" required></td>
+        </tr>
+        <tr>
+            <td colspan="4" class="text-izquierda">
+                <strong>Objetivo:</strong> Evaluar las condiciones de seguridad locativas. En caso de identificar condiciones peligrosas que pongan en riesgo la seguridad de las personas, informe al área de Seguridad y Salud en el Trabajo. Evalúe la situación y si es necesario, solicite suspensión del paso por el área hasta que la condición de riesgo sea resuelta.
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <table border="1">
+        <tr>
+            <td>Marque con una "X" en la columna de ESTADO la condición encontrada para cada uno de los aspectos evaluados: C=CUMPLE, NC=NO CUMPLE, N/A=NO APLICA</td>
+        </tr>
+        <tr>
+            <th style="background: #c7c7c7;">INSPECCIÓN LOCATIVA</th>
+        </tr>
+    </table>
+    <form method="POST" action="submit_inspection.php">
+        <table border="1" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th rowspan="2">N°</th>
+                    <th rowspan="2">Descripción</th>
+                    <th colspan="3">Estado</th>
+                    <th rowspan="2">Grado de peligrosidad (ver indicaciones)</th>
+                    <th rowspan="2">Observaciones</th>
+                </tr>
+                <tr>
+                    <th>C</th>
+                    <th>NC</th>
+                    <th>N/A</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ORDEN Y ASEO EN EL ÁREA DE TRABAJO -->
+                <tr>
+                    <td colspan="7" style="background-color: #ddd;"><strong>ORDEN Y ASEO EN EL ÁREA DE TRABAJO</strong></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>¿Las rutas de evacuación se encuentran señalizadas?</td>
+                    <td><input type="radio" name="estado_ruta_evacuacion" value="C"></td>
+                    <td><input type="radio" name="estado_ruta_evacuacion" value="NC"></td>
+                    <td><input type="radio" name="estado_ruta_evacuacion" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_ruta_evacuacion"></td>
+                    <td><input type="text" name="observaciones_ruta_evacuacion"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>¿Las salidas de emergencia se encuentran señalizadas?</td>
+                    <td><input type="radio" name="estado_salidas_emergencia" value="C"></td>
+                    <td><input type="radio" name="estado_salidas_emergencia" value="NC"></td>
+                    <td><input type="radio" name="estado_salidas_emergencia" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_salidas_emergencia"></td>
+                    <td><input type="text" name="observaciones_salidas_emergencia"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>¿Los elementos de atención de emergencia se encuentran señalizados?</td>
+                    <td><input type="radio" name="estado_elementos_emergencia" value="C"></td>
+                    <td><input type="radio" name="estado_elementos_emergencia" value="NC"></td>
+                    <td><input type="radio" name="estado_elementos_emergencia" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_elementos_emergencia"></td>
+                    <td><input type="text" name="observaciones_elementos_emergencia"></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>¿La señalización es clara, legible y se encuentra en buen estado?</td>
+                    <td><input type="radio" name="estado_senalizacion" value="C"></td>
+                    <td><input type="radio" name="estado_senalizacion" value="NC"></td>
+                    <td><input type="radio" name="estado_senalizacion" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_senalizacion"></td>
+                    <td><input type="text" name="observaciones_senalizacion"></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>¿Se tienen demarcados senderos peatonales?</td>
+                    <td><input type="radio" name="estado_senderos_peatonales" value="C"></td>
+                    <td><input type="radio" name="estado_senderos_peatonales" value="NC"></td>
+                    <td><input type="radio" name="estado_senderos_peatonales" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_senderos_peatonales"></td>
+                    <td><input type="text" name="observaciones_senderos_peatonales"></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>¿Se tienen demarcadas áreas para tránsito de montacargas?</td>
+                    <td><input type="radio" name="estado_transito_montacargas" value="C"></td>
+                    <td><input type="radio" name="estado_transito_montacargas" value="NC"></td>
+                    <td><input type="radio" name="estado_transito_montacargas" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_transito_montacargas"></td>
+                    <td><input type="text" name="observaciones_transito_montacargas"></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>¿Se tienen demarcadas áreas para el almacenamiento de materiales?</td>
+                    <td><input type="radio" name="estado_almacenamiento_materiales" value="C"></td>
+                    <td><input type="radio" name="estado_almacenamiento_materiales" value="NC"></td>
+                    <td><input type="radio" name="estado_almacenamiento_materiales" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_almacenamiento_materiales"></td>
+                    <td><input type="text" name="observaciones_almacenamiento_materiales"></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>¿Se respeta la demarcación y señalización existente?</td>
+                    <td><input type="radio" name="estado_senalizacion_existente" value="C"></td>
+                    <td><input type="radio" name="estado_senalizacion_existente" value="NC"></td>
+                    <td><input type="radio" name="estado_senalizacion_existente" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_senalizacion_existente"></td>
+                    <td><input type="text" name="observaciones_senalizacion_existente"></td>
+                </tr>
+
+                <!-- ESTADO DE LOS PISOS Y OTROS PASOS OBLIGADOS -->
+                <tr>
+                    <td colspan="7" style="background-color: #ddd;"><strong>ESTADO DE LOS PISOS Y OTROS PASOS OBLIGADOS</strong></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>¿Existe presencia de huecos, baches y otros elementos que originan daños en las ruedas de los montacargas?</td>
+                    <td><input type="radio" name="estado_huecos_pisos" value="C"></td>
+                    <td><input type="radio" name="estado_huecos_pisos" value="NC"></td>
+                    <td><input type="radio" name="estado_huecos_pisos" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_huecos_pisos"></td>
+                    <td><input type="text" name="observaciones_huecos_pisos"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>¿Las tapas de sistemas eléctricos y drenajes se encuentran completas, ubicadas correctamente y no presentan daños?</td>
+                    <td><input type="radio" name="estado_tapas_sistemas" value="C"></td>
+                    <td><input type="radio" name="estado_tapas_sistemas" value="NC"></td>
+                    <td><input type="radio" name="estado_tapas_sistemas" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_tapas_sistemas"></td>
+                    <td><input type="text" name="observaciones_tapas_sistemas"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>¿Las vías de acceso se encuentran libres de elementos que dificultan el paso?</td>
+                    <td><input type="radio" name="estado_vias_acceso" value="C"></td>
+                    <td><input type="radio" name="estado_vias_acceso" value="NC"></td>
+                    <td><input type="radio" name="estado_vias_acceso" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_vias_acceso"></td>
+                    <td><input type="text" name="observaciones_vias_acceso"></td>
+                </tr>
+
+                <!-- ALMACENAMIENTO DE PRODUCTO -->
+                <tr>
+                    <td colspan="7" style="background-color: #ddd;"><strong>ALMACENAMIENTO DE PRODUCTO</strong></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>¿La estructura de los pisos en general, limita la capacidad de carga, traslado y almacenamiento del producto?</td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="C"></td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="NC"></td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_estructura_pisos"></td>
+                    <td><input type="text" name="observaciones_estructura_pisos"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>¿Los big bag en los que se encuentran almacenados los materiales se encuentran en buen estado y se encuentran correctamente almacenados?</td>
+                    <td><input type="radio" name="estado_big_bag" value="C"></td>
+                    <td><input type="radio" name="estado_big_bag" value="NC"></td>
+                    <td><input type="radio" name="estado_big_bag" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_big_bag"></td>
+                    <td><input type="text" name="observaciones_big_bag"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>¿Las estibas en las que se encuentran almacenados los materiales se encuentran en buen estado y se encuentran correctamente almacenadas?</td>
+                    <td><input type="radio" name="estado_estibas" value="C"></td>
+                    <td><input type="radio" name="estado_estibas" value="NC"></td>
+                    <td><input type="radio" name="estado_estibas" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_estibas"></td>
+                    <td><input type="text" name="observaciones_estibas"></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>¿Cada carga almacenada se encuentra identificada, amarrada (asegurada) y con perfiles para prevenir el riesgo de caída?</td>
+                    <td><input type="radio" name="estado_carga_almacenada" value="C"></td>
+                    <td><input type="radio" name="estado_carga_almacenada" value="NC"></td>
+                    <td><input type="radio" name="estado_carga_almacenada" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_carga_almacenada"></td>
+                    <td><input type="text" name="observaciones_carga_almacenada"></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>¿El producto almacenado cumple con las disposiciones de almacenamiento establecidas en los estándares documentados?</td>
+                    <td><input type="radio" name="estado_producto_almacenado" value="C"></td>
+                    <td><input type="radio" name="estado_producto_almacenado" value="NC"></td>
+                    <td><input type="radio" name="estado_producto_almacenado" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_producto_almacenado"></td>
+                    <td><input type="text" name="observaciones_producto_almacenado"></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>¿Se tiene identificada la capacidad por cada elemento a almacenar (kg) y se cumple con esta disposición?</td>
+                    <td><input type="radio" name="estado_capacidad_almacenamiento" value="C"></td>
+                    <td><input type="radio" name="estado_capacidad_almacenamiento" value="NC"></td>
+                    <td><input type="radio" name="estado_capacidad_almacenamiento" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_capacidad_almacenamiento"></td>
+                    <td><input type="text" name="observaciones_capacidad_almacenamiento"></td>
+                </tr>
+
+                <!--  CARGUE DE PRODUCTO -->
+                <tr>
+                    <td colspan="7" style="background-color: #ddd;"><strong>CARGUE DE PRODUCTO</strong></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td> ¿Las rampas de acceso a vehículos proporcionan la resistencia necesaria
+                        para el ingreso del montacargas y se encuentran en adecuadas
+                        condiciones de funcionamiento?</td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="C"></td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="NC"></td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_estructura_pisos"></td>
+                    <td><input type="text" name="observaciones_estructura_pisos"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>¿Se cuenta con una buena regulación y ajuste de la altura de la rampa al
+                        camion?</td>
+                    <td><input type="radio" name="estado_big_bag" value="C"></td>
+                    <td><input type="radio" name="estado_big_bag" value="NC"></td>
+                    <td><input type="radio" name="estado_big_bag" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_big_bag"></td>
+                    <td><input type="text" name="observaciones_big_bag"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td> ¿Se verifica el correcto estacionamiento del vehiculo, y las condiciones de
+                        instalacion de la rampa?</td>
+                    <td><input type="radio" name="estado_estibas" value="C"></td>
+                    <td><input type="radio" name="estado_estibas" value="NC"></td>
+                    <td><input type="radio" name="estado_estibas" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_estibas"></td>
+                    <td><input type="text" name="observaciones_estibas"></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>¿El vehículo permanece apagado durante el cargue, se verifica el "no"
+                        ingreso de operadores y conductores al contenedor mientras se realiza el
+                        cargue del vehiculo y se mantiene una distancia la seguridad necesaria
+                        para prevenir accidentes?</td>
+                    <td><input type="radio" name="estado_carga_almacenada" value="C"></td>
+                    <td><input type="radio" name="estado_carga_almacenada" value="NC"></td>
+                    <td><input type="radio" name="estado_carga_almacenada" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_carga_almacenada"></td>
+                    <td><input type="text" name="observaciones_carga_almacenada"></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>¿Se usan cuñas de seguridad que estén en perfecto estado, para el
+                        cargue de vehiculos?</td>
+                    <td><input type="radio" name="estado_producto_almacenado" value="C"></td>
+                    <td><input type="radio" name="estado_producto_almacenado" value="NC"></td>
+                    <td><input type="radio" name="estado_producto_almacenado" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_producto_almacenado"></td>
+                    <td><input type="text" name="observaciones_producto_almacenado"></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>¿Se mantiene despejada el area de operaciones y se verifica que se encuentre libre de elementos que dificulten el paso?</td>
+                    <td><input type="radio" name="estado_capacidad_almacenamiento" value="C"></td>
+                    <td><input type="radio" name="estado_capacidad_almacenamiento" value="NC"></td>
+                    <td><input type="radio" name="estado_capacidad_almacenamiento" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_capacidad_almacenamiento"></td>
+                    <td><input type="text" name="observaciones_capacidad_almacenamiento"></td>
+                </tr>
+
+
+                <!--   ILUMINACIÓN, VENTILACIÓN Y SISTEMAS ELÉCTRICOS -->
+                <tr>
+                    <td colspan="7" style="background-color: #ddd;"><strong> ILUMINACIÓN, VENTILACIÓN Y SISTEMAS ELÉCTRICOS</strong></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td> ¿La iluminación (natural o artificial) en el área de trabajo facilita el
+                        desarrollo de las labores y se encuentra homogéneamente distribuida,
+                        previniendo el deslumbramiento o penumbra?</td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="C"></td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="NC"></td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_estructura_pisos"></td>
+                    <td><input type="text" name="observaciones_estructura_pisos"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>¿Las instalaciones eléctricas cuentan con polo a tierra?</td>
+                    <td><input type="radio" name="estado_big_bag" value="C"></td>
+                    <td><input type="radio" name="estado_big_bag" value="NC"></td>
+                    <td><input type="radio" name="estado_big_bag" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_big_bag"></td>
+                    <td><input type="text" name="observaciones_big_bag"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td> ¿Los cables, conexiones, extensiones, enchufes, tomacorriente,
+                        interruptores y otros elementos del sistema eléctrico se encuentran en
+                        buen estado, organizados correctamente, libre de deterioro aparente o
+                        cualquier otro indicio de daño?</td>
+                    <td><input type="radio" name="estado_estibas" value="C"></td>
+                    <td><input type="radio" name="estado_estibas" value="NC"></td>
+                    <td><input type="radio" name="estado_estibas" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_estibas"></td>
+                    <td><input type="text" name="observaciones_estibas"></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>¿En caso de acumulación de material particulado, gases, humos y/o
+                        vapores en el área, se cuenta con un sistema de extracción natural o
+                        mecanizado eficiente que reduzca la concentración a límites permisibles?</td>
+                    <td><input type="radio" name="estado_carga_almacenada" value="C"></td>
+                    <td><input type="radio" name="estado_carga_almacenada" value="NC"></td>
+                    <td><input type="radio" name="estado_carga_almacenada" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_carga_almacenada"></td>
+                    <td><input type="text" name="observaciones_carga_almacenada"></td>
+                </tr>
+
+                <!--  SISTEMAS DE CONDUCCIÓN DE AGUAS Y OTRAS SUSTANCIAS QUÍMICAS -->
+                <tr>
+                    <td colspan="7" style="background-color: #ddd;"><strong> SISTEMAS DE CONDUCCIÓN DE AGUAS Y OTRAS SUSTANCIAS QUÍMICAS</strong></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td> ¿Los drenajes que conducen aguas lluvia se encuentran limpios, libres de
+                        taponamiento.Su diámetro facilita el caudal de drenaje e impide que se
+                        presente inundaciones?</td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="C"></td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="NC"></td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_estructura_pisos"></td>
+                    <td><input type="text" name="observaciones_estructura_pisos"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>¿El tejado se encuentra libre de filtraciones?</td>
+                    <td><input type="radio" name="estado_big_bag" value="C"></td>
+                    <td><input type="radio" name="estado_big_bag" value="NC"></td>
+                    <td><input type="radio" name="estado_big_bag" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_big_bag"></td>
+                    <td><input type="text" name="observaciones_big_bag"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td> ¿Las canaletas y bajantes, conducen el agua lluvia y previenen que se
+                        presente la entrada de agua a las instalaciones. Éstas se encuentran
+                        limpias, libres de taponamiento. Su diámetro facilita el caudal de drenaje e
+                        impide que se presente inundaciones?</td>
+                    <td><input type="radio" name="estado_estibas" value="C"></td>
+                    <td><input type="radio" name="estado_estibas" value="NC"></td>
+                    <td><input type="radio" name="estado_estibas" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_estibas"></td>
+                    <td><input type="text" name="observaciones_estibas"></td>
+                </tr>
+
+                <!--   ORDEN Y ASEO EN EL ÁREA DE TRABAJO -->
+                <tr>
+                    <td colspan="7" style="background-color: #ddd;"><strong> ORDEN Y ASEO EN EL ÁREA DE TRABAJO</strong></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td> ¿El área de trabajo se encuentra organizada, según estándares de
+                        ubicación de los diversos elementos, el área se encuentra limpia, libre de
+                        residuos en el piso, se retiran los residuos del área oportunamente?</td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="C"></td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="NC"></td>
+                    <td><input type="radio" name="estado_estructura_pisos" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_estructura_pisos"></td>
+                    <td><input type="text" name="observaciones_estructura_pisos"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td> ¿Se cuenta con los contenedores para la segregación de residuos y éstos
+                        son usados correctamente?</td>
+                    <td><input type="radio" name="estado_big_bag" value="C"></td>
+                    <td><input type="radio" name="estado_big_bag" value="NC"></td>
+                    <td><input type="radio" name="estado_big_bag" value="NA"></td>
+                    <td><input type="text" name="peligrosidad_big_bag"></td>
+                    <td><input type="text" name="observaciones_big_bag"></td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="background-color: #ddd;"><strong> REPORTE DE LOS TRABAJADORES DE LAS CONDICIONES Y ACTOS PELIGROSOS IDENTIFICADOS EN EL ÁREA DE TRABAJO</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="padding: 10px 0;"><strong> </strong></td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="padding: 10px 0;"><strong> </strong></td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="padding: 10px 0;"><strong> </strong></td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="padding: 10px 0;"><strong> </strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
