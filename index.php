@@ -59,8 +59,10 @@
     $InspeccionesRoutes = include 'App/Routes/Inspecciones_Routes.php';
     $ProductosRoutes = include 'App/Routes/Productos_Routes.php';
     $MontacargasRoutes = include 'App/Routes/Montacargas_Routes.php';
+    $MantenimientoRoutes = include 'App/Routes/Mantenimiento_Routes.php';
     $BlogRoutes = include 'App/Routes/Blog_Routes.php';
-    $Overhauling = include 'App/Routes/Overhauling.php';
+    $OverallRoutes = include 'App/Routes/Overhauling_Routes.php';
+
 
     // Merge de todas las rutas
     $routes = array_merge(
@@ -73,8 +75,9 @@
         $InspeccionesRoutes, 
         $ProductosRoutes,
         $MontacargasRoutes,
+        $MantenimientoRoutes,
         $BlogRoutes,
-        $Overhauling,
+        $OverallRoutes,
         [
             '' => 'Views/Templates/Principal/Inicio.php',
             '/' => 'Views/Templates/Principal/Index.php',
@@ -85,6 +88,7 @@
             'Contacto' => 'Views/Templates/Contacto.php',
             'IniciarSesion' => 'Views/Templates/IniciarSesion.php',
             'ActivarCuenta' => 'Views/Templates/ActivarCuenta.php',
+            'Huella/Inicio' => 'Views/Templates/Huella/Inicio.php',
         ]
     );
 

@@ -120,7 +120,6 @@
             }
         }
         
-
         public function RegistrarProducto($ID, $Nombre1, $Nombre){
             $ultimoCodigo = $this->Modelo_Dotacion->obtenerUltimoCodigo();
             if ($ultimoCodigo) {
@@ -833,6 +832,16 @@
                     </script>";
             }
             
+        }
+        
+        public function LeerHuella($ID_Centro){
+            if ($this->Modelo_Dotacion->LeerHuella($ID_Centro)) {
+                $Resultado = $this->Modelo_Dotacion->LeerHuella($ID_Centro);
+                return $Resultado;
+            }
+            else {
+                return false;
+            }
         }
     }
 ?>

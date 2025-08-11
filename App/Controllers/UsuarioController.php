@@ -92,6 +92,16 @@
                 return false;
             }
         }
+        
+        public function LeerHuella($Huella){
+            if ($this->Modelo_Usuario->LeerHuella($Huella)) {
+                $Resultado = $this->Modelo_Usuario->LeerHuella($Huella);
+                return $Resultado;
+            }
+            else {
+                return false;
+            }
+        }
 
         public function Informe(){
             if ($this->Modelo_Usuario->Informe()) {

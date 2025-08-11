@@ -56,6 +56,16 @@
             $DataUsuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $DataUsuarios;
         }
+        
+        public function LeerHuella($Huella){
+            $Estado = 1;
+            $sql = "SELECT * FROM usuario WHERE ID_Huella = :Estado";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':Estado', $Huella);
+            $stmt->execute();
+            $DataUsuarios = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $DataUsuarios;
+        }
 
         public function Informe(){
             $Estado = 1;

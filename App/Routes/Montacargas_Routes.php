@@ -7,5 +7,7 @@
         'Montacargas/ETP' => 'Views/Templates/Montacargas/Etp.php',
         'Montacargas/EPA' => 'Views/Templates/Montacargas/Epa.php',
         'Montacargas/S' => 'Views/Templates/Montacargas/S.php',
+        'Montacargas/Crear' => 'Views/Templates/Montacargas/Crear.php',
+        'Montacargas/ObtenerAreas' => 'Views/Templates/Montacargas/Obtener_areas.php',
     ];
 ?>

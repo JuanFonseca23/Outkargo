@@ -86,7 +86,7 @@
         <button type="submit">Guardar Firma</button>
     </form>
     <button id="clear-button">Borrar</button>
-    <a href="InicioSalida">
+    <a href="InicioTraslados">
         <button>Volver</button>
     </a>
 

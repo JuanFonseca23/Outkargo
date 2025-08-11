@@ -1,3 +1,4 @@
+
 <?php
 
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
@@ -258,7 +259,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
         </div>
 
         <!-- Tarjeta 8 -->
-         <div class="tarjeta">
+        <div class="tarjeta">
             <h3><img width="50" height="50" src="https://img.icons8.com/ios-glyphs/50/000020/gearbox-selector.png" alt="gearbox-selector"/>Aditamentos</h3>
             <ul>
                 <li><span>Side shift</span><span>Bueno</span></li>

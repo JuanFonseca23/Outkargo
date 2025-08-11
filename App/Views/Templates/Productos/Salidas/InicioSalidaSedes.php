@@ -150,8 +150,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <a class="btn btn-sm btn-primary" target="_blank" href="VerSalida?ID=<?= urlencode(htmlspecialchars($Lista['ID'])) ?>">
                                         <img width="20" height="20" src="https://img.icons8.com/material-outlined/24/ffffff/visible--v1.png" alt="Ver" />
                                     </a>
-                                    <?php if ($Lista['Estado'] != 1) { ?>
+                                    <?php if ($Lista['Firma_Estado_Recibe'] != 1) { ?>
                                         <a class="btn btn-sm btn-warning" target="_blank" href="FirmaSalidaReceptor?Documento=<?= urlencode(htmlspecialchars($Lista['Documento'])) ?>&Salida=<?= urlencode(htmlspecialchars($Lista['ID'])) ?>&No_Formulario=<?= urlencode(htmlspecialchars($Lista['Numero'])) ?>">
+                                            <img width="20" height="20" src="https://img.icons8.com/sf-regular-filled/24/ffffff/autograph.png" alt="autograph"/>
+                                        </a>
+                                    <?php } ?>
+                                    <?php if ( $_SESSION['ID'] == $Lista['ID_Supervisor'] && $Lista['Firma_Supervisor_Estado'] != 1) { ?>
+                                        <a class="btn btn-sm btn-dark" target="_blank" href="FirmaSupervisorSalida?Documento=<?= urlencode(htmlspecialchars($Lista['Documento'])) ?>&Salida=<?= urlencode(htmlspecialchars($Lista['ID'])) ?>&No_Formulario=<?= urlencode(htmlspecialchars($Lista['Numero'])) ?>">
                                             <img width="20" height="20" src="https://img.icons8.com/sf-regular-filled/24/ffffff/autograph.png" alt="autograph"/>
                                         </a>
                                     <?php } ?>

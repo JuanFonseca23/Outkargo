@@ -1,6 +1,3 @@
-+
-
-
 <?php
 class Dotacion {
     // Atributos
@@ -23,7 +20,7 @@ class Dotacion {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
+    
     public function obtenerUltimoCodigo() {
         $sql = "SELECT Codigo FROM producto ORDER BY ID DESC LIMIT 1";
         $stmt = $this->PDO->prepare($sql);
@@ -797,5 +794,25 @@ class Dotacion {
         }
     }
     
+    public function LeerHuella($ID_Centro) {
+        // Establecer zona horaria de Bogotá
+        date_default_timezone_set('America/Bogota');
+    
+        // Obtener fecha actual en formato dd-mm-yyyy
+        $fechaHoy = date("d-m-Y");
+    
+        $sql = "SELECT *
+                FROM huella
+                WHERE ID_Centro = :ID_Centro
+                AND huella.Fecha = :Fecha
+                ORDER BY huella.ID DESC";
+    
+        $stmt = $this->PDO->prepare($sql);
+        $stmt->bindParam(':ID_Centro', $ID_Centro, PDO::PARAM_INT);
+        $stmt->bindParam(':Fecha', $fechaHoy, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>

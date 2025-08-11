@@ -1,5 +1,5 @@
 <?php
-    class Montacargas {
+    class Area {
         // Atributos
         private $PDO;
 
@@ -15,32 +15,22 @@
             $Estado = 1;
             $sql = "
                 SELECT 
-                    montacargas.*, 
+                    area.*, 
                     centrot.Nombre AS Ubicacion
                 FROM 
-                    montacargas
+                    area
                 INNER JOIN 
                     centrot 
                 ON 
-                    montacargas.ID_Centro = centrot.ID
+                    area.ID_Centro = centrot.ID
                 WHERE 
-                    montacargas.Estado = :Estado 
-                    AND montacargas.ID_Centro = :ID_Centro
+                    area.Estado = :Estado 
+                    AND area.ID_Centro = :ID_Centro
                     AND centrot.Estado = :Estado";
             
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(':Estado', $Estado);
             $stmt->bindParam(':ID_Centro', $ID_Centro);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-        
-        //Traer Marca
-        public function TraerMarca() {
-            $Estado = 1;
-            $sql = "SELECT * FROM marcas_montacargas WHERE Estado = :Estado";
-            $stmt = $this->PDO->prepare($sql);
-            $stmt->bindParam(':Estado', $Estado);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }

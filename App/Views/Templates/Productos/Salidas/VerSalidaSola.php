@@ -146,8 +146,8 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
         <thead>
             <tr>
                 <th>Salida</th>
-                <th>Supervisor</th>
                 <th>Recibe</th>
+                <th>Supervisor</th>
             </tr>
         </thead>
         <tbody>

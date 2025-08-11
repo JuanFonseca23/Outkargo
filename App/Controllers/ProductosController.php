@@ -899,7 +899,7 @@
             if($ID =$this->Modelo_Productos->FirmarSalida($ID_Usuario, $ID_Recibe, $ID_Supervisor, $ID_Centro, $ID_Destino, $No_Formulario, $Fecha_Realizado, $Estado, $Firma, $Firma_Estado_Recibe)){
                 $ID_Salida=$ID;
                 $this->Modelo_Productos->ProductosSalida($ID_Salida);
-                $this->GenerarCorreoSalida($CorreoSupervisor, $Nombre_Supervisor, $No_Formulario, $ID_Salida);
+                $this->GenerarCorreoSalida($CorreoSupervisor, $Nombre_Supervisor, $No_Documento, $No_Formulario, $ID_Salida);
                 $ID_Usuario1 =$ID_Usuario;
                 $ID_Usuario2 = Null;
                 $Creo = 'registro';
@@ -1478,7 +1478,7 @@
             }
         } 
 
-        private function GenerarCorreoSalida ($Correo_Supervisor, $Nombre_Supervisor, $No_Formulario, $ID_Salida) {
+        private function GenerarCorreoSalida ($Correo_Supervisor, $Nombre_Supervisor, $No_Documento, $No_Formulario, $ID_Salida) {
             $mail = new PHPMailer(true);
             $isLocal = false;
             $serverName = $_SERVER['SERVER_NAME']; 
@@ -1487,9 +1487,9 @@
                 $isLocal = true;
             }
             if ($isLocal === true) {
-                $AceptarSalida = "localhost/Outkargo2/Productos/FirmaSupervisorSalida?ID=$ID_Salida&No=$No_Formulario";
+                $AceptarSalida = "localhost/Outkargo2/Productos/FirmaSupervisorSalida?Documento=$No_Documento&Salida=$ID_Salida&No_Formulario=$No_Formulario";
             }else {
-                $AceptarSalida = "https://Outkargo.com.co/Productos/FirmaSupervisorSalida?ID=$ID_Salida&No=$No_Formulario/";
+                $AceptarSalida = "https://Outkargo.com.co/Productos/FirmaSupervisorSalida?Documento=$No_Documento&Salida=$ID_Salida&No_Formulario=$No_Formulario/";
             }
             try {
                 // Configuración del servidor SMTP

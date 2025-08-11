@@ -18,10 +18,10 @@
         "800": "poppins_800_a3f35df90afcc12957674bb493255c2e"
     },
     "heebo": {
-        "normal": "C:\\xampp\\htdocs\\Outkargo2\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_normal_927b9010964f579aa76fe48f47b22a6f",
-        "500": "C:\\xampp\\htdocs\\Outkargo2\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_500_6fa0e9e9b5fe3ccbd23a814b61f2fcec",
-        "600": "C:\\xampp\\htdocs\\Outkargo2\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_600_34f775969949a6701b0eec77792e39e0",
-        "bold": "heebo_bold_aae77a1081515d7d1dce169f39788857"
+        "normal": "C:\\xampp\\htdocs\\Outkargo2\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_normal_c81242535f5e5073499c19a98a01432d",
+        "500": "C:\\xampp\\htdocs\\Outkargo2\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_500_e622a15009b50e097c9073bc13634bcc",
+        "600": "C:\\xampp\\htdocs\\Outkargo2\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_600_6ba1f14d3b9b9de14c9b3f56e56acfd2",
+        "bold": "heebo_bold_8e86c2e888d515ce5032cebdaace7113"
     },
     "font awesome 5 brands": {
         "normal": "font_awesome_5_brands_normal_9166bcb40dea5ba374b655439357cc5e"

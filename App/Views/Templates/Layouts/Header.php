@@ -87,26 +87,33 @@
                     <a href="../Panel/Menu" class="nav-item nav-link"><img width="20" height="20" src="https://img.icons8.com/ios/50/ff5000/dashboard.png" alt="dashboard"/> Panel de control</a>
                     <?php
                         switch ($_SESSION['IdCargo']) {
-                            case '1':
+                            case '1': //Desarrollador de proyectos tecnologicos
                                 require_once "Empleado.php";
                                 require_once "Montacargas.php";
                                 require_once "Baterias.php";
                                 require_once "Cargadores.php";
                                 require_once "Centros.php";
+                                require_once "Dotacion.php";
                                 require_once "Tickets.php";
                                 require_once "Overhauling.php";
+                                require_once "Huella.php";
+                                require_once "Mantenimiento.php";
                                 break;
 
-                            case '2':
+                            case '2': //Practicante ingeniería software
+                                require_once "Inventario.php";
                                 require_once "Empleado.php";
                                 require_once "Montacargas.php";
                                 require_once "Baterias.php";
                                 require_once "Cargadores.php";
                                 require_once "Centros.php";
+                                require_once "Dotacion.php";
                                 require_once "Tickets.php";
+                                require_once "Overhauling.php";
+                                require_once "Huella.php";
                                 break;
 
-                            case '3':
+                            case '3': //Auxiliar HSEQ
                                 require_once "Inventario.php";
                                 require_once "OrdenesDeServicio.php";
                                 require_once "Mantenimiento.php";
@@ -115,14 +122,16 @@
                                 require_once "Montacargas.php";
                                 require_once "Baterias.php";
                                 require_once "Cargadores.php";
+                                require_once "Centros.php";
                                 require_once "Dotacion.php";
                                 require_once "Inspecciones.php";
                                 break;
 
-                            case '4':
+                            case '4': //Aprendiz Mecanico
+                                require_once "Mantenimiento.php";
                                 break;
 
-                            case '5':
+                            case '5': //Supervisor
                                 require_once "Inventario.php";
                                 require_once "Mantenimiento.php";
                                 require_once "ListaDeChequeo.php";
@@ -133,11 +142,15 @@
                                 require_once "Inspecciones.php";
                                 break;
                             
-                            case '6':
-                                require_once "ListaDeChequeo.php";
+                            case '6': //Técnico Electromecánico
+                                require_once "Mantenimiento.php";
                                 break;
 
-                            case '7':
+                            case '7': //Operador Montacargas
+                                require_once "ListaDeChequeo.php";
+                                break;
+                            
+                            case '8': //Director Tecnico
                                 require_once "Inventario.php";
                                 require_once "Mantenimiento.php";
                                 require_once "ListaDeChequeo.php";
@@ -145,14 +158,17 @@
                                 require_once "Baterias.php";
                                 require_once "Cargadores.php";
                                 require_once "Centros.php";
-                                break;
-                            
-                            case '8':
-                                require_once "Inventario.php";
-                                require_once "Empleado.php";
+                                require_once "Huella.php";
                                 break;
 
-                            case '9':
+                            case '9': //Contabilidad
+                                require_once "Inventario.php";
+                                require_once "Empleados.php";
+                                require_once "Montacargas.php";
+                                require_once "Huella.php";
+                                break;
+
+                            case '10': //Auxiliar Logistico
                                 require_once "Inventario.php";
                                 require_once "OrdenesDeServicio.php";
                                 require_once "Mantenimiento.php";
@@ -166,7 +182,7 @@
                                 require_once "Inspecciones.php";
                                 break;
 
-                            case '10':
+                            case '11': //Director Operaciones y Control
                                 require_once "Inventario.php";
                                 require_once "OrdenesDeServicio.php";
                                 require_once "Mantenimiento.php";
@@ -177,9 +193,14 @@
                                 require_once "Cargadores.php";
                                 require_once "Centros.php";
                                 require_once "Dotacion.php";
+                                require_once "Inspecciones.php";
+                                require_once "Tickets.php";
+                                require_once "Overhauling.php";
+                                require_once "Blog.php";
+                                require_once "Huella.php";
                                 break;
 
-                            case '11':
+                            case '12': //Director Administrativo y Financiero
                                 require_once "Inventario.php";
                                 require_once "OrdenesDeServicio.php";
                                 require_once "Mantenimiento.php";
@@ -190,8 +211,50 @@
                                 require_once "Cargadores.php";
                                 require_once "Centros.php";
                                 require_once "Dotacion.php";
+                                require_once "Inspecciones.php";
+                                require_once "Tickets.php";
+                                require_once "Overhauling.php";
+                                require_once "Blog.php";
+                                require_once "Huella.php";
                                 break;
 
+                            case '13': //Jefe de Taller
+                                require_once "Inventario.php";
+                                require_once "Mantenimiento.php";
+                                require_once "ListaDeChequeo.php";
+                                require_once "Montacargas.php";
+                                require_once "Baterias.php";
+                                require_once "Cargadores.php";
+                                require_once "Centros.php";
+                                require_once "Huella.php";
+                                break;
+                            
+                            case '14': //Líder HSEQ
+                                require_once "Inventario.php";
+                                require_once "OrdenesDeServicio.php";
+                                require_once "Mantenimiento.php";
+                                require_once "ListaDeChequeo.php";
+                                require_once "Empleado.php";
+                                require_once "Montacargas.php";
+                                require_once "Baterias.php";
+                                require_once "Cargadores.php";
+                                require_once "Centros.php";
+                                require_once "Dotacion.php";
+                                require_once "Inspecciones.php";
+                                require_once "Tickets.php";
+                                require_once "Overhauling.php";
+                                require_once "Blog.php";
+                                require_once "Huella.php";
+                                break;
+
+                            case '15': //Auxiliar Multimedia
+                                require_once "Blog.php";
+                                break;
+
+                            case '16': //Marketing
+                                require_once "Blog.php";
+                                break;
+                                
                             default:
                                 break;
                         }
