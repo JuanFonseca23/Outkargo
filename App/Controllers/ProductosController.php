@@ -772,7 +772,6 @@
                         });
                     </script>";
             }
-            
         }
 
         public function verificarEstadoFirma($ID_Entrada) {

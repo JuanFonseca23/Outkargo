@@ -3,15 +3,12 @@ include_once "App/Controllers/MantenimientosController.php";
 $MantenimientosController = new MantenimientosController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Usar $_GET para obtener el valor de la categoría
     $ID_Centro = intval($_GET['ID_Centro']);
 
     if ($ID_Centro) {
-        echo json_encode($MantenimientosController->TraerMontacargas($ID_Centro));
+        echo json_encode($MantenimientosController->TraerOperarios($ID_Centro));
     } else {
-        echo json_encode([
-            "error" => "ID de centro no proporcionado."
-        ]);
+        echo json_encode(["error" => "ID de centro no proporcionado."]);
     }
 }
 ?>

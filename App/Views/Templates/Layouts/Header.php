@@ -94,6 +94,7 @@
                                 require_once "Cargadores.php";
                                 require_once "Centros.php";
                                 require_once "Dotacion.php";
+                                require_once "Inventario.php";
                                 require_once "Tickets.php";
                                 require_once "Overhauling.php";
                                 require_once "Huella.php";

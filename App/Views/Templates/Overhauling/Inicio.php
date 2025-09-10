@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
         </div>
-        <a class="col-sm-6 col-xl-3" data-bs-toggle="modal" data-bs-target="#NumerDocumentoModal">
+        <a class="col-sm-6 col-xl-3" data-bs-toggle="modal" data-bs-target="#AgregarDiagnostico">
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <img width="50" height="50" src="https://img.icons8.com/ios/50/000020/new--v1.png" alt="new--v1" />
                 <div class="ms-3">
@@ -207,7 +207,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </div>
                             </div>
                         </a>
-
                         <a id="btnElectricoCard" class="col-sm-6 col-xl-3" href="#" data-open-modal="#ModalElectrico">
                             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                                 <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/000020/carbon-brush.png" alt="carbon-brush" />
