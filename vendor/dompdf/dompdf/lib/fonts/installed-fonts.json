@@ -18,23 +18,23 @@
         "800": "poppins_800_a3f35df90afcc12957674bb493255c2e"
     },
     "heebo": {
-        "normal": "C:\\xampp\\htdocs\\Outkargo2\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_normal_c81242535f5e5073499c19a98a01432d",
-        "500": "C:\\xampp\\htdocs\\Outkargo2\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_500_e622a15009b50e097c9073bc13634bcc",
-        "600": "C:\\xampp\\htdocs\\Outkargo2\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_600_6ba1f14d3b9b9de14c9b3f56e56acfd2",
-        "bold": "heebo_bold_8e86c2e888d515ce5032cebdaace7113"
+        "normal": "C:\\xampp\\htdocs\\Outkargo\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_normal_8c03f46dd53a3650aa88d5ce595a07a0",
+        "500": "C:\\xampp\\htdocs\\Outkargo\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_500_a93d65bf0445d76d26bf1deb2d156012",
+        "600": "C:\\xampp\\htdocs\\Outkargo\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_600_01fc3514d472a4e50ee7f537e2209ae5",
+        "bold": "heebo_bold_e02fffcb888c1aee43a8cd32d315cd4e"
     },
     "font awesome 5 brands": {
         "normal": "font_awesome_5_brands_normal_9166bcb40dea5ba374b655439357cc5e"
     },
     "font awesome 5 free": {
-        "normal": "C:\\xampp\\htdocs\\Outkargo2\\vendor\\dompdf\\dompdf\/lib\/fonts\/font_awesome_5_free_normal_ed4e4da87937dc9d793611fdb1abbce8",
-        "900": "font_awesome_5_free_900_31ca5fb3f9009ed2d5b8cf264a9d6ed4"
+        "normal": "font_awesome_5_free_normal_ed4e4da87937dc9d793611fdb1abbce8",
+        "900": "C:\\xampp\\htdocs\\Outkargo\\vendor\\dompdf\\dompdf\/lib\/fonts\/font_awesome_5_free_900_31ca5fb3f9009ed2d5b8cf264a9d6ed4"
     },
     "line awesome brands": {
         "normal": "line_awesome_brands_normal_f905f0dcb962dd842eea02bb4f9eee69"
     },
     "line awesome free": {
-        "normal": "C:\\xampp\\htdocs\\Outkargo2\\vendor\\dompdf\\dompdf\/lib\/fonts\/line_awesome_free_normal_967a0922d505961af7c5cdf6c50fd81e",
-        "900": "line_awesome_free_900_03518a78e82e89adf0bdd3560d8fbb29"
+        "normal": "line_awesome_free_normal_967a0922d505961af7c5cdf6c50fd81e",
+        "900": "C:\\xampp\\htdocs\\Outkargo\\vendor\\dompdf\\dompdf\/lib\/fonts\/line_awesome_free_900_03518a78e82e89adf0bdd3560d8fbb29"
     }
 }

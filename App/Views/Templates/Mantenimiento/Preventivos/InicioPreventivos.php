@@ -7,7 +7,243 @@ $CentrosDeTrabajo = new CentroDeTrabajoController;
 $MantenimientosController = new MantenimientosController();
 $ListaCentrosDeTrabajo = $CentrosDeTrabajo->TraerCentrosDeTrabajo();
 
+date_default_timezone_set('America/Bogota'); 
+$horaFormateada = date("H:i");
+
 $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
+$Tipo = 1;
+$DataSupervisores = $MantenimientosController->TraerSupervisores();
+$Mantenimientos = $MantenimientosController->LeerMantenimientos($ID_Centro, $Tipo);
+$NoMantenimientos = $MantenimientosController->ContarMantenimientos($ID_Centro, $Tipo);
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_POST['Tipo'] == "MantenimietoPreventivo") {
+        $ID_Montacargas = $_POST['ID_Montacargas1'];
+        $ID_Area = $_POST['ID_Area1'];
+        $ID_Operario = $_POST['ID_Operario1'];
+        $ID_Centro = $_POST['ID_Centro2'];
+        $ID_Supervisor = $_POST['IDSupervisor'];
+        $Correo_Supervisor = $_POST['CorreoSupervisor'];
+        $Nombre_Supervisor = $_POST['NombreSupervisor'];
+        $NumeroBateria = $_POST['NumeroBateria'];
+        $NumeroControlador = $_POST['NumeroControlador'];
+        $NumeroCargador = $_POST['NumeroCargador'];
+        $Observaciones = $_POST['diagnostico'];
+        $Longitudh = $_POST['LongitudH'];
+        $Horometro = $_POST['Horometro'];
+        $HoraInicio = $_POST['HoraInicio'];
+        $Criterio_1 = $_POST['Criterio_1'];
+        $Criterio_2 = $_POST['Criterio_2'];
+        $Criterio_3 = $_POST['Criterio_3'];
+        $Criterio_4 = $_POST['Criterio_4'];
+        $Criterio_5 = $_POST['Criterio_5'];
+        $Criterio_6 = $_POST['Criterio_6'];
+        $Criterio_7 = $_POST['Criterio_7'];
+        $Criterio_8 = $_POST['Criterio_8'];
+        $Criterio_9 = $_POST['Criterio_9'];
+        $Criterio_10 = $_POST['Criterio_10'];
+        $Criterio_11 = $_POST['Criterio_11'];
+        $Criterio_12 = $_POST['Criterio_12'];
+        $Criterio_13 = $_POST['Criterio_13'];
+        $Criterio_14 = $_POST['Criterio_14'];
+        $Criterio_15 = $_POST['Criterio_15'];
+        $Criterio_16 = $_POST['Criterio_16'];
+        $Criterio_17 = $_POST['Criterio_17'];
+        $Criterio_18 = $_POST['Criterio_18'];
+        $Criterio_19 = $_POST['Criterio_19'];
+        $Criterio_20 = $_POST['Criterio_20'];
+        $Criterio_21 = $_POST['Criterio_21'];
+        $Criterio_22 = $_POST['Criterio_22'];
+        $Criterio_23 = $_POST['Criterio_23'];
+        $Criterio_24 = $_POST['Criterio_24'];
+        $Criterio_25 = $_POST['Criterio_25'];
+        $Criterio_26 = $_POST['Criterio_26'];
+        $Criterio_27 = $_POST['Criterio_27'];
+        $Criterio_28 = $_POST['Criterio_28'];
+        $Criterio_29 = $_POST['Criterio_29'];
+        $Criterio_30 = $_POST['Criterio_30'];
+        $Criterio_31 = $_POST['Criterio_31'];
+        $Criterio_32 = $_POST['Criterio_32'];
+        $Criterio_33 = $_POST['Criterio_33'];
+        $Criterio_34 = $_POST['Criterio_34'];
+        $Criterio_35 = $_POST['Criterio_35'];
+        $Criterio_36 = $_POST['Criterio_36'];
+        $Criterio_37 = $_POST['Criterio_37'];
+        $Criterio_38 = $_POST['Criterio_38'];
+        $Criterio_39 = $_POST['Criterio_39'];
+        $Criterio_40 = $_POST['Criterio_40'];
+        $Criterio_41 = $_POST['Criterio_41'];
+        $Criterio_42 = $_POST['Criterio_42'];
+        $Criterio_43 = $_POST['Criterio_43'];
+        $Criterio_44 = $_POST['Criterio_44'];
+        $Criterio_45 = $_POST['Criterio_45'];
+        $Criterio_46 = $_POST['Criterio_46'];
+        $Criterio_47 = $_POST['Criterio_47'];
+        $Criterio_48 = $_POST['Criterio_48'];
+        $Criterio_49 = $_POST['Criterio_49'];
+        $Criterio_50 = $_POST['Criterio_50'];
+        $Criterio_51 = $_POST['Criterio_51'];
+        $Criterio_52 = $_POST['Criterio_52'];
+        $Criterio_53 = $_POST['Criterio_53'];
+        $Criterio_54 = $_POST['Criterio_54'];
+        $Criterio_55 = $_POST['Criterio_55'];
+        $Criterio_56 = $_POST['Criterio_56'];
+        $Criterio_57 = $_POST['Criterio_57'];
+        $Criterio_58 = $_POST['Criterio_58'];
+        $Criterio_59 = $_POST['Criterio_59'];
+        $Criterio_60 = $_POST['Criterio_60'];
+        $Criterio_61 = $_POST['Criterio_61'];
+        $Criterio_62 = $_POST['Criterio_62'];
+        $Criterio_63 = $_POST['Criterio_63'];
+        $Criterio_64 = $_POST['Criterio_64'];
+        $Criterio_65 = $_POST['Criterio_65'];
+        $Criterio_66 = $_POST['Criterio_66'];
+        $Criterio_67 = $_POST['Criterio_67'];
+        $Criterio_68 = $_POST['Criterio_68'];
+        $Criterio_69 = $_POST['Criterio_69'];
+        $Criterio_70 = $_POST['Criterio_70'];
+        $Criterio_71 = $_POST['Criterio_71'];
+        $Criterio_72 = $_POST['Criterio_72'];
+        $Criterio_73 = $_POST['Criterio_73'];
+        $Criterio_74 = $_POST['Criterio_74'];
+        $Criterio_75 = $_POST['Criterio_75'];
+        $Criterio_76 = $_POST['Criterio_76'];
+        $Criterio_77 = $_POST['Criterio_77'];
+        $Criterio_78 = $_POST['Criterio_78'];
+        $Criterio_79 = $_POST['Criterio_79'];
+        $Criterio_80 = $_POST['Criterio_80'];
+        $Criterio_81 = $_POST['Criterio_81'];
+        $Criterio_82 = $_POST['Criterio_82'];
+        $Criterio_83 = $_POST['Criterio_83'];
+        $Criterio_84 = $_POST['Criterio_84'];
+        $Criterio_85 = $_POST['Criterio_85'];
+        $Criterio_86 = $_POST['Criterio_86'];
+        $Criterio_87 = $_POST['Criterio_87'];
+        $Criterio_88 = $_POST['Criterio_88'];
+        $Criterio_89 = $_POST['Criterio_89'];
+        $Criterio_90 = $_POST['Criterio_90'];
+        $Criterio_91 = $_POST['Criterio_91'];
+        $Criterio_92 = $_POST['Criterio_92'];
+        $Criterio_93 = $_POST['Criterio_93'];
+        $Criterio_94 = $_POST['Criterio_94'];
+        $Criterio_95 = $_POST['Criterio_95'];
+        $Criterio_96 = $_POST['Criterio_96'];
+        $Criterio_97 = $_POST['Criterio_97'];
+        $Criterio_98 = $_POST['Criterio_98'];
+        $Criterio_99 = $_POST['Criterio_99'];
+        $Criterio_100 = $_POST['Criterio_100'];
+        $Criterio_101 = $_POST['Criterio_101'];
+        $Criterio_102 = $_POST['Criterio_102'];
+        $Criterio_103 = $_POST['Criterio_103'];
+        $Criterio_104 = $_POST['Criterio_104'];
+        $Criterio_105 = $_POST['Criterio_105'];
+        $Criterio_106 = $_POST['Criterio_106'];
+        $Criterio_107 = $_POST['Criterio_107'];
+        $Criterio_108 = $_POST['Criterio_108'];
+        $Criterio_109 = $_POST['Criterio_109'];
+        $Criterio_110 = $_POST['Criterio_110'];
+        $Criterio_111 = $_POST['Criterio_111'];
+        $Criterio_112 = $_POST['Criterio_112'];
+        $Criterio_113 = $_POST['Criterio_113'];
+        $Criterio_114 = $_POST['Criterio_114'];
+        $Criterio_115 = $_POST['Criterio_115'];
+        $Criterio_116 = $_POST['Criterio_116'];
+        $Criterio_117 = $_POST['Criterio_117'];
+        $Criterio_118 = $_POST['Criterio_118'];
+        $Criterio_119 = $_POST['Criterio_119'];
+        $Criterio_120 = $_POST['Criterio_120'];
+        $Criterio_121 = $_POST['Criterio_121'];
+        $Criterio_122 = $_POST['Criterio_122'];
+        $Criterio_123 = $_POST['Criterio_123'];
+        $Criterio_124 = $_POST['Criterio_124'];
+        $Criterio_125 = $_POST['Criterio_125'];
+        $Criterio_126 = $_POST['Criterio_126'];
+        $Criterio_127 = $_POST['Criterio_127'];
+        $Criterio_128 = $_POST['Criterio_128'];
+        $Criterio_129 = $_POST['Criterio_129'];
+        $Criterio_130 = $_POST['Criterio_130'];
+        $Criterio_131 = NULL;
+        $Criterio_132 = NULL;
+        $Criterio_133 = NULL;
+        $Criterio_134 = NULL;
+        $Criterio_135 = NULL;
+        $Criterio_136 = NULL;
+        $Criterio_137 = NULL;
+        $Criterio_138 = NULL;
+        $Criterio_139 = NULL;
+        // 🔹 Técnicos encargados 
+        $Tecnicos = isset($_POST['tecnicoId']) ? $_POST['tecnicoId'] : [];
+        // Imagenes Diagnostico
+        $Baterias = $_FILES['imagenesDiagnosticoBateria'];
+        $Electricos = $_FILES['imagenesDiagnosticoEletrico'];
+        $Tracciones = $_FILES['imagenesDiagnosticoTraccion'];
+        $Frenos = $_FILES['imagenesDiagnosticoFrenos'];
+        $Direcciones = $_FILES['imagenesDiagnosticoDireccion'];
+        $Hidraulicos = $_FILES['imagenesDiagnosticoHidraulico'];
+        $Mastiles = $_FILES['imagenesDiagnosticoMastil'];
+        $Carros = $_FILES['imagenesDiagnosticoCarroPorta'];
+        $Aditamientos = $_FILES['imagenesDiagnosticoAditamientos'];
+        $Horquillas = $_FILES['imagenesDiagnosticoHorquillas'];
+        $Ruedas = $_FILES['imagenesDiagnosticoRuedas'];
+        $Chasis = $_FILES['imagenesDiagnosticoChasis'];
+        $Luces = $_FILES['imagenesDiagnosticoLuces'];
+        $Lubricaciones = $_FILES['imagenesDiagnosticoLubricacion'];
+        $Cargadores = $_FILES['imagenesDiagnosticoCargador'];
+        $Revisiones = $_FILES['imagenesDiagnosticoRevision'];
+        $ID_Usuario = $_SESSION['ID'];
+        $NombreCreo = $_SESSION['Nombre1'];
+        
+        if($ID_Mantenimiento = $MantenimientosController->RegistrarMantenimiento($ID_Usuario, $NombreCreo, $ID_Montacargas,$ID_Area,$ID_Operario,$ID_Centro,$ID_Supervisor,$Correo_Supervisor,$Nombre_Supervisor,$NumeroBateria,$NumeroControlador,$NumeroCargador,$Observaciones,$Longitudh,$Horometro,$HoraInicio,
+                                                          $Criterio_1,$Criterio_2,$Criterio_3,$Criterio_4,$Criterio_5,$Criterio_6,$Criterio_7,$Criterio_8,$Criterio_9,$Criterio_10,
+                                                          $Criterio_11,$Criterio_12,$Criterio_13,$Criterio_14,$Criterio_15,$Criterio_16,$Criterio_17,$Criterio_18,$Criterio_19,$Criterio_20,
+                                                          $Criterio_21,$Criterio_22,$Criterio_23,$Criterio_24,$Criterio_25,$Criterio_26,$Criterio_27,$Criterio_28,$Criterio_29,$Criterio_30,
+                                                          $Criterio_31,$Criterio_32,$Criterio_33,$Criterio_34,$Criterio_35,$Criterio_36,$Criterio_37,$Criterio_38,$Criterio_39,$Criterio_40,
+                                                          $Criterio_41,$Criterio_42,$Criterio_43,$Criterio_44,$Criterio_45,$Criterio_46,$Criterio_47,$Criterio_48,$Criterio_49,$Criterio_50,
+                                                          $Criterio_51,$Criterio_52,$Criterio_53,$Criterio_54,$Criterio_55,$Criterio_56,$Criterio_57,$Criterio_58,$Criterio_59,$Criterio_60,
+                                                          $Criterio_61,$Criterio_62,$Criterio_63,$Criterio_64,$Criterio_65,$Criterio_66,$Criterio_67,$Criterio_68,$Criterio_69,$Criterio_70,
+                                                          $Criterio_71,$Criterio_72,$Criterio_73,$Criterio_74,$Criterio_75,$Criterio_76,$Criterio_77,$Criterio_78,$Criterio_79,$Criterio_80,
+                                                          $Criterio_81,$Criterio_82,$Criterio_83,$Criterio_84,$Criterio_85,$Criterio_86,$Criterio_87,$Criterio_88,$Criterio_89,$Criterio_90,
+                                                          $Criterio_91,$Criterio_92,$Criterio_93,$Criterio_94,$Criterio_95,$Criterio_96,$Criterio_97,$Criterio_98,$Criterio_99,$Criterio_100,
+                                                          $Criterio_101,$Criterio_102,$Criterio_103,$Criterio_104,$Criterio_105,$Criterio_106,$Criterio_107,$Criterio_108,$Criterio_109,$Criterio_110,
+                                                          $Criterio_111,$Criterio_112,$Criterio_113,$Criterio_114,$Criterio_115,$Criterio_116,$Criterio_117,$Criterio_118,$Criterio_119,$Criterio_120,
+                                                          $Criterio_121,$Criterio_122,$Criterio_123,$Criterio_124,$Criterio_125,$Criterio_126,$Criterio_127,$Criterio_128,$Criterio_129,$Criterio_130,
+                                                          $Criterio_131,$Criterio_132,$Criterio_133,$Criterio_134,$Criterio_135,$Criterio_136,$Criterio_137,$Criterio_138,$Criterio_139,
+                                                          $Tecnicos,$Baterias,$Electricos,$Tracciones,$Frenos,$Direcciones,$Hidraulicos,$Mastiles,$Carros,$Aditamientos,$Horquillas,$Ruedas,$Chasis,$Luces,$Lubricaciones,$Cargadores,$Revisiones, $Tipo)){
+            echo "
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+            <script>
+                Swal.fire({
+                    title: 'Mantenimiento Creado!',
+                    text: 'El mantenimiento se ha creado exitosamente.',
+                    icon: 'success',
+                    showCancelButton: true,
+                    confirmButtonText: 'Continuar',
+                    cancelButtonText: 'Cancelar',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'FirmaMantenimiento?ID=' + " . $ID_Mantenimiento . ";
+                    }
+                });
+            </script>";
+        } else {
+            echo "
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+            <script>
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'El mantenimiento no se pudo crear, por favor intente de nuevo.',
+                    icon: 'error',
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            </script>";
+        }
+    }
+    
+}
 ?>
 <style>
     .select-Conforme {
@@ -57,11 +293,11 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                 <img width="50" height="50" src="https://img.icons8.com/pastel-glyph/50/000020/hand-truck--v2.png" alt="hand-truck--v2"/>
                 <div class="ms-3">
                     <p class="mb-2" style="color: #000020;">Preventivos Realizados</p>
-                    <h6 class="mb-0" style="color: #000020;"></h6>
+                    <h6 class="mb-0" style="color: #000020;"><?= $NoMantenimientos['NoMantenimientos'] ?></h6>
                 </div>
             </div>
         </div>
-        <a class="col-sm-6 col-xl-3" data-bs-toggle="modal" data-bs-target="#agregarMantenimiento">
+        <a class="col-sm-6 col-xl-3" data-bs-toggle="modal" data-bs-target="#NumerDocumentoModal">
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <img width="50" height="50" src="https://img.icons8.com/pastel-glyph/100/000020/hand-truck--v1.png" alt="hand-truck--v2" style="transform: scaleX(-1);" />
                 <div class="ms-3">
@@ -110,14 +346,68 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                 <thead>
                     <tr class="text-dark">
                         <th scope="col" class="text-center">N°</th>
-                        <th scope="col" class="text-center">Nombre Ingresa</th>
-                        <th scope="col">Nombre Supervisor</th>
+                        <th scope="col" class="text-center">Serie</th>
+                        <th scope="col" class="text-center">Horometro </th>
+                        <th scope="col" class="text-center">Horometro Actual</th>
+                        <th scope="col" class="text-center">Operario Reporta</th>
+                        <th scope="col" class="text-center">Fecha Realizado</th>
                         <th scope="col" class="text-center">Estado</th>
                         <th scope="col" class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Aquí irían los datos -->
+                    <?php
+                    if ($Mantenimientos) {
+                        foreach ($Mantenimientos as $Mantenimiento) {
+                            $HorometroA = $Mantenimiento['HorometroA']; 
+                            $HorometroM = $Mantenimiento['HorometroM']; 
+                            $diferencia = $HorometroA - $HorometroM;
+                            if ($diferencia >= 250) {
+                                $progressBarClass = 'bg-danger';
+                                $estadoTexto = 'Vencido';
+                            } elseif ($diferencia >= 200 && $diferencia < 250) {
+                                $progressBarClass = 'bg-warning';
+                                $estadoTexto = 'Mantenimiento';
+                            }else{
+                                $progressBarClass = 'bg-success';
+                                $estadoTexto = 'Valido';
+                            }
+
+                    ?>
+                            <tr data-id="<?= htmlspecialchars($Mantenimiento['ID']) ?>">
+                                <td width="100" class="text-center"><?= htmlspecialchars($Mantenimiento['NumeroM']) ?></td>
+                                <td><?= htmlspecialchars($Mantenimiento['SerieM']) ?></td>
+                                <td><?= htmlspecialchars($Mantenimiento['HorometroM']) ?></td>
+                                <td><?= htmlspecialchars($Mantenimiento['HorometroA']) ?></td>
+                                <td><?= htmlspecialchars($Mantenimiento['NombreUsuario']) ?></td>
+                                <td><?= htmlspecialchars($Mantenimiento['Fecha_Realizado']) ?></td>
+                                <td>
+                                    <div class="progress">
+                                        <div id="progressStatus" class="progress-bar <?= $progressBarClass ?>" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                            <?=  $estadoTexto ?>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td width="200" class="text-center">
+                                    <a class="btn btn-sm btn-primary" target="_blank" href="VerMantenimientoP?ID=<?= urlencode(htmlspecialchars($Mantenimiento['ID'])) ?>">
+                                        <img width="20" height="20" src="https://img.icons8.com/material-outlined/24/ffffff/visible--v1.png" alt="Ver" />
+                                    </a>
+                                    <?php if ($Mantenimiento['Estado_Firma_Operario'] != 1) { ?>
+                                        <a class="btn btn-sm btn-warning" target="_blank" href="FirmaOperario?ID=<?= urlencode(htmlspecialchars($Mantenimiento['ID'])) ?>">
+                                            <img width="20" height="20" src="https://img.icons8.com/sf-regular-filled/24/ffffff/autograph.png" alt="autograph"/>
+                                        </a>
+                                    <?php } ?>
+                                    <?php if ( $_SESSION['ID'] == $Mantenimiento['ID_Supervisor'] && $Mantenimiento['Estado_Firma_Supervisor'] != 1) { ?>
+                                        <a class="btn btn-sm btn-dark" target="_blank" href="FirmaSupervisor?ID=<?= urlencode(htmlspecialchars($Mantenimiento['ID'])) ?>">
+                                            <img width="20" height="20" src="https://img.icons8.com/sf-regular-filled/24/ffffff/autograph.png" alt="autograph"/>
+                                        </a>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                    <?php
+                        }
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -128,15 +418,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
 <div class="modal fade" id="NumerDocumentoModal" tabindex="-1" aria-labelledby="NumerDocumentoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-primary">
+            <div class="modal-header bg-primary">                
                 <h5 class="modal-title text-white" id="NumerDocumentoModalLabel">Mantenimiento Preventivo</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
-                <form id="documentForm" method="POST">
+                <form id="documentFormIngreso" method="POST">
                     <div class="mb-3">
-                        <label for="floatingSelect">Sección</label>
-                        <input type="text" class="form-control" name= "Seccion" id="Seccion" placeholder="Sección" required>
                         <label for="CentroTrabajo">Seleccione el centro de trabajo</label>
                         <select class="form-select" name="ID_Centro1" id="ID_Centro1" aria-label="Seleccione centro de trabajo" onchange="cargarMontacargas()" required>
                             <option value="" disabled selected>Centro de Trabajo</option>
@@ -149,12 +437,16 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             ?>
                         </select>
                         <label for="floatingSelect">Seleccione el numeró de montacargas</label>
-                        <select class="form-select" name="ID_Montacargas" id="ID_Montacargas">
+                        <select class="form-select" name="ID_Montacargas" id="ID_Montacargas" required>
                             <option value="" disabled selected>Seleccione un montacargas</option>
                         </select>
                         <label for="floatingSelect">Seleccione operario quien reporta</label>
-                        <select class="form-select" name="ID_Operario" id="ID_Operario">
+                        <select class="form-select" name="ID_Operario" id="ID_Operario" required>
                             <option value="" disabled selected>Seleccione operario</option>
+                        </select>
+                        <label for="floatingSelect">Seleccione Sección o Area de trabajo</label>
+                        <select class="form-select" name="ID_Area" id="ID_Area" required>
+                            <option value="" disabled selected>Seleccione Seccion</option>
                         </select>
                         <input type="hidden" name="Tipo" value="DocumentoPreventivo">
                     </div>
@@ -174,37 +466,43 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="documentForm" method="POST" enctype="multipart/form-data">
+                <form id="documentFormMantenimiento" method="POST" enctype="multipart/form-data">
                     <div class="row">
                         <!-- Informacion Montacaragas -->
                         <div class="col-md-4">
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="numeroMontacargas">Montacargas</label>
-                                    <input type="text" class="form-control" name="numeroMontacargas" id="numeroMontacargas" placeholder="22" readonly>
+                                    <input type="text" class="form-control" name="numeroMontacargas" id="numeroMontacargas"  readonly>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="nombreSección">Sección</label>
-                                    <input type="text" class="form-control" name="nombreSección" id="nombreSección" placeholder="Dragueo" readonly>
+                                    <input type="text" class="form-control" name="nombreSección" id="nombreSección"  readonly>
                                 </div>
                                 <div class="col-md-12">
                                     <label for="numeroSerie">Serie</label>
-                                    <input type="text" class="form-control" name="numeroSerie" id="numeroSerie" placeholder="<?= htmlspecialchars($_SESSION['NombreCompleto']) ?>" readonly>
+                                    <input type="text" class="form-control" name="numeroSerie" id="numeroSerie" readonly>
                                     <label for="numeroModelo">Modelo</label>
-                                    <input type="text" class="form-control" name="numeroModelo" id="numeroModelo" placeholder="<?= htmlspecialchars($_SESSION['NombreCompleto']) ?>" readonly>
+                                    <input type="text" class="form-control" name="numeroModelo" id="numeroModelo" readonly>
                                     <label for="nombreCentro">Centro de Trabajo</label>
-                                    <input type="text" class="form-control" name="nombreCentro" id="nombreCentro" placeholder="<?= htmlspecialchars($_SESSION['Centro']) ?>" readonly>
+                                    <input type="text" class="form-control" name="nombreCentro" id="nombreCentro" readonly>
                                     <label for="nombreOperario">Operario</label>
-                                    <input type="text" class="form-control" name="nombreOperario" id="nombreOperario" placeholder="<?= htmlspecialchars($_SESSION['NombreCompleto']) ?>" readonly>
+                                    <input type="text" class="form-control" name="nombreOperario" id="nombreOperario" readonly>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label for="Voltaje">Voltaje</label>
-                                        <input type="text" class="form-control" name="Voltaje" id="Voltaje" placeholder="36 V" readonly>
+                                        <input type="text" class="form-control" name="Voltaje" id="Voltaje" readonly>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="Horometro">Horometro</label>
-                                        <input type="text" class="form-control" name="Horometro" id="Horometro" placeholder="18000" readonly>
+                                        <input type="text" class="form-control" name="Horometro" id="Horometro" >
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="HoraIncio">Hora Inicio</label>
+                                        <input type="time" class="form-control" name="HoraInicio" id="HoraInicio" value="<?= date('H:i', strtotime($horaFormateada)) ?>">
                                     </div>
                                 </div>
                                 <!-- Campo de técnicos con botón -->
@@ -219,10 +517,27 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                                     <!-- Lista de técnicos adicionales -->
                                     <div id="listaTecnicos"></div>
                                 </div>
+                                <div class="col-md-12">
+                                    <label for="Autoriza">Autoriza</label>
+                                    <select class="form-select me-2" name="Autoriza" id="Autoriza" onchange="mostrarSupervisor()">
+                                        <option value=""></option> 
+                                        <?php
+                                            if ($DataSupervisores) {
+                                                foreach ($DataSupervisores as $Supervisor) {
+                                        ?>
+                                        <option value="<?= htmlspecialchars($Supervisor['ID'] . '|' . $Supervisor['Correo']) ?>">
+                                            <?= htmlspecialchars($Supervisor['NombreCompleto']) ?>
+                                        </option>
+                                        <?php
+                                                }
+                                            }                                   
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <!-- Formulario -->
-                        <div class="col-md-8">
+                        <div class="col-md-8">                            
                             <p class="mb-2" style="color: #000020;"> Seleccione en el campo de condición alguna de las siguientes convenciones: </p>
                                 <div>
                                     <span style="display:inline-block; background:#d4edda; color:#155724; padding:3px 5px; border-radius:5px; margin:2px;">
@@ -408,6 +723,166 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="ID_MecanicoPrincipal" value="<?= $_SESSION['ID'] ?>">
+                    <input type="hidden" name="ID_Montacargas1" id="hiddenIDMontacargas">
+                    <input type="hidden" name="ID_Area1" id="hiddenIDArea">
+                    <input type="hidden" name="ID_Operario1" id="hiddenIDOperario">
+                    <input type="hidden" name="ID_Centro2" id="hiddenIDCentro">
+                    <input type="hidden" name="IDSupervisor" id="formIDSupervisor">
+                    <input type="hidden" name="CorreoSupervisor" id="formCorreoSupervisor">
+                    <input type="hidden" name="NombreSupervisor" id="formNombreSupervisor">
+                    <input type="hidden" name="NumeroBateria" id="hiddenNumeroBateria">
+                    <input type="hidden" name="NumeroControlador" id="hiddenNumeroControlador">
+                    <input type="hidden" name="NumeroCargador" id="hiddenNumeroCargador">
+                    <input type="hidden" name="diagnostico" id="hiddendiagnostico">
+                    <input type="hidden" name="LongitudH" id="hiddenLongitudH">
+                    <input type="hidden" name="Criterio_1" id="hiddenCriterio_1">
+                    <input type="hidden" name="Criterio_2" id="hiddenCriterio_2">
+                    <input type="hidden" name="Criterio_3" id="hiddenCriterio_3">
+                    <input type="hidden" name="Criterio_4" id="hiddenCriterio_4">
+                    <input type="hidden" name="Criterio_5" id="hiddenCriterio_5">
+                    <input type="hidden" name="Criterio_6" id="hiddenCriterio_6">
+                    <input type="hidden" name="Criterio_7" id="hiddenCriterio_7">
+                    <input type="hidden" name="Criterio_8" id="hiddenCriterio_8">
+                    <input type="hidden" name="Criterio_9" id="hiddenCriterio_9">
+                    <input type="hidden" name="Criterio_10" id="hiddenCriterio_10">
+                    <input type="hidden" name="Criterio_11" id="hiddenCriterio_11">
+                    <input type="hidden" name="Criterio_12" id="hiddenCriterio_12">
+                    <input type="hidden" name="Criterio_13" id="hiddenCriterio_13">
+                    <input type="hidden" name="Criterio_14" id="hiddenCriterio_14">
+                    <input type="hidden" name="Criterio_15" id="hiddenCriterio_15">
+                    <input type="hidden" name="Criterio_16" id="hiddenCriterio_16">
+                    <input type="hidden" name="Criterio_17" id="hiddenCriterio_17">
+                    <input type="hidden" name="Criterio_18" id="hiddenCriterio_18">
+                    <input type="hidden" name="Criterio_19" id="hiddenCriterio_19">
+                    <input type="hidden" name="Criterio_20" id="hiddenCriterio_20">
+                    <input type="hidden" name="Criterio_21" id="hiddenCriterio_21">
+                    <input type="hidden" name="Criterio_22" id="hiddenCriterio_22">
+                    <input type="hidden" name="Criterio_23" id="hiddenCriterio_23">
+                    <input type="hidden" name="Criterio_24" id="hiddenCriterio_24">
+                    <input type="hidden" name="Criterio_25" id="hiddenCriterio_25">
+                    <input type="hidden" name="Criterio_26" id="hiddenCriterio_26">
+                    <input type="hidden" name="Criterio_27" id="hiddenCriterio_27">
+                    <input type="hidden" name="Criterio_28" id="hiddenCriterio_28">
+                    <input type="hidden" name="Criterio_29" id="hiddenCriterio_29">
+                    <input type="hidden" name="Criterio_30" id="hiddenCriterio_30">
+                    <input type="hidden" name="Criterio_31" id="hiddenCriterio_31">
+                    <input type="hidden" name="Criterio_32" id="hiddenCriterio_32">
+                    <input type="hidden" name="Criterio_33" id="hiddenCriterio_33">
+                    <input type="hidden" name="Criterio_34" id="hiddenCriterio_34">
+                    <input type="hidden" name="Criterio_35" id="hiddenCriterio_35">
+                    <input type="hidden" name="Criterio_36" id="hiddenCriterio_36">
+                    <input type="hidden" name="Criterio_37" id="hiddenCriterio_37">
+                    <input type="hidden" name="Criterio_38" id="hiddenCriterio_38">
+                    <input type="hidden" name="Criterio_39" id="hiddenCriterio_39">
+                    <input type="hidden" name="Criterio_40" id="hiddenCriterio_40">
+                    <input type="hidden" name="Criterio_41" id="hiddenCriterio_41">
+                    <input type="hidden" name="Criterio_42" id="hiddenCriterio_42">
+                    <input type="hidden" name="Criterio_43" id="hiddenCriterio_43">
+                    <input type="hidden" name="Criterio_44" id="hiddenCriterio_44">
+                    <input type="hidden" name="Criterio_45" id="hiddenCriterio_45">
+                    <input type="hidden" name="Criterio_46" id="hiddenCriterio_46">
+                    <input type="hidden" name="Criterio_47" id="hiddenCriterio_47">
+                    <input type="hidden" name="Criterio_48" id="hiddenCriterio_48">
+                    <input type="hidden" name="Criterio_49" id="hiddenCriterio_49">
+                    <input type="hidden" name="Criterio_50" id="hiddenCriterio_50">
+                    <input type="hidden" name="Criterio_51" id="hiddenCriterio_51">
+                    <input type="hidden" name="Criterio_52" id="hiddenCriterio_52">
+                    <input type="hidden" name="Criterio_53" id="hiddenCriterio_53">
+                    <input type="hidden" name="Criterio_54" id="hiddenCriterio_54">
+                    <input type="hidden" name="Criterio_55" id="hiddenCriterio_55">
+                    <input type="hidden" name="Criterio_56" id="hiddenCriterio_56">
+                    <input type="hidden" name="Criterio_57" id="hiddenCriterio_57">
+                    <input type="hidden" name="Criterio_58" id="hiddenCriterio_58">
+                    <input type="hidden" name="Criterio_59" id="hiddenCriterio_59">
+                    <input type="hidden" name="Criterio_60" id="hiddenCriterio_60">
+                    <input type="hidden" name="Criterio_61" id="hiddenCriterio_61">
+                    <input type="hidden" name="Criterio_62" id="hiddenCriterio_62">
+                    <input type="hidden" name="Criterio_63" id="hiddenCriterio_63">
+                    <input type="hidden" name="Criterio_64" id="hiddenCriterio_64">
+                    <input type="hidden" name="Criterio_65" id="hiddenCriterio_65">
+                    <input type="hidden" name="Criterio_66" id="hiddenCriterio_66">
+                    <input type="hidden" name="Criterio_67" id="hiddenCriterio_67">
+                    <input type="hidden" name="Criterio_68" id="hiddenCriterio_68">
+                    <input type="hidden" name="Criterio_69" id="hiddenCriterio_69">
+                    <input type="hidden" name="Criterio_70" id="hiddenCriterio_70">
+                    <input type="hidden" name="Criterio_71" id="hiddenCriterio_71">
+                    <input type="hidden" name="Criterio_72" id="hiddenCriterio_72">
+                    <input type="hidden" name="Criterio_73" id="hiddenCriterio_73">
+                    <input type="hidden" name="Criterio_74" id="hiddenCriterio_74">
+                    <input type="hidden" name="Criterio_75" id="hiddenCriterio_75">
+                    <input type="hidden" name="Criterio_76" id="hiddenCriterio_76">
+                    <input type="hidden" name="Criterio_77" id="hiddenCriterio_77">
+                    <input type="hidden" name="Criterio_78" id="hiddenCriterio_78">
+                    <input type="hidden" name="Criterio_79" id="hiddenCriterio_79">
+                    <input type="hidden" name="Criterio_80" id="hiddenCriterio_80">
+                    <input type="hidden" name="Criterio_81" id="hiddenCriterio_81">
+                    <input type="hidden" name="Criterio_82" id="hiddenCriterio_82">
+                    <input type="hidden" name="Criterio_83" id="hiddenCriterio_83">
+                    <input type="hidden" name="Criterio_84" id="hiddenCriterio_84">
+                    <input type="hidden" name="Criterio_85" id="hiddenCriterio_85">
+                    <input type="hidden" name="Criterio_86" id="hiddenCriterio_86">
+                    <input type="hidden" name="Criterio_87" id="hiddenCriterio_87">
+                    <input type="hidden" name="Criterio_88" id="hiddenCriterio_88">
+                    <input type="hidden" name="Criterio_89" id="hiddenCriterio_89">
+                    <input type="hidden" name="Criterio_90" id="hiddenCriterio_90">
+                    <input type="hidden" name="Criterio_91" id="hiddenCriterio_91">
+                    <input type="hidden" name="Criterio_92" id="hiddenCriterio_92">
+                    <input type="hidden" name="Criterio_93" id="hiddenCriterio_93">
+                    <input type="hidden" name="Criterio_94" id="hiddenCriterio_94">
+                    <input type="hidden" name="Criterio_95" id="hiddenCriterio_95">
+                    <input type="hidden" name="Criterio_96" id="hiddenCriterio_96">
+                    <input type="hidden" name="Criterio_97" id="hiddenCriterio_97">
+                    <input type="hidden" name="Criterio_98" id="hiddenCriterio_98">
+                    <input type="hidden" name="Criterio_99" id="hiddenCriterio_99">
+                    <input type="hidden" name="Criterio_100" id="hiddenCriterio_100">
+                    <input type="hidden" name="Criterio_101" id="hiddenCriterio_101">
+                    <input type="hidden" name="Criterio_102" id="hiddenCriterio_102">
+                    <input type="hidden" name="Criterio_103" id="hiddenCriterio_103">
+                    <input type="hidden" name="Criterio_104" id="hiddenCriterio_104">
+                    <input type="hidden" name="Criterio_105" id="hiddenCriterio_105">
+                    <input type="hidden" name="Criterio_106" id="hiddenCriterio_106">
+                    <input type="hidden" name="Criterio_107" id="hiddenCriterio_107">
+                    <input type="hidden" name="Criterio_108" id="hiddenCriterio_108">
+                    <input type="hidden" name="Criterio_109" id="hiddenCriterio_109">
+                    <input type="hidden" name="Criterio_110" id="hiddenCriterio_110">
+                    <input type="hidden" name="Criterio_111" id="hiddenCriterio_111">
+                    <input type="hidden" name="Criterio_112" id="hiddenCriterio_112">
+                    <input type="hidden" name="Criterio_113" id="hiddenCriterio_113">
+                    <input type="hidden" name="Criterio_114" id="hiddenCriterio_114">
+                    <input type="hidden" name="Criterio_115" id="hiddenCriterio_115">
+                    <input type="hidden" name="Criterio_116" id="hiddenCriterio_116">
+                    <input type="hidden" name="Criterio_117" id="hiddenCriterio_117">
+                    <input type="hidden" name="Criterio_118" id="hiddenCriterio_118">
+                    <input type="hidden" name="Criterio_119" id="hiddenCriterio_119">
+                    <input type="hidden" name="Criterio_120" id="hiddenCriterio_120">
+                    <input type="hidden" name="Criterio_121" id="hiddenCriterio_121">
+                    <input type="hidden" name="Criterio_122" id="hiddenCriterio_122">
+                    <input type="hidden" name="Criterio_123" id="hiddenCriterio_123">
+                    <input type="hidden" name="Criterio_124" id="hiddenCriterio_124">
+                    <input type="hidden" name="Criterio_125" id="hiddenCriterio_125">
+                    <input type="hidden" name="Criterio_126" id="hiddenCriterio_126">
+                    <input type="hidden" name="Criterio_127" id="hiddenCriterio_127">
+                    <input type="hidden" name="Criterio_128" id="hiddenCriterio_128">
+                    <input type="hidden" name="Criterio_129" id="hiddenCriterio_129">
+                    <input type="hidden" name="Criterio_130" id="hiddenCriterio_130">
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoBateria" name="imagenesDiagnosticoBateria[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoEletrico" name="imagenesDiagnosticoEletrico[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoTraccion" name="imagenesDiagnosticoTraccion[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoFrenos" name="imagenesDiagnosticoFrenos[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoDireccion" name="imagenesDiagnosticoDireccion[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoHidraulico" name="imagenesDiagnosticoHidraulico[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoMastil" name="imagenesDiagnosticoMastil[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoCarroPorta" name="imagenesDiagnosticoCarroPorta[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoAditamientos" name="imagenesDiagnosticoAditamientos[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoHorquillas" name="imagenesDiagnosticoHorquillas[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoRuedas" name="imagenesDiagnosticoRuedas[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoChasis" name="imagenesDiagnosticoChasis[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoLuces" name="imagenesDiagnosticoLuces[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoLubricacion" name="imagenesDiagnosticoLubricacion[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoCargador" name="imagenesDiagnosticoCargador[]" accept="image/*" multiple>
+                    <input class="form-control d-none" type="file" id="imagenesDiagnosticoRevision" name="imagenesDiagnosticoRevision[]" accept="image/*" multiple>                   
+                    <input type="hidden" name="Tipo" value="MantenimietoPreventivo">
                     <button type="submit" class="btn btn-primary mt-3">Agregar</button>
                 </form>
             </div>
@@ -449,12 +924,12 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                 <!-- Reutiliza este bloque para cada campo -->
                 <div class="mb-3">
                     <label for="NumeroBateria" class="form-label">N° de Batería</label>
-                    <input type="text" class="form-control" name="NumeroBateria" id="NumeroBateria" placeholder="# de batería" >
+                    <input type="text" class="form-control" name="NumeroBateria" id="NumeroBateria" placeholder="# de batería" required>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCables" class="form-label">Estado de cables</label>
+                    <label for="Criterio_1" class="form-label">Estado de cables</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select me-2" id="estadoCables" name="Criterio_1" required>
+                        <select class="form-select me-2" id="Criterio_1" name="Criterio_1" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -463,13 +938,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCables"></span>
+                        <span class="estado-icon" id="icon-Criterio_1"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoElectrolito" class="form-label">Nivel de electrolito</label>
+                    <label for="Criterio_2" class="form-label">Nivel de electrolito</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select me-2" id="estadoElectrolito" name="Criterio_2" required>
+                        <select class="form-select me-2" id="Criterio_2" name="Criterio_2" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -478,13 +953,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoElectrolito"></span>
+                        <span class="estado-icon" id="icon-Criterio_2"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoConector" class="form-label">Conector Anderson</label>
+                    <label for="Criterio_3" class="form-label">Conector Anderson</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select me-2" id="estadoConector" name="Criterio_3" required>
+                        <select class="form-select me-2" id="Criterio_3" name="Criterio_3" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -493,13 +968,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoConector"></span>
+                        <span class="estado-icon" id="icon-Criterio_3"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoComportartimiento" class="form-label">Comportartimiento de la batería</label>
+                    <label for="Criterio_4" class="form-label">Comportartimiento de la batería</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select me-2" id="estadoComportartimiento" name="Criterio_4" required>
+                        <select class="form-select me-2" id="Criterio_4" name="Criterio_4" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -508,13 +983,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoComportartimiento"></span>
+                        <span class="estado-icon" id="icon-Criterio_4"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoBateria" class="form-label">Estado de batería</label>
+                    <label for="Criterio_5" class="form-label">Estado de batería</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select me-2" id="estadoBateria" name="Criterio_5" required>
+                        <select class="form-select me-2" id="Criterio_5" name="Criterio_5" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -523,13 +998,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoBateria"></span>
+                        <span class="estado-icon" id="icon-Criterio_5"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoPuentes" class="form-label">Estado de los puentes</label>
+                    <label for="Criterio_6" class="form-label">Estado de los puentes</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select me-2" id="estadoPuentes" name="Criterio_6" required>
+                        <select class="form-select me-2" id="Criterio_6" name="Criterio_6" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -538,16 +1013,15 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoPuentes"></span>
+                        <span class="estado-icon" id="icon-Criterio_6"></span>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Subir Imágenes del Diagnóstico</label>
                     <div class="d-flex gap-2">
-                        <button type="button" class="btn btn-outline-primary" id="btnTomarFoto">Tomar Foto</button>
-                        <button type="button" class="btn btn-outline-secondary" id="btnCargarImagen">Cargar Imágenes</button>
+                        <button type="button" class="btn btn-outline-primary" id="btnTomarFoto1">Tomar Foto</button>
+                        <button type="button" class="btn btn-outline-secondary" id="btnCargarImagen1">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoBateria" name="imagenesDiagnosticoBateria[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarBateria" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -559,8 +1033,8 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
         const selects = document.querySelectorAll('#ModalBateria select.form-select');
         const fileInput = document.getElementById('imagenesDiagnosticoBateria');
         const boton = document.getElementById('btnGuardarBateria');
-        const btnTomarFoto = document.getElementById('btnTomarFoto');
-        const btnCargarImagen = document.getElementById('btnCargarImagen');
+        const btnTomarFoto = document.getElementById('btnTomarFoto1');
+        const btnCargarImagen = document.getElementById('btnCargarImagen1');
 
     function actualizarEstado(select) {
         const icon = document.getElementById(`icon-${select.id}`);
@@ -630,7 +1104,41 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                 valido = false;
             }
 
+            // ✅ Validar que el número de batería no esté vacío
+            const numeroBateria = document.getElementById('NumeroBateria').value.trim();
+            if (numeroBateria === "") {
+                alert("Debe ingresar el número de batería.");
+                document.getElementById('NumeroBateria').focus();
+                valido = false;
+            }
+
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenNumeroBateria').value = numeroBateria;
+            document.getElementById('hiddenCriterio_1').value = document.getElementById('Criterio_1').value;
+            document.getElementById('hiddenCriterio_2').value = document.getElementById('Criterio_2').value;
+            document.getElementById('hiddenCriterio_3').value = document.getElementById('Criterio_3').value;
+            document.getElementById('hiddenCriterio_4').value = document.getElementById('Criterio_4').value;
+            document.getElementById('hiddenCriterio_5').value = document.getElementById('Criterio_5').value;
+            document.getElementById('hiddenCriterio_6').value = document.getElementById('Criterio_6').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("N° de Batería:", document.getElementById('hiddenNumeroBateria').value);
+            console.log("Criterio_1:", document.getElementById('hiddenCriterio_1').value);
+            console.log("Criterio_2:", document.getElementById('hiddenCriterio_2').value);
+            console.log("Criterio_3:", document.getElementById('hiddenCriterio_3').value);
+            console.log("Criterio_4:", document.getElementById('hiddenCriterio_4').value);
+            console.log("Criterio_5:", document.getElementById('hiddenCriterio_5').value);
+            console.log("Criterio_6:", document.getElementById('hiddenCriterio_6').value);
+
+            // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInput.files.length; i++) {
+                archivos.push(fileInput.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnBateriaCard').querySelector('div');
@@ -658,9 +1166,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoPotencia" class="form-label">Cables de potencia</label>
+                    <label for="Criterio_7" class="form-label">Cables de potencia</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoPotencia" name="Criterio_7" required>
+                        <select class="form-select" id="Criterio_7" name="Criterio_7" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -669,13 +1177,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoPotencia"></span>
+                        <span class="estado-icon" id="icon-Criterio_7"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoDesconector" class="form-label">Desconector de emergencia</label>
+                    <label for="Criterio_8" class="form-label">Desconector de emergencia</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoDesconector" name="Criterio_8" required>
+                        <select class="form-select" id="Criterio_8" name="Criterio_8" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -684,13 +1192,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoDesconector"></span>
+                        <span class="estado-icon" id="icon-Criterio_8"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoControl" class="form-label">Cables de control</label>
+                    <label for="Criterio_9" class="form-label">Cables de control</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoControl" name="Criterio_9" required>
+                        <select class="form-select" id="Criterio_9" name="Criterio_9" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -699,13 +1207,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoControl"></span>
+                        <span class="estado-icon" id="icon-Criterio_9"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoConectores" class="form-label">Conectores</label>
+                    <label for="Criterio_10" class="form-label">Conectores</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoConectores" name="Criterio_10" required>
+                        <select class="form-select" id="Criterio_10" name="Criterio_10" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -714,13 +1222,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoConectores"></span>
+                        <span class="estado-icon" id="icon-Criterio_10"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoFusibles" class="form-label">Fusibles</label>
+                    <label for="Criterio_11" class="form-label">Fusibles</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoFusibles" name="Criterio_11" required>
+                        <select class="form-select" id="Criterio_11" name="Criterio_11" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -729,17 +1237,17 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoFusibles"></span>
+                        <span class="estado-icon" id="icon-Criterio_11"></span>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="NumeroControlador" class="form-label">N° de Controlador</label>
-                    <input type="text" class="form-control" name="NumeroControlador" id="NumeroControlador" placeholder="# de Controlador" >
+                    <input type="text" class="form-control" name="NumeroControlador" id="NumeroControlador" placeholder="# de Controlador" required>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoControlador" class="form-label">Controlador</label>
+                    <label for="Criterio_12" class="form-label">Controlador</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoControlador" name="Criterio_12" required>
+                        <select class="form-select" id="Criterio_12" name="Criterio_12" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -748,13 +1256,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoControlador"></span>
+                        <span class="estado-icon" id="icon-Criterio_12"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoDisplay" class="form-label">Display</label>
+                    <label for="Criterio_13" class="form-label">Displey</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoDisplay" name="Criterio_13" required>
+                        <select class="form-select" id="Criterio_13" name="Criterio_13" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -763,13 +1271,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoDisplay"></span>
+                        <span class="estado-icon" id="icon-Criterio_13"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoContactor" class="form-label">Contactor linea</label>
+                    <label for="Criterio_14" class="form-label">Contactor linea</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoContactor" name="Criterio_14" required>
+                        <select class="form-select" id="Criterio_14" name="Criterio_14" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -778,13 +1286,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoContactor"></span>
+                        <span class="estado-icon" id="icon-Criterio_14"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoDireccion" class="form-label">Contactor direccion</label>
+                    <label for="Criterio_15" class="form-label">Contactor direccion</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoDireccion" name="Criterio_15" required>
+                        <select class="form-select" id="Criterio_15" name="Criterio_15" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -793,13 +1301,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoDireccion"></span>
+                        <span class="estado-icon" id="icon-Criterio_15"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoElevacion" class="form-label">Contactor elevacion</label>
+                    <label for="Criterio_16" class="form-label">Contactor elevacion</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoElevacion" name="Criterio_16" required>
+                        <select class="form-select" id="Criterio_16" name="Criterio_16" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -808,13 +1316,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoElevacion"></span>
+                        <span class="estado-icon" id="icon-Criterio_16"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoMarcha" class="form-label">Contactor marcha</label>
+                    <label for="Criterio_17" class="form-label">Contactor marcha</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoMarcha" name="Criterio_17" required>
+                        <select class="form-select" id="Criterio_17" name="Criterio_17" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -823,13 +1331,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoMarcha"></span>
+                        <span class="estado-icon" id="icon-Criterio_17"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoMicros" class="form-label">Micros</label>
+                    <label for="Criterio_18" class="form-label">Micros</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoMicros" name="Criterio_18" required>
+                        <select class="form-select" id="Criterio_18" name="Criterio_18" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -838,13 +1346,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoMicros"></span>
+                        <span class="estado-icon" id="icon-Criterio_18"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoSwitch" class="form-label">Switch de ignicion</label>
+                    <label for="Criterio_19" class="form-label">Switch de ignicion</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoSwitch" name="Criterio_19" required>
+                        <select class="form-select" id="Criterio_19" name="Criterio_19" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -853,13 +1361,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoSwitch"></span>
+                        <span class="estado-icon" id="icon-Criterio_19"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoPotenciometro" class="form-label">Potenciometro de aceleracion</label>
+                    <label for="Criterio_20" class="form-label">Potenciómetro de aceleración</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoPotenciometro" name="Criterio_20" required>
+                        <select class="form-select" id="Criterio_20" name="Criterio_20" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -868,7 +1376,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoPotenciometro"></span>
+                        <span class="estado-icon" id="icon-Criterio_20"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -877,7 +1385,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoElectrico">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenElectrico">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoEletrico" name="imagenesDiagnosticoEletrico[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarElectrico" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -931,6 +1438,20 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectElectrico.addEventListener('change', () => actualizarEstadoElectrico(selectElectrico));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoElectrico.addEventListener('click', () => {
+            fileInputElectrico.removeAttribute('multiple');
+            fileInputElectrico.setAttribute('capture', 'environment');
+            fileInputElectrico.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenElectrico.addEventListener('click', () => {
+            fileInputElectrico.setAttribute('multiple', 'true');
+            fileInputElectrico.removeAttribute('capture');
+            fileInputElectrico.click();
+        });
+
         botonElectrico.addEventListener('click', () => {
             let valido = true;
 
@@ -945,8 +1466,58 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                 alert('Debe subir al menos una imagen del diagnóstico.');
                 valido = false;
             }
+            
+            // ✅ Validar que el número de controlador no esté vacío
+            const numeroControlador = document.getElementById('NumeroControlador').value.trim();
+            if (numeroControlador === "") {
+                alert("Debe ingresar el número de controlador.");
+                document.getElementById('NumeroControlador').focus();
+                valido = false;
+            }
 
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenNumeroControlador').value = numeroControlador;
+            document.getElementById('hiddenCriterio_7').value = document.getElementById('Criterio_7').value;
+            document.getElementById('hiddenCriterio_8').value = document.getElementById('Criterio_8').value;
+            document.getElementById('hiddenCriterio_9').value = document.getElementById('Criterio_9').value;
+            document.getElementById('hiddenCriterio_10').value = document.getElementById('Criterio_10').value;
+            document.getElementById('hiddenCriterio_11').value = document.getElementById('Criterio_11').value;
+            document.getElementById('hiddenCriterio_12').value = document.getElementById('Criterio_12').value;
+            document.getElementById('hiddenCriterio_13').value = document.getElementById('Criterio_13').value;
+            document.getElementById('hiddenCriterio_14').value = document.getElementById('Criterio_14').value;
+            document.getElementById('hiddenCriterio_15').value = document.getElementById('Criterio_15').value;
+            document.getElementById('hiddenCriterio_16').value = document.getElementById('Criterio_16').value;
+            document.getElementById('hiddenCriterio_17').value = document.getElementById('Criterio_17').value;
+            document.getElementById('hiddenCriterio_18').value = document.getElementById('Criterio_18').value;
+            document.getElementById('hiddenCriterio_19').value = document.getElementById('Criterio_19').value;
+            document.getElementById('hiddenCriterio_20').value = document.getElementById('Criterio_20').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("NumeroControlador:", document.getElementById('hiddenNumeroControlador').value);
+            console.log("Criterio_7:", document.getElementById('hiddenCriterio_7').value);
+            console.log("Criterio_8:", document.getElementById('hiddenCriterio_8').value);
+            console.log("Criterio_9:", document.getElementById('hiddenCriterio_9').value);
+            console.log("Criterio_10:", document.getElementById('hiddenCriterio_10').value);
+            console.log("Criterio_11:", document.getElementById('hiddenCriterio_11').value);
+            console.log("Criterio_12:", document.getElementById('hiddenCriterio_12').value);
+            console.log("Criterio_13:", document.getElementById('hiddenCriterio_13').value);
+            console.log("Criterio_14:", document.getElementById('hiddenCriterio_14').value);
+            console.log("Criterio_15:", document.getElementById('hiddenCriterio_15').value);
+            console.log("Criterio_16:", document.getElementById('hiddenCriterio_16').value);
+            console.log("Criterio_17:", document.getElementById('hiddenCriterio_17').value);
+            console.log("Criterio_18:", document.getElementById('hiddenCriterio_18').value);
+            console.log("Criterio_19:", document.getElementById('hiddenCriterio_19').value);
+            console.log("Criterio_20:", document.getElementById('hiddenCriterio_20').value);
+
+            // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInputElectrico.files.length; i++) {
+                archivos.push(fileInputElectrico.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnElectricoCard').querySelector('div');
@@ -974,9 +1545,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoMotor" class="form-label">Motor de tracción</label>
+                    <label for="Criterio_21" class="form-label">Motor de tracción</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoMotor" name="estadoMotor" required>
+                        <select class="form-select" id="Criterio_21" name="Criterio_21" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -985,13 +1556,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoMotor"></span>
+                        <span class="estado-icon" id="icon-Criterio_21"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoEscobillas" class="form-label">Escobillas</label>
+                    <label for="Criterio_22" class="form-label">Escobillas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoEscobillas" name="estadoEscobillas" required>
+                        <select class="form-select" id="Criterio_22" name="Criterio_22" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1000,13 +1571,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoEscobillas"></span>
+                        <span class="estado-icon" id="icon-Criterio_22"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoMicros" class="form-label">Micros de marchas</label>
+                    <label for="Criterio_23" class="form-label">Micros de marchas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoMicros" name="estadoMicros" required>
+                        <select class="form-select" id="Criterio_23" name="Criterio_23" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1015,13 +1586,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoMicros"></span>
+                        <span class="estado-icon" id="icon-Criterio_23"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoTransmision" class="form-label">Transmisión</label>
+                    <label for="Criterio_24" class="form-label">Transmisión</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoTransmision" name="estadoTransmision" required>
+                        <select class="form-select" id="Criterio_24" name="Criterio_24" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1030,13 +1601,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoTransmision"></span>
+                        <span class="estado-icon" id="icon-Criterio_24"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoValvulina" class="form-label">Nivel de valvulina</label>
+                    <label for="Criterio_25" class="form-label">Nivel de valvulina</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoValvulina" name="estadoValvulina" required>
+                        <select class="form-select" id="Criterio_25" name="Criterio_25" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1045,13 +1616,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoValvulina"></span>
+                        <span class="estado-icon" id="icon-Criterio_25"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoTornilleria" class="form-label">Tornilleria</label>
+                    <label for="Criterio_26" class="form-label">Tornilleria</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoTornilleria" name="estadoTornilleria" required>
+                        <select class="form-select" id="Criterio_26" name="Criterio_26" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1060,7 +1631,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoTornilleria"></span>
+                        <span class="estado-icon" id="icon-Criterio_26"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -1069,7 +1640,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoTraccion">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenTraccion">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoTraccion" name="imagenesDiagnosticoTraccion[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarTraccion" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -1123,10 +1693,24 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectTraccion.addEventListener('change', () => actualizarEstadoTraccion(selectTraccion));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoTraccion.addEventListener('click', () => {
+            fileInputTraccion.removeAttribute('multiple');
+            fileInputTraccion.setAttribute('capture', 'environment');
+            fileInputTraccion.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenTraccion.addEventListener('click', () => {
+            fileInputTraccion.setAttribute('multiple', 'true');
+            fileInputTraccion.removeAttribute('capture');
+            fileInputTraccion.click();
+        });
+
         botonTraccion.addEventListener('click', () => {
             let valido = true;
 
-            selectTraccion.forEach(selectTraccion => {
+            selectsTraccion.forEach(selectTraccion => {
                 if (!selectTraccion.value) {
                     actualizarEstadoTraccion(selectTraccion);
                     valido = false;
@@ -1139,6 +1723,30 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             }
 
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenCriterio_21').value = document.getElementById('Criterio_21').value;
+            document.getElementById('hiddenCriterio_22').value = document.getElementById('Criterio_22').value;
+            document.getElementById('hiddenCriterio_23').value = document.getElementById('Criterio_23').value;
+            document.getElementById('hiddenCriterio_24').value = document.getElementById('Criterio_24').value;
+            document.getElementById('hiddenCriterio_25').value = document.getElementById('Criterio_25').value;
+            document.getElementById('hiddenCriterio_26').value = document.getElementById('Criterio_26').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_21:", document.getElementById('hiddenCriterio_21').value);
+            console.log("Criterio_22:", document.getElementById('hiddenCriterio_22').value);
+            console.log("Criterio_23:", document.getElementById('hiddenCriterio_23').value);
+            console.log("Criterio_24:", document.getElementById('hiddenCriterio_24').value);
+            console.log("Criterio_25:", document.getElementById('hiddenCriterio_25').value);
+            console.log("Criterio_26:", document.getElementById('hiddenCriterio_26').value);
+
+            // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInputTraccion.files.length; i++) {
+                archivos.push(fileInputTraccion.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnTraccionCard').querySelector('div');
@@ -1166,9 +1774,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoLiquido" class="form-label">Liquido de frenos</label>
+                    <label for="Criterio_27" class="form-label">Liquido de frenos</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoLiquido" name="Criterio_30" required>
+                        <select class="form-select" id="Criterio_27" name="Criterio_27" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1177,13 +1785,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoLiquido"></span>
+                        <span class="estado-icon" id="icon-Criterio_27"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoBomba2" class="form-label">Bomba de freno principal</label>
+                    <label for="Criterio_28" class="form-label">Bomba de freno principal</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoBomba2" name="Criterio_31" required>
+                        <select class="form-select" id="Criterio_28" name="Criterio_28" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1192,13 +1800,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoBomba2"></span>
+                        <span class="estado-icon" id="icon-Criterio_28"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoBandas" class="form-label">Estado de bandas</label>
+                    <label for="Criterio_29" class="form-label">Estado de bandas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoBandas" name="Criterio_32" required>
+                        <select class="form-select" id="Criterio_29" name="Criterio_29" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1207,13 +1815,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoBandas"></span>
+                        <span class="estado-icon" id="icon-Criterio_29"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoRodamientos" class="form-label">Rodamientos</label>
+                    <label for="Criterio_30" class="form-label">Rodamientos</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoRodamientos" name="Criterio_33" required>
+                        <select class="form-select" id="Criterio_30" name="Criterio_30" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1222,13 +1830,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoRodamientos"></span>
+                        <span class="estado-icon" id="icon-Criterio_30"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoFreno" class="form-label">Freno de estacionamiento</label>
+                    <label for="Criterio_31" class="form-label">Freno de estacionamiento</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoFreno" name="Criterio_34" required>
+                        <select class="form-select" id="Criterio_31" name="Criterio_31" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1237,13 +1845,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoFreno"></span>
+                        <span class="estado-icon" id="icon-Criterio_31"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoFrenado" class="form-label">Eficiencia de frenado</label>
+                    <label for="Criterio_32" class="form-label">Eficiencia de frenado</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoFrenado" name="Criterio_35" required>
+                        <select class="form-select" id="Criterio_32" name="Criterio_32" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1252,13 +1860,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoFrenado"></span>
+                        <span class="estado-icon" id="icon-Criterio_32"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoGuayas" class="form-label">Guayas de parqueo</label>
+                    <label for="Criterio_33" class="form-label">Guayas de parqueo</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoGuayas" name="Criterio_36" required>
+                        <select class="form-select" id="Criterio_33" name="Criterio_33" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1267,13 +1875,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoGuayas"></span>
+                        <span class="estado-icon" id="icon-Criterio_33"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoPedal" class="form-label">Pedal de freno</label>
+                    <label for="Criterio_34" class="form-label">Pedal de freno</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoPedal" name="Criterio_37" required>
+                        <select class="form-select" id="Criterio_34" name="Criterio_34" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1282,7 +1890,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoPedal"></span>
+                        <span class="estado-icon" id="icon-Criterio_34"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -1291,7 +1899,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoFrenos">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenFrenos">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoFrenos" name="imagenesDiagnosticoFrenos[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarFreno" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -1303,8 +1910,8 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
         const selectsFreno = document.querySelectorAll('#ModalFrenos select.form-select');
         const fileInputFreno = document.getElementById('imagenesDiagnosticoFrenos');
         const botonFreno = document.getElementById('btnGuardarFreno');
-        const btnTomarFotoTraccion = document.getElementById('btnTomarFotoFrenos');
-        const btnCargarImagenTraccion = document.getElementById('btnCargarImagenFrenos');
+        const btnTomarFotoFrenos = document.getElementById('btnTomarFotoFrenos');
+        const btnCargarImagenFrenos = document.getElementById('btnCargarImagenFrenos');
 
         function actualizarEstadoFreno(selectFreno) {
             const iconFreno = document.getElementById(`icon-${selectFreno.id}`);
@@ -1345,6 +1952,20 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectFreno.addEventListener('change', () => actualizarEstadoFreno(selectFreno));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoFrenos.addEventListener('click', () => {
+            fileInputFreno.removeAttribute('multiple');
+            fileInputFreno.setAttribute('capture', 'environment');
+            fileInputFreno.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenFrenos.addEventListener('click', () => {
+            fileInputFreno.setAttribute('multiple', 'true');
+            fileInputFreno.removeAttribute('capture');
+            fileInputFreno.click();
+        });
+
         botonFreno.addEventListener('click', () => {
             let valido = true;
 
@@ -1362,14 +1983,42 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
 
             if (!valido) return;
 
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenCriterio_27').value = document.getElementById('Criterio_27').value;
+            document.getElementById('hiddenCriterio_28').value = document.getElementById('Criterio_28').value;
+            document.getElementById('hiddenCriterio_29').value = document.getElementById('Criterio_29').value;
+            document.getElementById('hiddenCriterio_30').value = document.getElementById('Criterio_30').value;
+            document.getElementById('hiddenCriterio_31').value = document.getElementById('Criterio_31').value;
+            document.getElementById('hiddenCriterio_32').value = document.getElementById('Criterio_32').value;
+            document.getElementById('hiddenCriterio_33').value = document.getElementById('Criterio_33').value;
+            document.getElementById('hiddenCriterio_34').value = document.getElementById('Criterio_34').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_27:", document.getElementById('hiddenCriterio_27').value);
+            console.log("Criterio_28:", document.getElementById('hiddenCriterio_28').value);
+            console.log("Criterio_29:", document.getElementById('hiddenCriterio_29').value);
+            console.log("Criterio_30:", document.getElementById('hiddenCriterio_30').value);
+            console.log("Criterio_31:", document.getElementById('hiddenCriterio_31').value);
+            console.log("Criterio_32:", document.getElementById('hiddenCriterio_32').value);
+            console.log("Criterio_33:", document.getElementById('hiddenCriterio_33').value);
+            console.log("Criterio_34:", document.getElementById('hiddenCriterio_34').value);
+
+            // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInputFreno.files.length; i++) {
+                archivos.push(fileInputFreno.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
+
             // ✅ Cambiar color del card
             const card = document.getElementById('btnFrenosCard').querySelector('div');
             card.classList.remove('bg-light');
             card.classList.add('bg-validado');
 
             // ❌ Cerrar modal actual
-            const ModalFreno = bootstrap.Modal.getInstance(document.getElementById('ModalFreno'));
-            ModalFreno.hide();
+            const ModalFrenos = bootstrap.Modal.getInstance(document.getElementById('ModalFrenos'));
+            ModalFrenos.hide();
 
             // ✅ Abrir siguiente modal
             const modalAgregar = new bootstrap.Modal(document.getElementById('AgregarDiagnostico'));
@@ -1388,9 +2037,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoMotor" class="form-label">Motor de dirección</label>
+                    <label for="Criterio_35" class="form-label">Motor de dirección</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoMotorD" name="estadoMotor" required>
+                        <select class="form-select" id="Criterio_35" name="Criterio_35" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1399,13 +2048,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoMotorD"></span>
+                        <span class="estado-icon" id="icon-Criterio_35"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoEscobillas" class="form-label">Escobillas</label>
+                    <label for="Criterio_36" class="form-label">Escobillas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoEscobillasD" name="estadoEscobillas" required>
+                        <select class="form-select" id="Criterio_36" name="Criterio_36" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1414,13 +2063,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoEscobillasD"></span>
+                        <span class="estado-icon" id="icon-Criterio_36"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoBomba" class="form-label">Bomba de dirección</label>
+                    <label for="Criterio_37" class="form-label">Bomba de dirección</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoBomba" name="estadoBomba" required>
+                        <select class="form-select" id="Criterio_37" name="Criterio_37" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1429,13 +2078,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoBomba"></span>
+                        <span class="estado-icon" id="icon-Criterio_37"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoMangueras" class="form-label">Mangueras</label>
+                    <label for="Criterio_38" class="form-label">Mangueras</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoMangueras" name="estadoMangueras" required>
+                        <select class="form-select" id="Criterio_38" name="Criterio_38" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1444,13 +2093,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoMangueras"></span>
+                        <span class="estado-icon" id="icon-Criterio_38"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCilindro" class="form-label">Cilindro de dirección</label>
+                    <label for="Criterio_39" class="form-label">Cilindro de dirección</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCilindro" name="estadoCilindro" required>
+                        <select class="form-select" id="Criterio_39" name="Criterio_39" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1459,13 +2108,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCilindro"></span>
+                        <span class="estado-icon" id="icon-Criterio_39"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCauchos" class="form-label">Cauchos puente trasero</label>
+                    <label for="Criterio_40" class="form-label">Cauchos puente trasero</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCauchos" name="estadoCauchos" required>
+                        <select class="form-select" id="Criterio_40" name="Criterio_40" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1474,13 +2123,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCauchos"></span>
+                        <span class="estado-icon" id="icon-Criterio_40"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoRotulas" class="form-label">Rótulas</label>
+                    <label for="Criterio_41" class="form-label">Rótulas</label>
                         <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoRotulas" name="estadoRotulas" required>
+                        <select class="form-select" id="Criterio_41" name="Criterio_41" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1489,13 +2138,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoRotulas"></span>
+                        <span class="estado-icon" id="icon-Criterio_41"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoGuarda" class="form-label">Guarda polvo</label>
+                    <label for="Criterio_42" class="form-label">Guarda polvo</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoGuarda" name="estadoGuarda" required>
+                        <select class="form-select" id="Criterio_42" name="Criterio_42" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1504,13 +2153,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoGuarda"></span>
+                        <span class="estado-icon" id="icon-Criterio_42"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoRodamientos" class="form-label">Rodamientos</label>
+                    <label for="Criterio_43" class="form-label">Rodamientos</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoRodamientos" name="estadoRodamientos" required>
+                        <select class="form-select" id="Criterio_43" name="Criterio_43" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1519,13 +2168,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoRodamientos"></span>
+                        <span class="estado-icon" id="icon-Criterio_43"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoOrbitrol" class="form-label">Orbitrol</label>
+                    <label for="Criterio_44" class="form-label">Orbitrol</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoOrbitrol" name="estadoOrbitrol" required>
+                        <select class="form-select" id="Criterio_44" name="Criterio_44" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1534,13 +2183,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoOrbitrol"></span>
+                        <span class="estado-icon" id="icon-Criterio_44"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoTerminales" class="form-label">Terminales de dirección</label>
+                    <label for="Criterio_45" class="form-label">Terminales de dirección</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoTerminales" name="estadoTerminales" required>
+                        <select class="form-select" id="Criterio_45" name="Criterio_45" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1549,7 +2198,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoTerminales"></span>
+                        <span class="estado-icon" id="icon-Criterio_45"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -1558,7 +2207,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoDireccion">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenDireccion">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoDireccion" name="imagenesDiagnosticoDireccion[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarDireccion" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -1568,10 +2216,10 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const selectsDireccion = document.querySelectorAll('#ModalDireccion select.form-select');
-        const fileInputFreno = document.getElementById('imagenesDiagnosticoDireccion');
+        const fileInputDireccion = document.getElementById('imagenesDiagnosticoDireccion');
         const botonFreno = document.getElementById('btnGuardarDireccion');
-        const btnTomarFotoTraccion = document.getElementById('btnTomarFotoDireccion');
-        const btnCargarImagenTraccion = document.getElementById('btnCargarImagenDireccion');
+        const btnTomarFotoDireccion = document.getElementById('btnTomarFotoDireccion');
+        const btnCargarImagenDireccion = document.getElementById('btnCargarImagenDireccion');
 
         function actualizarEstadoDireccion(selectDireccion) {
             const iconDireccion = document.getElementById(`icon-${selectDireccion.id}`);
@@ -1612,6 +2260,20 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectDireccion.addEventListener('change', () => actualizarEstadoDireccion(selectDireccion));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoDireccion.addEventListener('click', () => {
+            fileInputDireccion.removeAttribute('multiple');
+            fileInputDireccion.setAttribute('capture', 'environment');
+            fileInputDireccion.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenDireccion.addEventListener('click', () => {
+            fileInputDireccion.setAttribute('multiple', 'true');
+            fileInputDireccion.removeAttribute('capture');
+            fileInputDireccion.click();
+        });
+
         botonFreno.addEventListener('click', () => {
             let valido = true;
 
@@ -1622,12 +2284,46 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                 }
             });
 
-            if (fileInputFreno.files.length === 0) {
+            if (fileInputDireccion.files.length === 0) {
                 alert('Debe subir al menos una imagen del diagnóstico.');
                 valido = false;
             }
 
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenCriterio_35').value = document.getElementById('Criterio_35').value;
+            document.getElementById('hiddenCriterio_36').value = document.getElementById('Criterio_36').value;
+            document.getElementById('hiddenCriterio_37').value = document.getElementById('Criterio_37').value;
+            document.getElementById('hiddenCriterio_38').value = document.getElementById('Criterio_38').value;
+            document.getElementById('hiddenCriterio_39').value = document.getElementById('Criterio_39').value;
+            document.getElementById('hiddenCriterio_40').value = document.getElementById('Criterio_40').value;
+            document.getElementById('hiddenCriterio_41').value = document.getElementById('Criterio_41').value;
+            document.getElementById('hiddenCriterio_42').value = document.getElementById('Criterio_42').value;
+            document.getElementById('hiddenCriterio_43').value = document.getElementById('Criterio_43').value;
+            document.getElementById('hiddenCriterio_44').value = document.getElementById('Criterio_44').value;
+            document.getElementById('hiddenCriterio_45').value = document.getElementById('Criterio_45').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_35:", document.getElementById('hiddenCriterio_35').value);
+            console.log("Criterio_36:", document.getElementById('hiddenCriterio_36').value);
+            console.log("Criterio_37:", document.getElementById('hiddenCriterio_37').value);
+            console.log("Criterio_38:", document.getElementById('hiddenCriterio_38').value);
+            console.log("Criterio_39:", document.getElementById('hiddenCriterio_39').value);
+            console.log("Criterio_40:", document.getElementById('hiddenCriterio_40').value);
+            console.log("Criterio_41:", document.getElementById('hiddenCriterio_41').value);
+            console.log("Criterio_42:", document.getElementById('hiddenCriterio_42').value);
+            console.log("Criterio_43:", document.getElementById('hiddenCriterio_43').value);
+            console.log("Criterio_44:", document.getElementById('hiddenCriterio_44').value);
+            console.log("Criterio_45:", document.getElementById('hiddenCriterio_45').value);
+
+            // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInputDireccion.files.length; i++) {
+                archivos.push(fileInputDireccion.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnDireccionCard').querySelector('div');
@@ -1655,9 +2351,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoHidraulico" class="form-label">Estado y nivel hidráulico</label>
+                    <label for="Criterio_46" class="form-label">Estado y nivel hidráulico</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoHidraulico" name="Criterio_21" required>
+                        <select class="form-select" id="Criterio_46" name="Criterio_46" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1666,13 +2362,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoHidraulico"></span>
+                        <span class="estado-icon" id="icon-Criterio_46"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoMotor" class="form-label">Motor de sistema hidráulico</label>
+                    <label for="Criterio_47" class="form-label">Motor de sistema hidráulico</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoMotorH" name="Criterio_22" required>
+                        <select class="form-select" id="Criterio_47" name="Criterio_47" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1681,13 +2377,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoMotorH"></span>
+                        <span class="estado-icon" id="icon-Criterio_47"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoEscobillas" class="form-label">Escobillas</label>
+                    <label for="Criterio_48" class="form-label">Escobillas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoEscobillasH" name="Criterio_23" required>
+                        <select class="form-select" id="Criterio_48" name="Criterio_48" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1696,13 +2392,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoEscobillasH"></span>
+                        <span class="estado-icon" id="icon-Criterio_48"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCaucho" class="form-label">Caucho absorbedor de golpe</label>
+                    <label for="Criterio_49" class="form-label">Caucho absorbedor de golpe</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCaucho" name="Criterio_24" required>
+                        <select class="form-select" id="Criterio_49" name="Criterio_49" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1711,13 +2407,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCaucho"></span>
+                        <span class="estado-icon" id="icon-Criterio_49"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoBomba" class="form-label">Bomba sistema hidráulico</label>
+                    <label for="Criterio_50" class="form-label">Bomba sistema hidráulico</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoBombaH" name="Criterio_25" required>
+                        <select class="form-select" id="Criterio_50" name="Criterio_50" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1726,13 +2422,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoBombaH"></span>
+                        <span class="estado-icon" id="icon-Criterio_50"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoFiltro" class="form-label">Filtro de retorno</label>
+                    <label for="Criterio_51" class="form-label">Filtro de retorno</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoFiltro" name="Criterio_26" required>
+                        <select class="form-select" id="Criterio_51" name="Criterio_51" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1741,13 +2437,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoFiltro"></span>
+                        <span class="estado-icon" id="icon-Criterio_51"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoValvulas" class="form-label">Cuerpo de válvulas</label>
+                    <label for="Criterio_52" class="form-label">Cuerpo de válvulas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoValvulas" name="Criterio_27" required>
+                        <select class="form-select" id="Criterio_52" name="Criterio_52" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1756,13 +2452,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoValvulas"></span>
+                        <span class="estado-icon" id="icon-Criterio_52"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoMangueras" class="form-label">Mangueras</label>
+                    <label for="Criterio_53" class="form-label">Mangueras</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoManguerasH" name="Criterio_28" required>
+                        <select class="form-select" id="Criterio_53" name="Criterio_53" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1771,13 +2467,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoManguerasH"></span>
+                        <span class="estado-icon" id="icon-Criterio_53"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoMicros" class="form-label">Micros de funciones hidráulicas</label>
+                    <label for="Criterio_54" class="form-label">Micros de funciones hidráulicas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoMicros" name="Criterio_29" required>
+                        <select class="form-select" id="Criterio_54" name="Criterio_54" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1786,7 +2482,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoMicros"></span>
+                        <span class="estado-icon" id="icon-Criterio_54"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -1795,7 +2491,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoHidraulico">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenHidraulico">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoHidraulico" name="imagenesDiagnosticoHidraulico[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarHidraulico" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -1807,8 +2502,8 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
         const selectsHidraulico = document.querySelectorAll('#ModalHidraulico select.form-select');
         const fileInputHidraulico = document.getElementById('imagenesDiagnosticoHidraulico');
         const botonHidraulico = document.getElementById('btnGuardarHidraulico');
-        const btnTomarFotoTraccion = document.getElementById('btnTomarFotoHidraulico');
-        const btnCargarImagenTraccion = document.getElementById('btnCargarImagenHidraulico');
+        const btnTomarFotoHidraulico = document.getElementById('btnTomarFotoHidraulico');
+        const btnCargarImagenHidraulico = document.getElementById('btnCargarImagenHidraulico');
 
         function actualizarEstadoHidraulico(selectHidraulico) {
             const iconHidraulico = document.getElementById(`icon-${selectHidraulico.id}`);
@@ -1849,6 +2544,20 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectHidraulico.addEventListener('change', () => actualizarEstadoHidraulico(selectHidraulico));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoHidraulico.addEventListener('click', () => {
+            fileInputHidraulico.removeAttribute('multiple');
+            fileInputHidraulico.setAttribute('capture', 'environment');
+            fileInputHidraulico.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenHidraulico.addEventListener('click', () => {
+            fileInputHidraulico.setAttribute('multiple', 'true');
+            fileInputHidraulico.removeAttribute('capture');
+            fileInputHidraulico.click();
+        });
+
         botonHidraulico.addEventListener('click', () => {
             let valido = true;
 
@@ -1865,6 +2574,36 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             }
 
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenCriterio_46').value = document.getElementById('Criterio_46').value;
+            document.getElementById('hiddenCriterio_47').value = document.getElementById('Criterio_47').value;
+            document.getElementById('hiddenCriterio_48').value = document.getElementById('Criterio_48').value;
+            document.getElementById('hiddenCriterio_49').value = document.getElementById('Criterio_49').value;
+            document.getElementById('hiddenCriterio_50').value = document.getElementById('Criterio_50').value;
+            document.getElementById('hiddenCriterio_51').value = document.getElementById('Criterio_51').value;
+            document.getElementById('hiddenCriterio_52').value = document.getElementById('Criterio_52').value;
+            document.getElementById('hiddenCriterio_53').value = document.getElementById('Criterio_53').value;
+            document.getElementById('hiddenCriterio_54').value = document.getElementById('Criterio_54').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_46:", document.getElementById('hiddenCriterio_46').value);
+            console.log("Criterio_47:", document.getElementById('hiddenCriterio_47').value);
+            console.log("Criterio_48:", document.getElementById('hiddenCriterio_48').value);
+            console.log("Criterio_49:", document.getElementById('hiddenCriterio_49').value);
+            console.log("Criterio_50:", document.getElementById('hiddenCriterio_50').value);
+            console.log("Criterio_51:", document.getElementById('hiddenCriterio_51').value);
+            console.log("Criterio_52:", document.getElementById('hiddenCriterio_52').value);
+            console.log("Criterio_53:", document.getElementById('hiddenCriterio_53').value);
+            console.log("Criterio_54:", document.getElementById('hiddenCriterio_54').value);
+
+            // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInputHidraulico.files.length; i++) {
+                archivos.push(fileInputHidraulico.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnHidraulicoCard').querySelector('div');
@@ -1892,9 +2631,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoMastil" class="form-label">Ajuste mastil</label>
+                    <label for="Criterio_55" class="form-label">Ajuste mastil</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoMastil" name="estadoMastil" required>
+                        <select class="form-select" id="Criterio_55" name="Criterio_55" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1903,13 +2642,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoMastil"></span>
+                        <span class="estado-icon" id="icon-Criterio_55"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoSecciones" class="form-label">Estado secciones</label>
+                    <label for="Criterio_56" class="form-label">Estado secciones</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoSecciones" name="estadoSecciones" required>
+                        <select class="form-select" id="Criterio_56" name="Criterio_56" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1918,13 +2657,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoSecciones"></span>
+                        <span class="estado-icon" id="icon-Criterio_56"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoBujes" class="form-label">Bujes</label>
+                    <label for="Criterio_57" class="form-label">Bujes</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoBujes" name="estadoBujes" required>
+                        <select class="form-select" id="Criterio_57" name="Criterio_57" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1933,13 +2672,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoBujes"></span>
+                        <span class="estado-icon" id="icon-Criterio_57"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoRodamientos" class="form-label">Rodamientos</label>
+                    <label for="Criterio_58" class="form-label">Rodamientos</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoRodamientosM" name="estadoRodamientosM" required>
+                        <select class="form-select" id="Criterio_58" name="Criterio_58" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1948,13 +2687,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoRodamientosM"></span>
+                        <span class="estado-icon" id="icon-Criterio_58"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCadenas" class="form-label">Cadenas</label>
+                    <label for="Criterio_59" class="form-label">Cadenas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCadenas" name="estadoCadenas" required>
+                        <select class="form-select" id="Criterio_59" name="Criterio_59" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1963,13 +2702,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCadenas"></span>
+                        <span class="estado-icon" id="icon-Criterio_59"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoPoleas" class="form-label">Poleas</label>
+                    <label for="Criterio_60" class="form-label">Poleas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoPoleas" name="estadoPoleas" required>
+                        <select class="form-select" id="Criterio_60" name="Criterio_60" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1978,13 +2717,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoPoleas"></span>
+                        <span class="estado-icon" id="icon-Criterio_60"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoPasadores" class="form-label">Pasadores cadenas</label>
+                    <label for="Criterio_61" class="form-label">Pasadores cadenas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoPasadores" name="estadoPasadores" required>
+                        <select class="form-select" id="Criterio_61" name="Criterio_61" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -1993,13 +2732,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoPasadores"></span>
+                        <span class="estado-icon" id="icon-Criterio_61"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoManguerasF" class="form-label">Mangueras free lift</label>
+                    <label for="Criterio_62" class="form-label">Mangueras free lift</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoManguerasF" name="estadoManguerasF" required>
+                        <select class="form-select" id="Criterio_62" name="Criterio_62" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2008,13 +2747,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoManguerasF"></span>
+                        <span class="estado-icon" id="icon-Criterio_62"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoManguerasS" class="form-label">Mangueras side shift</label>
+                    <label for="Criterio_63" class="form-label">Mangueras side shift</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoManguerasS" name="estadoManguerasS" required>
+                        <select class="form-select" id="Criterio_63" name="Criterio_63" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2023,13 +2762,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoManguerasS"></span>
+                        <span class="estado-icon" id="icon-Criterio_63"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoManguerasP" class="form-label">Mangueras fork positioner</label>
+                    <label for="Criterio_64" class="form-label">Mangueras fork positioner</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoManguerasP" name="estadoManguerasP" required>
+                        <select class="form-select" id="Criterio_64" name="Criterio_64" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2038,13 +2777,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoManguerasP"></span>
+                        <span class="estado-icon" id="icon-Criterio_64"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoTuberias" class="form-label">Tuberías</label>
+                    <label for="Criterio_65" class="form-label">Tuberías</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoTuberias" name="estadoTuberias" required>
+                        <select class="form-select" id="Criterio_65" name="Criterio_65" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2053,13 +2792,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoTuberias"></span>
+                        <span class="estado-icon" id="icon-Criterio_65"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoRacores" class="form-label">Racores</label>
+                    <label for="Criterio_66" class="form-label">Racores</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoRacores" name="estadoRacores" required>
+                        <select class="form-select" id="Criterio_66" name="Criterio_66" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2068,13 +2807,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoRacores"></span>
+                        <span class="estado-icon" id="icon-Criterio_66"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCilindrosI" class="form-label">Cilindros de inclinacion</label>
+                    <label for="Criterio_67" class="form-label">Cilindros de inclinación</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCilindrosI" name="estadoCilindrosI" required>
+                        <select class="form-select" id="Criterio_67" name="Criterio_67" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2083,13 +2822,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCilindrosI"></span>
+                        <span class="estado-icon" id="icon-Criterio_67"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCilindrosF" class="form-label">Cilindro de free lift</label>
+                    <label for="Criterio_68" class="form-label">Cilindro de free lift</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCilindrosF" name="estadoCilindrosF" required>
+                        <select class="form-select" id="Criterio_68" name="Criterio_68" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2098,13 +2837,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCilindrosF"></span>
+                        <span class="estado-icon" id="icon-Criterio_68"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCilindrosL" class="form-label">Cilindros laterales</label>
+                    <label for="Criterio_69" class="form-label">Cilindros laterales</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCilindrosL" name="estadoCilindrosL" required>
+                        <select class="form-select" id="Criterio_69" name="Criterio_69" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2113,13 +2852,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCilindrosL"></span>
+                        <span class="estado-icon" id="icon-Criterio_69"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCilindrosS" class="form-label">Cilindro de side shift</label>
+                    <label for="Criterio_70" class="form-label">Cilindro de side shift</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCilindrosS" name="estadoCilindrosS" required>
+                        <select class="form-select" id="Criterio_70" name="Criterio_70" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2128,13 +2867,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCilindrosS"></span>
+                        <span class="estado-icon" id="icon-Criterio_70"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCilindrosP" class="form-label">Cilindros de fork positioner</label>
+                    <label for="Criterio_71" class="form-label">Cilindros de fork positioner</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCilindrosP" name="estadoCilindrosP" required>
+                        <select class="form-select" id="Criterio_71" name="Criterio_71" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2143,7 +2882,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCilindrosP"></span>
+                        <span class="estado-icon" id="icon-Criterio_71"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -2152,7 +2891,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoMastil">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenMastil">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoMastil" name="imagenesDiagnosticoMastil[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarMastil" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>    
@@ -2206,6 +2944,20 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectMastil.addEventListener('change', () => actualizarEstadoMastil(selectMastil));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoMastil.addEventListener('click', () => {
+            fileInputMastil.removeAttribute('multiple');
+            fileInputMastil.setAttribute('capture', 'environment');
+            fileInputMastil.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenMastil.addEventListener('click', () => {
+            fileInputMastil.setAttribute('multiple', 'true');
+            fileInputMastil.removeAttribute('capture');
+            fileInputMastil.click();
+        });
+
         botonMastil.addEventListener('click', () => {
             let valido = true;
 
@@ -2223,8 +2975,53 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
 
             if (!valido) return;
 
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenCriterio_55').value = document.getElementById('Criterio_55').value;
+            document.getElementById('hiddenCriterio_56').value = document.getElementById('Criterio_56').value;
+            document.getElementById('hiddenCriterio_57').value = document.getElementById('Criterio_57').value;
+            document.getElementById('hiddenCriterio_58').value = document.getElementById('Criterio_58').value;
+            document.getElementById('hiddenCriterio_59').value = document.getElementById('Criterio_59').value;
+            document.getElementById('hiddenCriterio_60').value = document.getElementById('Criterio_60').value;
+            document.getElementById('hiddenCriterio_61').value = document.getElementById('Criterio_61').value;
+            document.getElementById('hiddenCriterio_62').value = document.getElementById('Criterio_62').value;
+            document.getElementById('hiddenCriterio_63').value = document.getElementById('Criterio_63').value;
+            document.getElementById('hiddenCriterio_64').value = document.getElementById('Criterio_64').value;
+            document.getElementById('hiddenCriterio_65').value = document.getElementById('Criterio_65').value;
+            document.getElementById('hiddenCriterio_66').value = document.getElementById('Criterio_66').value;
+            document.getElementById('hiddenCriterio_67').value = document.getElementById('Criterio_67').value;
+            document.getElementById('hiddenCriterio_68').value = document.getElementById('Criterio_68').value;
+            document.getElementById('hiddenCriterio_69').value = document.getElementById('Criterio_69').value;
+            document.getElementById('hiddenCriterio_70').value = document.getElementById('Criterio_70').value;
+            document.getElementById('hiddenCriterio_71').value = document.getElementById('Criterio_71').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_55:", document.getElementById('hiddenCriterio_55').value);
+            console.log("Criterio_56:", document.getElementById('hiddenCriterio_56').value);
+            console.log("Criterio_57:", document.getElementById('hiddenCriterio_57').value);
+            console.log("Criterio_58:", document.getElementById('hiddenCriterio_58').value);
+            console.log("Criterio_59:", document.getElementById('hiddenCriterio_59').value);
+            console.log("Criterio_60:", document.getElementById('hiddenCriterio_60').value);
+            console.log("Criterio_61:", document.getElementById('hiddenCriterio_61').value);
+            console.log("Criterio_62:", document.getElementById('hiddenCriterio_62').value);
+            console.log("Criterio_63:", document.getElementById('hiddenCriterio_63').value);
+            console.log("Criterio_64:", document.getElementById('hiddenCriterio_64').value);
+            console.log("Criterio_65:", document.getElementById('hiddenCriterio_65').value);
+            console.log("Criterio_66:", document.getElementById('hiddenCriterio_66').value);
+            console.log("Criterio_67:", document.getElementById('hiddenCriterio_67').value);
+            console.log("Criterio_68:", document.getElementById('hiddenCriterio_68').value);
+            console.log("Criterio_69:", document.getElementById('hiddenCriterio_69').value);
+            console.log("Criterio_70:", document.getElementById('hiddenCriterio_70').value);
+            console.log("Criterio_71:", document.getElementById('hiddenCriterio_71').value);
+             // ✅ También puedes mostrar los archivos seleccionad57
+            let archivos = [];
+            for (let i = 0; i < fileInputMastil.files.length; i++) {
+                archivos.push(fileInputMastil.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
+
             // ✅ Cambiar color del card
-            const card = document.getElementById('btnHidraulicoCard').querySelector('div');
+            const card = document.getElementById('btnMastilCard').querySelector('div');
             card.classList.remove('bg-light');
             card.classList.add('bg-validado');
 
@@ -2249,9 +3046,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoAjuste" class="form-label">Ajuste carro porta horquillas</label>
+                    <label for="Criterio_72" class="form-label">Ajuste carro porta horquillas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoAjusteC" name="estadoAjusteC" required>
+                        <select class="form-select" id="Criterio_72" name="Criterio_72" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2260,13 +3057,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoAjusteC"></span>
+                        <span class="estado-icon" id="icon-Criterio_72"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoRodamientos" class="form-label">Rodamientos</label>
+                    <label for="Criterio_73" class="form-label">Rodamientos</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoRodamientosC" name="estadoRodamientosC" required>
+                        <select class="form-select" id="Criterio_73" name="Criterio_73" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2275,13 +3072,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoRodamientosC"></span>
+                        <span class="estado-icon" id="icon-Criterio_73"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCadenas" class="form-label">Cadenas</label>
+                    <label for="Criterio_74" class="form-label">Cadenas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCadenasC" name="estadoCadenasC" required>
+                        <select class="form-select" id="Criterio_74" name="Criterio_74" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2290,13 +3087,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCadenasC"></span>
+                        <span class="estado-icon" id="icon-Criterio_74"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoPasadores" class="form-label">Pasadores</label>
+                    <label for="Criterio_75" class="form-label">Pasadores</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoPasadoresC" name="estadoPasadoresC" required>
+                        <select class="form-select" id="Criterio_75" name="Criterio_75" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2305,13 +3102,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoPasadoresC"></span>
+                        <span class="estado-icon" id="icon-Criterio_75"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoParilla" class="form-label">Parilla o Espejo</label>
+                    <label for="Criterio_76" class="form-label">Parilla o Espejo</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoParilla" name="estadoParilla" required>
+                        <select class="form-select" id="Criterio_76" name="Criterio_76" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2320,13 +3117,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoParilla"></span>
+                        <span class="estado-icon" id="icon-Criterio_76"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoMordazas" class="form-label">Mordazas</label>
+                    <label for="Criterio_77" class="form-label">Mordazas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoMordazas" name="estadoMordazas" required>
+                        <select class="form-select" id="Criterio_77" name="Criterio_77" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2335,13 +3132,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoMordazas"></span>
+                        <span class="estado-icon" id="icon-Criterio_77"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoDeslizadores" class="form-label">Deslizadores</label>
+                    <label for="Criterio_78" class="form-label">Deslizadores</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoDeslizadores" name="estadoDeslizadores" required>
+                        <select class="form-select" id="Criterio_78" name="Criterio_78" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2350,7 +3147,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoDeslizadores"></span>
+                        <span class="estado-icon" id="icon-Criterio_78"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -2359,7 +3156,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoCarroPorta">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenCarroPorta">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoCarroPorta" name="imagenesDiagnosticoCarroPorta[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarCarroPorta"  type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -2413,6 +3209,20 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectCarroPorta.addEventListener('change', () => actualizarEstadoCarroPorta(selectCarroPorta));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoCarroPorta.addEventListener('click', () => {
+            fileInputCarroPorta.removeAttribute('multiple');
+            fileInputCarroPorta.setAttribute('capture', 'environment');
+            fileInputCarroPorta.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenCarroPorta.addEventListener('click', () => {
+            fileInputCarroPorta.setAttribute('multiple', 'true');
+            fileInputCarroPorta.removeAttribute('capture');
+            fileInputCarroPorta.click();
+        });
+
         botonCarroPorta.addEventListener('click', () => {
             let valido = true;
 
@@ -2429,6 +3239,32 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             }
 
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenCriterio_72').value = document.getElementById('Criterio_72').value;
+            document.getElementById('hiddenCriterio_73').value = document.getElementById('Criterio_73').value;
+            document.getElementById('hiddenCriterio_74').value = document.getElementById('Criterio_74').value;
+            document.getElementById('hiddenCriterio_75').value = document.getElementById('Criterio_75').value;
+            document.getElementById('hiddenCriterio_76').value = document.getElementById('Criterio_76').value;
+            document.getElementById('hiddenCriterio_77').value = document.getElementById('Criterio_77').value;
+            document.getElementById('hiddenCriterio_78').value = document.getElementById('Criterio_78').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_72:", document.getElementById('hiddenCriterio_72').value);
+            console.log("Criterio_73:", document.getElementById('hiddenCriterio_73').value);
+            console.log("Criterio_74:", document.getElementById('hiddenCriterio_74').value);
+            console.log("Criterio_75:", document.getElementById('hiddenCriterio_75').value);
+            console.log("Criterio_76:", document.getElementById('hiddenCriterio_76').value);
+            console.log("Criterio_77:", document.getElementById('hiddenCriterio_77').value);
+            console.log("Criterio_78:", document.getElementById('hiddenCriterio_78').value);
+
+             // ✅ También puedes mostrar los archivos seleccionad57
+            let archivos = [];
+            for (let i = 0; i < fileInputCarroPorta.files.length; i++) {
+                archivos.push(fileInputCarroPorta.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnCarroPortaCard').querySelector('div');
@@ -2456,9 +3292,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoSideShift" class="form-label">Side shift</label>
+                    <label for="Criterio_79" class="form-label">Side shift</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoSideShift" name="estadoSideShift" required>
+                        <select class="form-select" id="Criterio_79" name="Criterio_79" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2467,13 +3303,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoSideShift"></span>
+                        <span class="estado-icon" id="icon-Criterio_79"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoForkPositioner" class="form-label">Fork positioner</label>
+                    <label for="Criterio_80" class="form-label">Fork positioner</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoForkPositioner" name="estadoForkPositioner" required>
+                        <select class="form-select" id="Criterio_80" name="Criterio_80" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2482,13 +3318,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoForkPositioner"></span>
+                        <span class="estado-icon" id="icon-Criterio_80"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoClamp" class="form-label">Clamp</label>
+                    <label for="Criterio_81" class="form-label">Clamp</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoClamp" name="estadoClamp" required>
+                        <select class="form-select" id="Criterio_81" name="Criterio_81" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2497,13 +3333,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoClamp"></span>
+                        <span class="estado-icon" id="icon-Criterio_81"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoTubular" class="form-label">Cascade Tubular</label>
+                    <label for="Criterio_82" class="form-label">Cascade Tubular</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoTubular" name="estadoTubular" required>
+                        <select class="form-select" id="Criterio_82" name="Criterio_82" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2512,7 +3348,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoTubular"></span>
+                        <span class="estado-icon" id="icon-Criterio_82"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -2521,7 +3357,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoAditamientos">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenAditamientos">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoAditamientos" name="imagenesDiagnosticoAditamientos[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarAditamientos" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -2575,7 +3410,21 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectAditamientos.addEventListener('change', () => actualizarEstadoAditamientos(selectAditamientos));
         });
 
-        botonCarroPorta.addEventListener('click', () => {
+        // Botón para tomar foto (cámara)
+        btnTomarFotoAditamientos.addEventListener('click', () => {
+            fileInputAditamientos.removeAttribute('multiple');
+            fileInputAditamientos.setAttribute('capture', 'environment');
+            fileInputAditamientos.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenAditamientos.addEventListener('click', () => {
+            fileInputAditamientos.setAttribute('multiple', 'true');
+            fileInputAditamientos.removeAttribute('capture');
+            fileInputAditamientos.click();
+        });
+
+        botonAditamientos.addEventListener('click', () => {
             let valido = true;
 
             selectsAditamientos.forEach(selectAditamientos => {
@@ -2591,6 +3440,26 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             }
 
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenCriterio_79').value = document.getElementById('Criterio_79').value;
+            document.getElementById('hiddenCriterio_80').value = document.getElementById('Criterio_80').value;
+            document.getElementById('hiddenCriterio_81').value = document.getElementById('Criterio_81').value;
+            document.getElementById('hiddenCriterio_82').value = document.getElementById('Criterio_82').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_79:", document.getElementById('hiddenCriterio_79').value);
+            console.log("Criterio_80:", document.getElementById('hiddenCriterio_80').value);
+            console.log("Criterio_81:", document.getElementById('hiddenCriterio_81').value);
+            console.log("Criterio_82:", document.getElementById('hiddenCriterio_82').value);
+
+             // ✅ También puedes mostrar los archivos seleccionad57
+            let archivos = [];
+            for (let i = 0; i < fileInputAditamientos.files.length; i++) {
+                archivos.push(fileInputAditamientos.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnAditamentosCard').querySelector('div');
@@ -2618,9 +3487,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoSeguros" class="form-label">Seguros</label>
+                    <label for="Criterio_83" class="form-label">Seguros</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoSeguros" name="estadoSeguros" required>
+                        <select class="form-select" id="Criterio_83" name="Criterio_83" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2629,13 +3498,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoSeguros"></span>
+                        <span class="estado-icon" id="icon-Criterio_83"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoMordazaS" class="form-label">Mordaza superior</label>
+                    <label for="Criterio_84" class="form-label">Mordaza superior</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoMordazaS" name="estadoMordazaS" required>
+                        <select class="form-select" id="Criterio_84" name="Criterio_84" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2644,13 +3513,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoMordazaS"></span>
+                        <span class="estado-icon" id="icon-Criterio_84"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoMordazaI" class="form-label">Mordaza inferior</label>
+                    <label for="Criterio_85" class="form-label">Mordaza inferior</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoMordazaI" name="estadoMordazaI" required>
+                        <select class="form-select" id="Criterio_85" name="Criterio_85" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2659,28 +3528,29 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoMordazaI"></span>
+                        <span class="estado-icon" id="icon-Criterio_85"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="claseHorquilllas" class="form-label">Clase de horquillas</label>
+                    <label for="Criterio_86" class="form-label">Clase de horquillas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="claseHorquilllas" name="claseHorquilllas" required>
-                            <option value="Tipo2" disabled selected>Clase 2</option>
+                        <select class="form-select" id="Criterio_86" name="Criterio_86" required>
+                            <option value="" disabled selected>Seleccione clase</option>
+                            <option value="Tipo2">Clase 2</option>
                             <option value="Tipo3">Clase 3</option>
                             <option value="Tipo4">Clase 4</option>
                         </select>
-                        <span class="estado-icon" id="icon-claseHorquilllas"></span>
+                        <span class="estado-icon" id="icon-Criterio_86"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="Longitud" class="form-label">Longitud (m)</label>
-                    <input type="text" class="form-control" name="Longitud" id="Longitud" placeholder="Longitud" >
+                    <label for="LongitudH" class="form-label">Longitud (m)</label>
+                    <input type="text" class="form-control" name="LongitudH" id="LongitudH" placeholder="Longitud" >
                 </div>
                 <div class="mb-3">
-                    <label for="estadoHorquillas" class="form-label">Estado de horquillas (inspección visual ver F-206 como referencia)</label>
+                    <label for="Criterio_87" class="form-label">Estado de horquillas (inspección visual ver F-206 como referencia)</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoHorquillas" name="estadoHorquillas" required>
+                        <select class="form-select" id="Criterio_87" name="Criterio_87" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2689,7 +3559,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoHorquillas"></span>
+                        <span class="estado-icon" id="icon-Criterio_87"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -2698,7 +3568,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoHorquillas">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenHorquillas">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoHorquillas" name="imagenesDiagnosticoHorquillas[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarHorquillas" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -2755,6 +3624,20 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectHorquillas.addEventListener('change', () => actualizarEstadoHorquillas(selectHorquillas));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoHorquillas.addEventListener('click', () => {
+            fileInputHorquillas.removeAttribute('multiple');
+            fileInputHorquillas.setAttribute('capture', 'environment');
+            fileInputHorquillas.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenHorquillas.addEventListener('click', () => {
+            fileInputHorquillas.setAttribute('multiple', 'true');
+            fileInputHorquillas.removeAttribute('capture');
+            fileInputHorquillas.click();
+        });
+
         botonHorquillas.addEventListener('click', () => {
             let valido = true;
 
@@ -2771,6 +3654,30 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             }
 
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenLongitudH').value = document.getElementById('LongitudH').value;
+            document.getElementById('hiddenCriterio_83').value = document.getElementById('Criterio_83').value;
+            document.getElementById('hiddenCriterio_84').value = document.getElementById('Criterio_84').value;
+            document.getElementById('hiddenCriterio_85').value = document.getElementById('Criterio_85').value;
+            document.getElementById('hiddenCriterio_86').value = document.getElementById('Criterio_86').value;
+            document.getElementById('hiddenCriterio_87').value = document.getElementById('Criterio_87').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_83:", document.getElementById('hiddenCriterio_83').value);
+            console.log("Criterio_84:", document.getElementById('hiddenCriterio_84').value);
+            console.log("Criterio_85:", document.getElementById('hiddenCriterio_85').value);
+            console.log("Criterio_86:", document.getElementById('hiddenCriterio_86').value);
+            console.log("Criterio_87:", document.getElementById('hiddenCriterio_87').value);
+            console.log("LongitudH:", document.getElementById('hiddenLongitudH').value);
+
+             // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInputHorquillas.files.length; i++) {
+                archivos.push(fileInputHorquillas.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnHorquillasCard').querySelector('div');
@@ -2798,9 +3705,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoRuedasC" class="form-label">Degaste de caucho de ruedas de carga</label>
+                    <label for="Criterio_88" class="form-label">Degaste de caucho de ruedas de carga</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoRuedasC" name="estadoRuedasC" required>
+                        <select class="form-select" id="Criterio_88" name="Criterio_88" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2809,13 +3716,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoRuedasC"></span>
+                        <span class="estado-icon" id="icon-Criterio_88"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoRuedasD" class="form-label">Degaste de caucho de ruedas de dirección</label>
+                    <label for="Criterio_89" class="form-label">Degaste de caucho de ruedas de dirección</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoRuedasD" name="estadoRuedasD" required>
+                        <select class="form-select" id="Criterio_89" name="Criterio_89" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2824,13 +3731,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoRuedasD"></span>
+                        <span class="estado-icon" id="icon-Criterio_89"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoRinC" class="form-label">Estado de rin de carga</label>
+                    <label for="Criterio_90" class="form-label">Estado de rin de carga</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoRinC" name="estadoRinC" required>
+                        <select class="form-select" id="Criterio_90" name="Criterio_90" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2839,13 +3746,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoRinC"></span>
+                        <span class="estado-icon" id="icon-Criterio_90"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoRinD" class="form-label">Estado de rin de dirección</label>
+                    <label for="Criterio_91" class="form-label">Estado de rin de dirección</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoRinD" name="estadoRinD" required>
+                        <select class="form-select" id="Criterio_91" name="Criterio_91" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2854,13 +3761,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoRinD"></span>
+                        <span class="estado-icon" id="icon-Criterio_91"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoLimpieza" class="form-label">Limpieza</label>
+                    <label for="Criterio_92" class="form-label">Limpieza</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoLimpieza" name="estadoLimpieza" required>
+                        <select class="form-select" id="Criterio_92" name="Criterio_92" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2869,7 +3776,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoLimpieza"></span>
+                        <span class="estado-icon" id="icon-Criterio_92"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -2878,7 +3785,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoRuedas">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenRuedas">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoRuedas" name="imagenesDiagnosticoRuedas[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarRuedas" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -2932,6 +3838,20 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectRuedas.addEventListener('change', () => actualizarEstadoRuedas(selectRuedas));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoRuedas.addEventListener('click', () => {
+            fileInputRuedas.removeAttribute('multiple');
+            fileInputRuedas.setAttribute('capture', 'environment');
+            fileInputRuedas.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenRuedas.addEventListener('click', () => {
+            fileInputRuedas.setAttribute('multiple', 'true');
+            fileInputRuedas.removeAttribute('capture');
+            fileInputRuedas.click();
+        });
+
         botonRuedas.addEventListener('click', () => {
             let valido = true;
 
@@ -2948,6 +3868,28 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             }
 
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenCriterio_88').value = document.getElementById('Criterio_88').value;
+            document.getElementById('hiddenCriterio_89').value = document.getElementById('Criterio_89').value;
+            document.getElementById('hiddenCriterio_90').value = document.getElementById('Criterio_90').value;
+            document.getElementById('hiddenCriterio_91').value = document.getElementById('Criterio_91').value;
+            document.getElementById('hiddenCriterio_92').value = document.getElementById('Criterio_92').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_88:", document.getElementById('hiddenCriterio_88').value);
+            console.log("Criterio_89:", document.getElementById('hiddenCriterio_89').value);
+            console.log("Criterio_90:", document.getElementById('hiddenCriterio_90').value);
+            console.log("Criterio_91:", document.getElementById('hiddenCriterio_91').value);
+            console.log("Criterio_92:", document.getElementById('hiddenCriterio_92').value);
+
+            // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInputRuedas.files.length; i++) {
+                archivos.push(fileInputRuedas.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnRuedasCard').querySelector('div');
@@ -2975,9 +3917,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoConjunto" class="form-label">Ajustes de conjunto</label>
+                    <label for="Criterio_93" class="form-label">Ajustes de conjunto</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoConjunto" name="estadoConjunto" required>
+                        <select class="form-select" id="Criterio_93" name="Criterio_93" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -2986,13 +3928,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoConjunto"></span>
+                        <span class="estado-icon" id="icon-Criterio_93"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoSoportes" class="form-label">Chequear soportes</label>
+                    <label for="Criterio_94" class="form-label">Chequear soportes</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoSoportes" name="estadoSoportes" required>
+                        <select class="form-select" id="Criterio_94" name="Criterio_94" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3001,13 +3943,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoSoportes"></span>
+                        <span class="estado-icon" id="icon-Criterio_94"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoTornilleria" class="form-label">Tornilleria</label>
+                    <label for="Criterio_95" class="form-label">Tornilleria</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoTornilleria" name="estadoTornilleria" required>
+                        <select class="form-select" id="Criterio_95" name="Criterio_95" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3016,13 +3958,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoTornilleria"></span>
+                        <span class="estado-icon" id="icon-Criterio_95"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoPintura" class="form-label">Estado pintura</label>
+                    <label for="Criterio_96" class="form-label">Estado pintura</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoPintura" name="estadoPintura" required>
+                        <select class="form-select" id="Criterio_96" name="Criterio_96" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3031,7 +3973,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoPintura"></span>
+                        <span class="estado-icon" id="icon-Criterio_96"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -3040,7 +3982,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoChasis">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenChasis">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoChasis" name="imagenesDiagnosticoChasis[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarChasis" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -3094,6 +4035,20 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectChasis.addEventListener('change', () => actualizarEstadoChasis(selectChasis));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoChasis.addEventListener('click', () => {
+            fileInputChasis.removeAttribute('multiple');
+            fileInputChasis.setAttribute('capture', 'environment');
+            fileInputChasis.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenChasis.addEventListener('click', () => {
+            fileInputChasis.setAttribute('multiple', 'true');
+            fileInputChasis.removeAttribute('capture');
+            fileInputChasis.click();
+        });
+
         botonChasis.addEventListener('click', () => {
             let valido = true;
 
@@ -3110,6 +4065,26 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             }
 
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenCriterio_93').value = document.getElementById('Criterio_93').value;
+            document.getElementById('hiddenCriterio_94').value = document.getElementById('Criterio_94').value;
+            document.getElementById('hiddenCriterio_95').value = document.getElementById('Criterio_95').value;
+            document.getElementById('hiddenCriterio_96').value = document.getElementById('Criterio_96').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_93:", document.getElementById('hiddenCriterio_93').value);
+            console.log("Criterio_94:", document.getElementById('hiddenCriterio_94').value);
+            console.log("Criterio_95:", document.getElementById('hiddenCriterio_95').value);
+            console.log("Criterio_96:", document.getElementById('hiddenCriterio_96').value);
+
+            // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInputChasis.files.length; i++) {
+                archivos.push(fileInputChasis.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnChasisCard').querySelector('div');
@@ -3137,9 +4112,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoLucesF" class="form-label">Luces frontales</label>
+                    <label for="Criterio_97" class="form-label">Luces frontales</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoLucesF" name="estadoLucesF" required>
+                        <select class="form-select" id="Criterio_97" name="Criterio_97" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3148,13 +4123,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoLucesF"></span>
+                        <span class="estado-icon" id="icon-Criterio_97"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoLuzE" class="form-label">Luz estroboscopia</label>
+                    <label for="Criterio_98" class="form-label">Luz estroboscopia</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoLuzE" name="estadoLuzE" required>
+                        <select class="form-select" id="Criterio_98" name="Criterio_98" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3163,13 +4138,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoLuzE"></span>
+                        <span class="estado-icon" id="icon-Criterio_98"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoLuzF" class="form-label">Luz de freno</label>
+                    <label for="Criterio_99" class="form-label">Luz de freno</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoLuzF" name="estadoLuzF" required>
+                        <select class="form-select" id="Criterio_99" name="Criterio_99" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3178,13 +4153,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoLuzF"></span>
+                        <span class="estado-icon" id="icon-Criterio_99"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoBlue" class="form-label">Blue light</label>
+                    <label for="Criterio_100" class="form-label">Blue light</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoTapas" name="estadoTapas" required>
+                        <select class="form-select" id="Criterio_100" name="Criterio_100" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3193,13 +4168,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoTapas"></span>
+                        <span class="estado-icon" id="icon-Criterio_100"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoPito" class="form-label">Pito bocina</label>
+                    <label for="Criterio_101" class="form-label">Pito bocina</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoPito" name="estadoPito" required>
+                        <select class="form-select" id="Criterio_101" name="Criterio_101" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3208,13 +4183,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoPito"></span>
+                        <span class="estado-icon" id="icon-Criterio_101"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoAlarma" class="form-label">Alarma reversa</label>
+                    <label for="Criterio_102" class="form-label">Alarma reversa</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoAlarma" name="estadoAlarma" required>
+                        <select class="form-select" id="Criterio_102" name="Criterio_102" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3223,7 +4198,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoAlarma"></span>
+                        <span class="estado-icon" id="icon-Criterio_102"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -3232,7 +4207,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoLuces">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenLuces">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoLuces" name="imagenesDiagnosticoLuces[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarLuces" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -3286,6 +4260,20 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectLuces.addEventListener('change', () => actualizarEstadoLuces(selectLuces));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoLuces.addEventListener('click', () => {
+            fileInputLuces.removeAttribute('multiple');
+            fileInputLuces.setAttribute('capture', 'environment');
+            fileInputLuces.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenLuces.addEventListener('click', () => {
+            fileInputLuces.setAttribute('multiple', 'true');
+            fileInputLuces.removeAttribute('capture');
+            fileInputLuces.click();
+        });
+
         botonLuces.addEventListener('click', () => {
             let valido = true;
 
@@ -3302,6 +4290,30 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             }
 
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenCriterio_97').value = document.getElementById('Criterio_97').value;
+            document.getElementById('hiddenCriterio_98').value = document.getElementById('Criterio_98').value;
+            document.getElementById('hiddenCriterio_99').value = document.getElementById('Criterio_99').value;
+            document.getElementById('hiddenCriterio_100').value = document.getElementById('Criterio_100').value;
+            document.getElementById('hiddenCriterio_101').value = document.getElementById('Criterio_101').value;
+            document.getElementById('hiddenCriterio_102').value = document.getElementById('Criterio_102').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_97:", document.getElementById('hiddenCriterio_97').value);
+            console.log("Criterio_98:", document.getElementById('hiddenCriterio_98').value);
+            console.log("Criterio_99:", document.getElementById('hiddenCriterio_99').value);
+            console.log("Criterio_100:", document.getElementById('hiddenCriterio_100').value);
+            console.log("Criterio_101:", document.getElementById('hiddenCriterio_101').value);
+            console.log("Criterio_102:", document.getElementById('hiddenCriterio_102').value);
+
+            // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInputLuces.files.length; i++) {
+                archivos.push(fileInputLuces.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnLucesCard').querySelector('div');
@@ -3329,9 +4341,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoEngraseP" class="form-label">Engrase puente trasero</label>
+                    <label for="Criterio_103" class="form-label">Engrase puente trasero</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoEngraseP" name="estadoEngraseP" required>
+                        <select class="form-select" id="Criterio_103" name="Criterio_103" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3340,13 +4352,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoEngraseP"></span>
+                        <span class="estado-icon" id="icon-Criterio_103"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoEngraseM" class="form-label">Engrase mastil</label>
+                    <label for="Criterio_104" class="form-label">Engrase mastil</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoEngraseM" name="estadoEngraseM" required>
+                        <select class="form-select" id="Criterio_104" name="Criterio_104" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3355,13 +4367,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoEngraseM"></span>
+                        <span class="estado-icon" id="icon-Criterio_104"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoLubricacion" class="form-label">Lubricacíon cadenas y secciones mastil</label>
+                    <label for="Criterio_105" class="form-label">Lubricacíon cadenas y secciones mastil</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoLubricacion" name="estadoLubricacion" required>
+                        <select class="form-select" id="Criterio_105" name="Criterio_105" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3370,7 +4382,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoLubricacion"></span>
+                        <span class="estado-icon" id="icon-Criterio_105"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -3379,7 +4391,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoLubricacion">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenLubricacion">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoLubricacion" name="imagenesDiagnosticoLubricacion[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarLubricacion" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -3389,8 +4400,8 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const selectsLubricacion = document.querySelectorAll('#ModalLubricacion select.form-select');
-        const fileInputLubricacion = document.getElementById('imagenesDiagnosticoLuces');
-        const botonLubricacion = document.getElementById('btnGuardarLuces');
+        const fileInputLubricacion = document.getElementById('imagenesDiagnosticoLubricacion');
+        const botonLubricacion = document.getElementById('btnGuardarLubricacion');
         const btnTomarFotoLubricacion = document.getElementById('btnTomarFotoLubricacion');
         const btnCargarImagenLubricacion = document.getElementById('btnCargarImagenLubricacion');
 
@@ -3428,12 +4439,26 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                 selectLubricacion.classList.add('select-vacio');
             }
         }
-
+        
         selectsLubricacion.forEach(selectLubricacion => {
             selectLubricacion.addEventListener('change', () => actualizarEstadoLubricacion(selectLubricacion));
         });
 
-        botonLuces.addEventListener('click', () => {
+        // Botón para tomar foto (cámara)
+        btnTomarFotoLubricacion.addEventListener('click', () => {
+            fileInputLubricacion.removeAttribute('multiple');
+            fileInputLubricacion.setAttribute('capture', 'environment');
+            fileInputLubricacion.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenLubricacion.addEventListener('click', () => {
+            fileInputLubricacion.setAttribute('multiple', 'true');
+            fileInputLubricacion.removeAttribute('capture');
+            fileInputLubricacion.click();
+        });
+
+        botonLubricacion.addEventListener('click', () => {
             let valido = true;
 
             selectsLubricacion.forEach(selectLubricacion => {
@@ -3449,6 +4474,24 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             }
 
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenCriterio_103').value = document.getElementById('Criterio_103').value;
+            document.getElementById('hiddenCriterio_104').value = document.getElementById('Criterio_104').value;
+            document.getElementById('hiddenCriterio_105').value = document.getElementById('Criterio_105').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_103:", document.getElementById('hiddenCriterio_103').value);
+            console.log("Criterio_104:", document.getElementById('hiddenCriterio_104').value);
+            console.log("Criterio_105:", document.getElementById('hiddenCriterio_105').value);
+
+            // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInputLubricacion.files.length; i++) {
+                archivos.push(fileInputLubricacion.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnLubricacionCard').querySelector('div');
@@ -3477,12 +4520,12 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="NumeroCargador" class="form-label">N° Cargador</label>
-                    <input type="text" class="form-control" name="NumeroCargador" id="NumeroCargador" placeholder="# de cargador" >
+                    <input type="text" class="form-control" name="NumeroCargador" id="NumeroCargador" placeholder="# de cargador" requerid>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoInspeccionC" class="form-label">Inspeccion visual</label>
+                    <label for="Criterio_106" class="form-label">Inspeccion visual</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoInspeccionC" name="estadoInspeccionC" required>
+                        <select class="form-select" id="Criterio_106" name="Criterio_106" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3491,13 +4534,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoInspeccionC"></span>
+                        <span class="estado-icon" id="icon-Criterio_106"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCablesP" class="form-label">Cables de potencia</label>
+                    <label for="Criterio_107" class="form-label">Cables de potencia</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCablesP" name="estadoCablesP" required>
+                        <select class="form-select" id="Criterio_107" name="Criterio_107" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3506,13 +4549,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCablesP"></span>
+                        <span class="estado-icon" id="icon-Criterio_107"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoConectorA" class="form-label">Conector Anderson</label>
+                    <label for="Criterio_108" class="form-label">Conector Anderson</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoConectorA" name="estadoConectorA" required>
+                        <select class="form-select" id="Criterio_108" name="Criterio_108" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3521,13 +4564,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoConectorA"></span>
+                        <span class="estado-icon" id="icon-Criterio_108"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoVoltajeB" class="form-label">Voltaje</label>
+                    <label for="Criterio_109" class="form-label">Voltaje</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoVoltajeB" name="estadoVoltajeB" required>
+                        <select class="form-select" id="Criterio_109" name="Criterio_109" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3536,13 +4579,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoVoltajeB"></span>
+                        <span class="estado-icon" id="icon-Criterio_109"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoAmperaje" class="form-label">Amperaje</label>
+                    <label for="Criterio_110" class="form-label">Amperaje</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoAmperaje" name="estadoAmperaje" required>
+                        <select class="form-select" id="Criterio_110" name="Criterio_110" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3551,13 +4594,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoAmperaje"></span>
+                        <span class="estado-icon" id="icon-Criterio_110"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoFusible" class="form-label">Fusible</label>
+                    <label for="Criterio_111" class="form-label">Fusible</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoFusible" name="estadoFusible" required>
+                        <select class="form-select" id="Criterio_111" name="Criterio_111" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3566,7 +4609,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoFusible"></span>
+                        <span class="estado-icon" id="icon-Criterio_111"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -3575,7 +4618,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoCargador">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenCargador">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoCargador" name="imagenesDiagnosticoLubricacion[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarCargador" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -3629,6 +4671,20 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectCargador.addEventListener('change', () => actualizarEstadoCargador(selectCargador));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoCargador.addEventListener('click', () => {
+            fileInputCargador.removeAttribute('multiple');
+            fileInputCargador.setAttribute('capture', 'environment');
+            fileInputCargador.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenCargador.addEventListener('click', () => {
+            fileInputCargador.setAttribute('multiple', 'true');
+            fileInputCargador.removeAttribute('capture');
+            fileInputCargador.click();
+        });
+
         botonCargador.addEventListener('click', () => {
             let valido = true;
 
@@ -3644,7 +4700,41 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                 valido = false;
             }
 
+            // ✅ Validar que el número de controlador no esté vacío
+            const numeroCargador = document.getElementById('NumeroCargador').value.trim();
+            if (numeroCargador === "") {
+                alert("Debe ingresar el número de controlador.");
+                document.getElementById('NumeroCargador').focus();
+                valido = false;
+            }
+
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenNumeroCargador').value = numeroCargador;
+            document.getElementById('hiddenCriterio_106').value = document.getElementById('Criterio_106').value;
+            document.getElementById('hiddenCriterio_107').value = document.getElementById('Criterio_107').value;
+            document.getElementById('hiddenCriterio_108').value = document.getElementById('Criterio_108').value;
+            document.getElementById('hiddenCriterio_109').value = document.getElementById('Criterio_109').value;
+            document.getElementById('hiddenCriterio_110').value = document.getElementById('Criterio_110').value;
+            document.getElementById('hiddenCriterio_111').value = document.getElementById('Criterio_111').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("NumeroCargador:", document.getElementById('hiddenNumeroCargador').value);
+            console.log("Criterio_106:", document.getElementById('hiddenCriterio_106').value);
+            console.log("Criterio_107:", document.getElementById('hiddenCriterio_107').value);
+            console.log("Criterio_108:", document.getElementById('hiddenCriterio_108').value);
+            console.log("Criterio_109:", document.getElementById('hiddenCriterio_109').value);
+            console.log("Criterio_110:", document.getElementById('hiddenCriterio_110').value);
+            console.log("Criterio_111:", document.getElementById('hiddenCriterio_111').value);
+
+            // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInputCargador.files.length; i++) {
+                archivos.push(fileInputCargador.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnCargadorCard').querySelector('div');
@@ -3672,9 +4762,9 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="estadoLimpiezaE" class="form-label">Limpieza del equipo</label>
+                    <label for="Criterio_112" class="form-label">Limpieza del equipo</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoLimpiezaE" name="estadoLimpiezaE" required>
+                        <select class="form-select" id="Criterio_112" name="Criterio_112" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3683,13 +4773,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoLimpiezaE"></span>
+                        <span class="estado-icon" id="icon-Criterio_112"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoHorometro" class="form-label">Horómetro</label>
+                    <label for="Criterio_113" class="form-label">Horómetro</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoHorometro" name="estadoHorometro" required>
+                        <select class="form-select" id="Criterio_113" name="Criterio_113" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3698,13 +4788,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoHorometro"></span>
+                        <span class="estado-icon" id="icon-Criterio_113"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoEtiquetas" class="form-label">Etiquetas de seguridad</label>
+                    <label for="Criterio_114" class="form-label">Etiquetas de seguridad</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoEtiquetas" name="estadoEtiquetas" required>
+                        <select class="form-select" id="Criterio_114" name="Criterio_114" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3713,13 +4803,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoEtiquetas"></span>
+                        <span class="estado-icon" id="icon-Criterio_114"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoLimpiezaA" class="form-label">Limpieza área de trabajo</label>
+                    <label for="Criterio_115" class="form-label">Limpieza área de trabajo</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoLimpiezaA" name="estadoLimpiezaA" required>
+                        <select class="form-select" id="Criterio_115" name="Criterio_115" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3728,13 +4818,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoLimpiezaA"></span>
+                        <span class="estado-icon" id="icon-Criterio_115"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoManual" class="form-label">Manual de operaciones</label>
+                    <label for="Criterio_116" class="form-label">Manual de operaciones</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoManual" name="estadoManual" required>
+                        <select class="form-select" id="Criterio_116" name="Criterio_116" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3743,13 +4833,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoManual"></span>
+                        <span class="estado-icon" id="icon-Criterio_116"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoTapas" class="form-label">Tapas</label>
+                    <label for="Criterio_117" class="form-label">Tapas</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoTapas" name="estadoTapas" required>
+                        <select class="form-select" id="Criterio_117" name="Criterio_117" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3758,13 +4848,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoTapas"></span>
+                        <span class="estado-icon" id="icon-Criterio_117"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCapo" class="form-label">Capó y amortiguador</label>
+                    <label for="Criterio_118" class="form-label">Capó y amortiguador</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCapo" name="estadoCapo" required>
+                        <select class="form-select" id="Criterio_118" name="Criterio_118" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3773,13 +4863,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCapo"></span>
+                        <span class="estado-icon" id="icon-Criterio_118"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoSilla" class="form-label">Silla</label>
+                    <label for="Criterio_119" class="form-label">Silla</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoSilla" name="estadoSilla" required>
+                        <select class="form-select" id="Criterio_119" name="Criterio_119" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3788,13 +4878,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoSilla"></span>
+                        <span class="estado-icon" id="icon-Criterio_119"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoCinturon" class="form-label">Cinturon de seguridad</label>
+                    <label for="Criterio_120" class="form-label">Cinturon de seguridad</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoCinturon" name="estadoCinturon" required>
+                        <select class="form-select" id="Criterio_120" name="Criterio_120" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3803,13 +4893,13 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoCinturon"></span>
+                        <span class="estado-icon" id="icon-Criterio_120"></span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="estadoExtintor" class="form-label">Extintor</label>
+                    <label for="Criterio_121" class="form-label">Extintor</label>
                     <div class="d-flex align-items-center">
-                        <select class="form-select" id="estadoExtintor" name="estadoExtintor" required>
+                        <select class="form-select" id="Criterio_121" name="Criterio_121" required>
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Conforme">Conforme</option>
                             <option value="Nivelacion">Nivelación</option>
@@ -3818,7 +4908,7 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                             <option value="Lubricación">Lubricación y engrase</option>
                             <option value="NoAplica">No aplica</option>
                         </select>
-                        <span class="estado-icon" id="icon-estadoExtintor"></span>
+                        <span class="estado-icon" id="icon-Criterio_121"></span>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -3827,7 +4917,6 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoRevision">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenRevision">Cargar Imágenes</button>
                     </div>
-                    <input class="form-control mt-2 d-none" type="file" id="imagenesDiagnosticoRevision" name="imagenesDiagnosticoRevision[]" accept="image/*" multiple capture="environment">
                 </div>
                 <button id="btnGuardarRevision" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
@@ -3881,6 +4970,20 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             selectRevision.addEventListener('change', () => actualizarEstadoRevision(selectRevision));
         });
 
+        // Botón para tomar foto (cámara)
+        btnTomarFotoRevision.addEventListener('click', () => {
+            fileInputRevision.removeAttribute('multiple');
+            fileInputRevision.setAttribute('capture', 'environment');
+            fileInputRevision.click();
+        });
+
+        // Botón para cargar imágenes (galería/archivos)
+        btnCargarImagenRevision.addEventListener('click', () => {
+            fileInputRevision.setAttribute('multiple', 'true');
+            fileInputRevision.removeAttribute('capture');
+            fileInputRevision.click();
+        });
+
         botonRevision.addEventListener('click', () => {
             let valido = true;
 
@@ -3897,6 +5000,38 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             }
 
             if (!valido) return;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            document.getElementById('hiddenCriterio_112').value = document.getElementById('Criterio_112').value;
+            document.getElementById('hiddenCriterio_113').value = document.getElementById('Criterio_113').value;
+            document.getElementById('hiddenCriterio_114').value = document.getElementById('Criterio_114').value;
+            document.getElementById('hiddenCriterio_115').value = document.getElementById('Criterio_115').value;
+            document.getElementById('hiddenCriterio_116').value = document.getElementById('Criterio_116').value;
+            document.getElementById('hiddenCriterio_117').value = document.getElementById('Criterio_117').value;
+            document.getElementById('hiddenCriterio_118').value = document.getElementById('Criterio_118').value;
+            document.getElementById('hiddenCriterio_119').value = document.getElementById('Criterio_119').value;
+            document.getElementById('hiddenCriterio_120').value = document.getElementById('Criterio_120').value;
+            document.getElementById('hiddenCriterio_121').value = document.getElementById('Criterio_121').value;
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("Criterio_112:", document.getElementById('hiddenCriterio_112').value);
+            console.log("Criterio_113:", document.getElementById('hiddenCriterio_113').value);
+            console.log("Criterio_114:", document.getElementById('hiddenCriterio_114').value);
+            console.log("Criterio_115:", document.getElementById('hiddenCriterio_115').value);
+            console.log("Criterio_116:", document.getElementById('hiddenCriterio_116').value);
+            console.log("Criterio_117:", document.getElementById('hiddenCriterio_117').value);
+            console.log("Criterio_118:", document.getElementById('hiddenCriterio_118').value);
+            console.log("Criterio_119:", document.getElementById('hiddenCriterio_119').value);
+            console.log("Criterio_120:", document.getElementById('hiddenCriterio_120').value);
+            console.log("Criterio_121:", document.getElementById('hiddenCriterio_121').value);
+
+            // ✅ También puedes mostrar los archivos seleccionados
+            let archivos = [];
+            for (let i = 0; i < fileInputRevision.files.length; i++) {
+                archivos.push(fileInputRevision.files[i].name);
+            }
+            console.log("Imágenes cargadas:", archivos);
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnRevisionCard').querySelector('div');
@@ -3928,21 +5063,315 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
                     <textarea class="form-control" id="diagnostico" name="diagnostico" rows="5" placeholder="Pendientes proximo mantenimiento..."></textarea>
                 </div>
 
+                <button id="btnGuardarObservaciones" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const botonObservaciones = document.getElementById('btnGuardarObservaciones');
+        botonObservaciones.addEventListener('click', () => {
+            let valido = true;
+
+            // ✅ Guardar valores en campos ocultos del formulario principal
+            const diagnosticoTextarea = document.getElementById('diagnostico');
+            const diagnosticoHidden = document.getElementById('hiddendiagnostico');
+            let valorDiagnostico = diagnosticoTextarea.value.trim();
+
+            // ✅ Si está vacío, guardar como NULL
+            if (valorDiagnostico === "") {
+                diagnosticoHidden.value = "NULL";
+            } else {
+                diagnosticoHidden.value = valorDiagnostico;
+            }
+
+            // ✅ Mostrar en consola los datos guardados
+            console.log("Datos guardados en hidden:");
+            console.log("diagnostico:", document.getElementById('hiddendiagnostico').value);
+
+
+            // ✅ Cambiar color del card
+            const card = document.getElementById('btnObservacionesCard').querySelector('div');
+            card.classList.remove('bg-light');
+            card.classList.add('bg-validado');
+
+            // ❌ Cerrar modal actual
+            const ModalObservaciones = bootstrap.Modal.getInstance(document.getElementById('ModalObservaciones'));
+            ModalObservaciones.hide();
+
+            // ✅ Abrir siguiente modal
+            const modalAgregar = new bootstrap.Modal(document.getElementById('AgregarDiagnostico'));
+            modalAgregar.show();
+        });
+
+    });
+</script>
+
+<!-- Modal Insumos de mantenimiento-->
+<div class="modal fade" id="ModalInsumos" tabindex="-1" aria-labelledby="ModalInsumosLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #000020;">
+                <h5 class="modal-title text-white" id="ModalInsumosLabel">Insumos Mantenimiento</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Agua para batería</label>
+                    <input type="hidden" id="codigoCriterio_122" value="P-000119">
+                    <div class="d-flex gap-2 align-items-center">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="Criterio_122" id="Criterio_122" placeholder="Cantidad">
+                            <select class="form-select w-auto" id="tipoMedidaCriterio_122" name="tipoMedidaCriterio_122" style="max-width: 100px;">
+                                <option value="Und">Und</option>
+                                <option value="Gal">Gal</option>
+                                <option value="1/4">1/4</option>
+                                <option value="1/2">1/2</option>
+                                <option value="3/4">3/4</option>
+                            </select>
+                        </div>
+                        <!-- Switch No Aplica -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input no-aplica" type="checkbox" id="noAplicaCriterio_122" data-target="Criterio_122,tipoMedidaCriterio_122">
+                            <label class="form-check-label" for="noAplicaCriterio_122">No Aplica</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Grasa Wurth</label>
+                    <input type="hidden" id="codigoCriterio_123" value="P-000054">
+                    <div class="d-flex gap-2 align-items-center">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="Criterio_123" id="Criterio_123" placeholder="Cantidad">
+                            <select class="form-select w-auto" id="tipoMedidaCriterio_123" name="tipoMedidaCriterio_123" style="max-width: 100px;">
+                                <option value="Und">Und</option>
+                                <option value="Gal">Gal</option>
+                                <option value="1/4">1/4</option>
+                                <option value="1/2">1/2</option>
+                                <option value="3/4">3/4</option>
+                            </select>
+                        </div>
+                        <!-- Switch No Aplica -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input no-aplica" type="checkbox" id="noAplicaCriterio_123" data-target="Criterio_123,tipoMedidaCriterio_123">
+                            <label class="form-check-label" for="noAplicaCriterio_123">No Aplica</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Aceite Hidráulico</label>
+                    <input type="hidden" id="codigoCriterio_124" value="P-000120">
+                    <div class="d-flex gap-2 align-items-center">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="Criterio_124" id="Criterio_124" placeholder="Cantidad">
+                            <select class="form-select w-auto" id="tipoMedidaCriterio_124" name="tipoMedidaCriterio_124" style="max-width: 100px;">
+                                <option value="Und">Und</option>
+                                <option value="Gal">Gal</option>
+                                <option value="1/4">1/4</option>
+                                <option value="1/2">1/2</option>
+                                <option value="3/4">3/4</option>
+                            </select>
+                        </div>
+                        <!-- Switch No Aplica -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input no-aplica" type="checkbox" id="noAplicaCriterio_124" data-target="Criterio_124,tipoMedidaCriterio_124">
+                            <label class="form-check-label" for="noAplicaCriterio_124">No Aplica</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Valvulina</label>
+                    <input type="hidden" id="codigoCriterio_125" value="P-000210">
+                    <div class="d-flex gap-2 align-items-center">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="Criterio_125" id="Criterio_125" placeholder="Cantidad">
+                            <select class="form-select w-auto" id="tipoMedidaCriterio_125" name="tipoMedidaCriterio_125" style="max-width: 100px;">
+                                <option value="Und">Und</option>
+                                <option value="Gal">Gal</option>
+                                <option value="1/4">1/4</option>
+                                <option value="1/2">1/2</option>
+                                <option value="3/4">3/4</option>
+                            </select>
+                        </div>
+                        <!-- Switch No Aplica -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input no-aplica" type="checkbox" id="noAplicaCriterio_125" data-target="Criterio_125,tipoMedidaCriterio_125">
+                            <label class="form-check-label" for="noAplicaCriterio_125">No Aplica</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Gasolina</label>
+                    <input type="hidden" id="codigoCriterio_126" value="P-000207">
+                    <div class="d-flex gap-2 align-items-center">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="Criterio_126" id="Criterio_126" placeholder="Cantidad">
+                            <select class="form-select w-auto" id="tipoMedidaCriterio_126" name="tipoMedidaCriterio_126" style="max-width: 100px;">
+                                <option value="Und">Und</option>
+                                <option value="Gal">Gal</option>
+                                <option value="1/4">1/4</option>
+                                <option value="1/2">1/2</option>
+                                <option value="3/4">3/4</option>
+                            </select>
+                        </div>
+                        <!-- Switch No Aplica -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input no-aplica" type="checkbox" id="noAplicaCriterio_126" data-target="Criterio_126,tipoMedidaCriterio_126">
+                            <label class="form-check-label" for="noAplicaCriterio_126">No Aplica</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Lubricante Wurth</label>
+                    <input type="hidden" id="codigoCriterio_127" value="P-000053">
+                    <div class="d-flex gap-2 align-items-center">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="Criterio_127" id="Criterio_127" placeholder="Cantidad">
+                            <select class="form-select w-auto" id="tipoMedidaCriterio_127" name="tipoMedidaCriterio_127" style="max-width: 100px;">
+                                <option value="Und">Und</option>
+                                <option value="Gal">Gal</option>
+                                <option value="1/4">1/4</option>
+                                <option value="1/2">1/2</option>
+                                <option value="3/4">3/4</option>
+                            </select>
+                        </div>
+                        <!-- Switch No Aplica -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input no-aplica" type="checkbox" id="noAplicaCriterio_127" data-target="Criterio_127,tipoMedidaCriterio_127">
+                            <label class="form-check-label" for="noAplicaCriterio_127">No Aplica</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Limpiador Wurth</label>
+                    <input type="hidden" id="codigoCriterio_128" value="P-000905">
+                    <div class="d-flex gap-2 align-items-center">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="Criterio_128" id="Criterio_128" placeholder="Cantidad">
+                            <select class="form-select w-auto" id="tipoMedidaCriterio_128" name="tipoMedidaCriterio_128" style="max-width: 100px;">
+                                <option value="Und">Und</option>
+                                <option value="Gal">Gal</option>
+                                <option value="1/4">1/4</option>
+                                <option value="1/2">1/2</option>
+                                <option value="3/4">3/4</option>
+                            </select>
+                        </div>
+                        <!-- Switch No Aplica -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input no-aplica" type="checkbox" id="noAplicaCriterio_128" data-target="Criterio_128,tipoMedidaCriterio_128">
+                            <label class="form-check-label" for="noAplicaCriterio_128">No Aplica</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Limpiador Eletrico</label>
+                    <input type="hidden" id="codigoCriterio_129" value="P-000994">
+                    <div class="d-flex gap-2 align-items-center">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="Criterio_129" id="Criterio_129" placeholder="Cantidad">
+                            <select class="form-select w-auto" id="tipoMedidaCriterio_129" name="tipoMedidaCriterio_129" style="max-width: 100px;">
+                                <option value="Und">Und</option>
+                                <option value="Gal">Gal</option>
+                                <option value="1/4">1/4</option>
+                                <option value="1/2">1/2</option>
+                                <option value="3/4">3/4</option>
+                            </select>
+                        </div>
+                        <!-- Switch No Aplica -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input no-aplica" type="checkbox" id="noAplicaCriterio_129" data-target="Criterio_129,tipoMedidaCriterio_129">
+                            <label class="form-check-label" for="noAplicaCriterio_129">No Aplica</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Liquido de Frenos</label>
+                    <input type="hidden" id="codigoCriterio_130" value="P-000021">
+                    <div class="d-flex gap-2 align-items-center">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="Criterio_130" id="Criterio_130" placeholder="Cantidad">
+                            <select class="form-select w-auto" id="tipoMedidaCriterio_130" name="tipoMedidaCriterio_130" style="max-width: 100px;">
+                                <option value="Und">Und</option>
+                                <option value="Gal">Gal</option>
+                                <option value="1/4">1/4</option>
+                                <option value="1/2">1/2</option>
+                                <option value="3/4">3/4</option>
+                            </select>
+                        </div>
+                        <!-- Switch No Aplica -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input no-aplica" type="checkbox" id="noAplicaCriterio_130" data-target="Criterio_130,tipoMedidaCriterio_130">
+                            <label class="form-check-label" for="noAplicaCriterio_130">No Aplica</label>
+                        </div>
+                    </div>
+                </div>
                 <button id="btnGuardarInsumos" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
             </div>
         </div>
     </div>
 </div>
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectsInsumos = document.querySelectorAll('#ModalInsumos select.form-select');
+        const botonInsumos = document.getElementById('btnGuardarInsumos');
+
+        botonInsumos.addEventListener('click', () => {
+            let valido = true;
+
+            // Lista de criterios a procesar
+            const criterios = [122,123,124,125,126,127,128,129,130];
+
+            criterios.forEach(num => {
+                const codigo = document.getElementById(`codigoCriterio_${num}`).value;
+                const cantidad = document.getElementById(`Criterio_${num}`);
+                const tipoMedida = document.getElementById(`tipoMedidaCriterio_${num}`);
+                const noAplica = document.getElementById(`noAplicaCriterio_${num}`);
+
+                let valorfinal;
+
+                if (noAplica.checked) {
+                    valorfinal = "null|null|null";
+                } else {
+                    const cantidadVal = cantidad.value.trim() || "null";
+                    const tipoMedidaVal = tipoMedida.value.trim() || "null";
+                    valorfinal = `${codigo}|${cantidadVal}|${tipoMedidaVal}`;
+                }
+
+                // Guardar en hidden del modal principal
+                const hidden = document.getElementById(`hiddenCriterio_${num}`);
+                if (hidden) {
+                    hidden.value = valorfinal;
+                    // Mostrar en consola el valor guardado
+                    console.log(`Criterio ${num}:`, hidden.value);
+                }
+
+            });
+
+            // ✅ Cambiar color del card
+            const card = document.getElementById('btnInsumosCard').querySelector('div');
+            card.classList.remove('bg-light');
+            card.classList.add('bg-validado');
+
+            // ❌ Cerrar modal actual
+            const ModalInsumos = bootstrap.Modal.getInstance(document.getElementById('ModalInsumos'));
+            ModalInsumos.hide();
+
+            // ✅ Abrir siguiente modal
+            const modalAgregar = new bootstrap.Modal(document.getElementById('AgregarDiagnostico'));
+            modalAgregar.show();
+        });
+
+    });
     document.querySelectorAll('.no-aplica').forEach(toggle => {
         toggle.addEventListener('change', function() {
             const targetIds = this.getAttribute('data-target').split(',');
             targetIds.forEach(id => {
                 const element = document.getElementById(id);
                 if (element) {
-                    element.disabled = this.checked; 
+                    element.disabled = this.checked; // ✅ si está marcado, deshabilita
                     if (this.checked) {
-                        element.value = ""; 
+                        element.value = ""; // opcional: limpiar valor
                     }
                 }
             });
@@ -3950,94 +5379,214 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
     });
 </script>
 
-<!-- Modal Insumos de mantenimiento-->
-
-
 <script>
     function cargarMontacargas() {
         const ID_Centro = document.getElementById('ID_Centro1').value;
         console.log('ID_Centro enviado:', ID_Centro);
         if (!ID_Centro) return;
         // Realizamos la solicitud AJAX para obtener los montacargas
-        $.get('TraerMontacargas?ID_Centro=${ID_Centro}', function(data) {
-            try{
-                const Montacargas= Array.isArray(data) ? data :JSON.parse(data);
-                const MontacargasSelect = document.getElementById('ID_Montacargas');
+        $.get(`TraerMontacargas?ID_Centro=${ID_Centro}`, function(data) {
+            try {
+                const Montacargas = Array.isArray(data) ? data : JSON.parse(data);
 
                 console.log('Montacargas recibido:', Montacargas);
 
-                // Limpiamos el select de montacargas
-                $('#ID_Montacargas').empty();
+                // Limpiamos el select
+                $('#ID_Montacargas').empty().append('<option value="" disabled selected>Seleccione un montacargas</option>');
 
-                // Agregamos las opciones al select
-                if(Montacargas.length > 0) {
-                    //Llenamos el select con los montacargas
+                if (Montacargas.length > 0) {
                     Montacargas.forEach(montacarga => {
-                        $('#ID_Montacargas').append('<option value="${montacarga.ID}">${montacarga.Numero}-${montacarga.Serie}</option>');
+                        $('#ID_Montacargas').append(
+                            `<option value="${montacarga.ID}"data-modelo="${montacarga.Modelo}" data-voltaje="${montacarga.Voltaje}" data-horometro="${montacarga.Horometro}" data-longitudh="${montacarga.Horquillas}">
+                            ${montacarga.Numero} - ${montacarga.Serie}</option>`
+                        );
                     });
                 }
-            }catch (error) {
+            } catch (error) {
                 console.error('Error al procesar los datos de montacargas:', error);
             }
         }).fail(function(xhr, status, error) {
             console.error('Error en la solicitud AJAX:', error);
-        })
+        });
+
         // Realizamos la solicitud AJAX para obtener los operarios
-        $.get('TraerOperarios?ID_Centro=${ID_Centro}', function(data) {
-            try{
-                const Operarios= Array.isArray(data) ? data :JSON.parse(data);
-                const OperariosSelect = document.getElementById('ID_Operario');
+        $.get(`TraerOperarios?ID_Centro=${ID_Centro}`, function(data) {
+            try {
+                const Operarios = Array.isArray(data) ? data : JSON.parse(data);
 
                 console.log('Operarios recibido:', Operarios);
 
-                // Limpiamos el select de montacargas
-                $('#ID_Operario').empty();
+                $('#ID_Operario').empty().append('<option value="" disabled selected>Seleccione un operario</option>');
 
-                // Agregamos las opciones al select
-                if(Operarios.length > 0) {
-                    //Llenamos el select con los operarios
+                if (Operarios.length > 0) {
                     Operarios.forEach(operario => {
-                        $('#ID_Operario').append('<option value="${operario.ID}">${operario.NombreCompleto}</option>');
+                        $('#ID_Operario').append(
+                            `<option value="${operario.ID}">${operario.NombreCompleto}</option>`
+                        );
                     });
                 }
-            }catch (error) {
+            } catch (error) {
                 console.error('Error al procesar los datos de operarios:', error);
             }
         }).fail(function(xhr, status, error) {
             console.error('Error en la solicitud AJAX:', error);
-        })
+        });
+
+        //Realizamos la solicitud AJAX para obtener las areas o secciones de trabajo
+         $.get(`TraerAreas?ID_Centro=${ID_Centro}`, function(data) {
+            try {
+                const Areas = Array.isArray(data) ? data : JSON.parse(data);
+                console.log('Áreas recibidas:', Areas);
+
+                $('#ID_Area').empty().append('<option value="" disabled selected>Seleccione un área</option>');
+
+                if (Areas.length > 0) {
+                    Areas.forEach(area => {
+                        $('#ID_Area').append(
+                            `<option value="${area.ID}">${area.Nombre}</option>`
+                        );
+                    });
+                }
+            } catch (error) {
+                console.error('Error al procesar los datos de áreas:', error);
+            }
+        }).fail(function(xhr, status, error) {
+            console.error('Error en la solicitud AJAX:', error);
+        });
     };
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        // Función para crear un helper de Bootstrap Modal compatible con varias versiones
+        const getModalInstance = (el) => {
+            if (!el) return null;
+            return (bootstrap.Modal.getOrCreateInstance)
+                ? bootstrap.Modal.getOrCreateInstance(el)
+                : (bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el));
+        };
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const modalPrincipal = new bootstrap.Modal(document.getElementById('agregarMantenimiento'));
 
-        // Detectar cualquier botón que tenga el atributo [data-open-modal]
+        // PARTE 1: FORMULARIO
+        const formIngreso = document.getElementById("documentFormIngreso"); // <-- asegúrate en HTML
+        if (formIngreso) {
+            formIngreso.addEventListener("submit", function (e) {
+                e.preventDefault(); 
+
+                // Obtenemos valores seleccionados (usamos ? para evitar crash)
+                const centroSelect = document.getElementById("ID_Centro1");
+                const montacargasSelect = document.getElementById("ID_Montacargas");
+                const operarioSelect = document.getElementById("ID_Operario");
+                const areaSelect = document.getElementById("ID_Area");
+
+                const centroTexto = centroSelect?.options[centroSelect.selectedIndex]?.text || "";
+                const montacargasTexto = montacargasSelect?.options[montacargasSelect.selectedIndex]?.text || "";
+                const operarioTexto = operarioSelect?.options[operarioSelect.selectedIndex]?.text || "";
+                const areaTexto = areaSelect?.options[areaSelect.selectedIndex]?.text || "";
+
+                // Evitar error si no hay valor seleccionado
+                const selectedOption = montacargasSelect?.options[montacargasSelect.selectedIndex];
+
+                const numeroMontacargas = selectedOption?.text.split(" - ")[0] || "";
+                const numeroSerie = selectedOption?.text.split(" - ")[1] || "";
+                const numeroModelo = selectedOption?.dataset.modelo || "";
+                const voltaje = selectedOption?.dataset.voltaje || "";
+                const horometro = selectedOption?.dataset.horometro || "";
+                const longitudh = selectedOption?.dataset.longitudh || "";
+
+                // ✅ Aquí llenamos los campos hidden con los IDs seleccionados
+                document.getElementById("hiddenIDMontacargas").value = montacargasSelect?.value || "";
+                document.getElementById("hiddenIDArea").value = areaSelect?.value || "";
+                document.getElementById("hiddenIDOperario").value = operarioSelect?.value || "";
+                document.getElementById("hiddenIDCentro").value = centroSelect?.value || "";
+
+                Swal.fire({
+                    title: 'Mantenimiento creado!',
+                    text: `El Número de Montacargas es: ${numeroMontacargas || "N/A"}`,
+                    icon: 'success',
+                    showCancelButton: true,
+                    confirmButtonText: 'Continuar',
+                    cancelButtonText: 'Cancelar',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Rellenar campos en el modal agregarMantenimiento (verificamos existencia)
+                        const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+                        setVal("numeroMontacargas", numeroMontacargas);
+                        setVal("numeroSerie", numeroSerie);
+                        setVal("numeroModelo", numeroModelo); 
+                        setVal("Voltaje", voltaje);           
+                        setVal("Horometro", horometro);           
+                        setVal("nombreCentro", centroTexto);
+                        setVal("nombreOperario", operarioTexto);
+                        setVal("nombreSección", areaTexto);
+                        setVal("LongitudH", longitudh);
+
+                        // Cerrar modal de ingreso y, cuando termine de cerrarse, abrir modal mantenimiento
+                        const modalIngresoEl = document.getElementById('NumerDocumentoModal');
+                        const modalIngresoInst = getModalInstance(modalIngresoEl);
+                        const modalMantEl = document.getElementById('agregarMantenimiento');
+                        const modalMantInst = getModalInstance(modalMantEl);
+
+                        if (modalIngresoInst && modalMantInst && modalIngresoEl) {
+                            const handler = function () {
+                                modalIngresoEl.removeEventListener('hidden.bs.modal', handler);
+                                // abrir mantenimiento
+                                modalMantInst.show();
+                            };
+                            modalIngresoEl.addEventListener('hidden.bs.modal', handler);
+                            modalIngresoInst.hide();
+                        } else {
+                            // Fallback: si no existe instancia, abrir mant directamente
+                            if (modalMantInst) modalMantInst.show();
+                        }
+                    }
+                });
+            });
+        } else {
+            console.warn("documentFormIngreso no encontrado. Verifica id del form en tu HTML.");
+        }
+
+        // PARTE 2: BOTONES data-open-modal
+        const modalPrincipalEl = document.getElementById('agregarMantenimiento');
+        const modalPrincipalInst = getModalInstance(modalPrincipalEl);
+
         document.querySelectorAll('[data-open-modal]').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-                const targetModalSelector = this.getAttribute('data-open-modal');
-                const targetModalElement = document.querySelector(targetModalSelector);
+                const selector = this.getAttribute('data-open-modal');
+                const targetEl = document.querySelector(selector);
+                if (!targetEl) return console.warn("target modal no encontrado para selector:", selector);
 
-                if (!targetModalElement) return;
+                const targetInst = getModalInstance(targetEl);
+                if (!targetInst) return;
 
-                const targetModal = new bootstrap.Modal(targetModalElement);
+                // Si el modal principal está abierto (clase .show), lo cerramos y esperamos
+                const principalIsOpen = modalPrincipalEl && modalPrincipalEl.classList.contains('show');
 
-                modalPrincipal.hide();
+                if (principalIsOpen && modalPrincipalInst) {
+                    const onHidden = function () {
+                        modalPrincipalEl.removeEventListener('hidden.bs.modal', onHidden);
+                        targetInst.show();
 
-                setTimeout(() => {
-                    targetModal.show();
-                }, 500);
-
-                // Al cerrar el modal secundario, reabrimos el modal principal
-                targetModalElement.addEventListener('hidden.bs.modal', function() {
-                    modalPrincipal.show();
-                }, {
-                    once: true
-                }); // Solo una vez, para evitar múltiples registros
+                        // Cuando cierre el secundario, reabrir el principal (una sola vez)
+                        const onSecHidden = function () {
+                            targetEl.removeEventListener('hidden.bs.modal', onSecHidden);
+                            // reabrir principal si existe
+                            const mp = getModalInstance(modalPrincipalEl);
+                            if (mp) mp.show();
+                        };
+                        targetEl.addEventListener('hidden.bs.modal', onSecHidden);
+                    };
+                    modalPrincipalEl.addEventListener('hidden.bs.modal', onHidden);
+                    modalPrincipalInst.hide();
+                } else {
+                    // Si principal no está abierto, abrimos directamente el secundario
+                    targetInst.show();
+                }
             });
         });
     });
-
+    
     let Tecnicos = [];
     $(document).ready(function() {
         $("#btnAgregarTecnico").click(function() {
@@ -4103,5 +5652,70 @@ $ID_Centro = isset($_GET['centro']) ? $_GET['centro'] : $_SESSION['NoCentro'];
             console.error("Error en AJAX:", error);
         });
     }
+
+    function mostrarSupervisor() {
+        var select = document.getElementById("Autoriza");
+        var selectedValue = select.value;
+            
+        if (!selectedValue) {
+            document.getElementById("supervisorSeleccionado").innerText = '';
+            return;
+        }
+
+        var supervisorSeleccionado = select.options[select.selectedIndex].text;
+        var parts = selectedValue.split('|');
+        var idSupervisor = parts[0];
+        var correoSupervisor = parts[1];
+        document.getElementById("formIDSupervisor").value = idSupervisor;
+        document.getElementById("formCorreoSupervisor").value = correoSupervisor;
+        document.getElementById("formNombreSupervisor").value = supervisorSeleccionado;
+
+        document.getElementById("supervisorSeleccionado").innerText = supervisorSeleccionado;
+    }
+
+    //Validacion de formulario antes de enviar
+    document.addEventListener("DOMContentLoaded", function () {
+        const documentFormMantenimiento = document.getElementById("documentFormMantenimiento");
+        if (documentFormMantenimiento) {
+            documentFormMantenimiento.addEventListener("submit", function (e) {
+                e.preventDefault(); 
+
+                // Verificar si se seleccionó un supervisor
+                var select = document.getElementById("Autoriza");
+                if (select.value === "") {
+                    alert("Por favor, selecciona un supervisor.");
+                    return;
+                }
+
+                // Validar Datos del Formulario de los modales
+                const hiddenInputs = documentFormMantenimiento.querySelectorAll("input[type=hidden]");
+                let incompletos = [];
+
+                hiddenInputs.forEach(input => {
+                    if (!input.value || input.value.trim() === "") {
+                        incompletos.push(input.name);
+                    }
+                });
+
+                if (incompletos.length > 0) {
+                    console.warn("⚠️ Faltan datos en:", incompletos);
+
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Información incompleta",
+                        text: "Debes diligenciar todos los campos antes de continuar.",
+                        confirmButtonText: "Ok"
+                    });
+                } else {
+                    console.log("✅ Todos los hidden tienen valores, se envía el formulario.");
+                    // 👉 Enviar formulario al controlador
+                    documentFormMantenimiento.submit();
+                }
+
+            });
+        } else {
+            console.warn("documentFormMantenimiento no encontrado. Verifica id del form en tu HTML.");
+        }
+    });
 </script>
 <?php require "App/Views/Templates/Layouts/Footer.php"; ?>
