@@ -106,8 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <thead>
                     <tr class="text-dark">
                         <th scope="col" class="text-center">Codigo</th>
-                        <th scope="col">Recibe</th>
                         <th scope="col">Entrega</th>
+                        <th scope="col">Recibe</th>
                         <th scope="col" class="text-center">Acciónes</th>
 
                     </tr>

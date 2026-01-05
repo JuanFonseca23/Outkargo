@@ -15,29 +15,8 @@
     $DotacionController = new DotacionController;
     $No_Documento = $_GET['Documento'];
     $CentroTrabajo = $_GET['Centro'];
-    $DataUsuario = $DotacionController->BuscarPersona($No_Documento);
-    $trasladosPendiente = $ProductosController->verificarEstadoTraslado($_SESSION['ID']); 
+    $DataUsuario = $DotacionController->BuscarPersona($No_Documento); 
     $Centro = $ProductosController->ObtenerCentro($_GET['Centro']);
-
-    if ($trasladosPendiente) {
-        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-        echo "
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                Swal.fire({
-                    title: 'Atención',
-                    text: 'Tienes una salida pendiente por autorizar',
-                    icon: 'warning',
-                    confirmButtonText: 'Aceptar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = 'Inicio'; 
-                    }
-                });
-            });
-        </script>";
-        exit;
-    }
     $ListaCentrosDeTrabajo = $CentrosDeTrabajo->TraerCentrosDeTrabajo();
     $DataSupervisores = $UsuariosController->obtenerSupervisor();
     $Filas = $ProductosController->DetallesTraslado($_SESSION['ID']);

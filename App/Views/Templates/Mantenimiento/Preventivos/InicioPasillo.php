@@ -178,18 +178,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $Electricos = $_FILES['imagenesDiagnosticoEletrico'];
         $Tracciones = $_FILES['imagenesDiagnosticoTraccion'];
         $Frenos = $_FILES['imagenesDiagnosticoFrenos'];
-        $Direcciones = $_FILES['imagenesDiagnosticoDireccion'];
+        $Direcciones = NULL;
         $Hidraulicos = $_FILES['imagenesDiagnosticoHidraulico'];
         $Mastiles = $_FILES['imagenesDiagnosticoMastil'];
-        $Carros = $_FILES['imagenesDiagnosticoCarroPorta'];
-        $Aditamientos = $_FILES['imagenesDiagnosticoAditamientos'];
+        $Carros = NULL;
+        $Aditamientos = NULL;
         $Horquillas = $_FILES['imagenesDiagnosticoHorquillas'];
         $Ruedas = $_FILES['imagenesDiagnosticoRuedas'];
         $Chasis = $_FILES['imagenesDiagnosticoChasis'];
         $Luces = $_FILES['imagenesDiagnosticoLuces'];
+        $Caja = NULL;
         $Lubricaciones = $_FILES['imagenesDiagnosticoLubricacion'];
         $Cargadores = $_FILES['imagenesDiagnosticoCargador'];
         $Revisiones = $_FILES['imagenesDiagnosticoRevision'];
+        
+        $Auxiliares = $_FILES['imagenesDiagnosticoDireccion'];
+        $Pantografo = $_FILES['imagenesDiagnosticoCarroPorta'];
+        $Suspension = $_FILES['imagenesDiagnosticoAditamientos'];
+        $Combustion = NULL;
+        $Transmision = NULL;
+        $Motor = NULL;
+        $Refigeracion = NULL;
+        $Componentes = NULL;
+        $Ausencias = NULL;
+        $Correas =NULL;
+        $Panel = NULL;
+        $Funcionamiento = NULL;
+
         $ID_Usuario = $_SESSION['ID'];
         $NombreCreo = $_SESSION['Nombre1'];
         
@@ -208,7 +223,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                           $Criterio_111,$Criterio_112,$Criterio_113,$Criterio_114,$Criterio_115,$Criterio_116,$Criterio_117,$Criterio_118,$Criterio_119,$Criterio_120,
                                                           $Criterio_121,$Criterio_122,$Criterio_123,$Criterio_124,$Criterio_125,$Criterio_126,$Criterio_127,$Criterio_128,$Criterio_129,$Criterio_130,
                                                           $Criterio_131,$Criterio_132,$Criterio_133,$Criterio_134,$Criterio_135,$Criterio_136,$Criterio_137,$Criterio_138,$Criterio_139,
-                                                          $Tecnicos,$Baterias,$Electricos,$Tracciones,$Frenos,$Direcciones,$Hidraulicos,$Mastiles,$Carros,$Aditamientos,$Horquillas,$Ruedas,$Chasis,$Luces,$Lubricaciones,$Cargadores,$Revisiones, $Tipo)){
+                                                          $Tecnicos,$Baterias,$Electricos,$Tracciones,$Frenos,$Direcciones,$Hidraulicos,$Mastiles,$Carros,$Aditamientos,$Horquillas,$Ruedas,$Chasis,$Luces,$Lubricaciones,$Cargadores,$Revisiones, $Caja, 
+                                                          $Auxiliares, $Pantografo, $Suspension, $Combustion, $Transmision, $Motor, $Refigeracion, $Componentes, $Ausencias, $Correas, $Panel, $Funcionamiento, $Tipo)){
             echo "
             <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
             <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
@@ -312,11 +328,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <div class="container-fluid pt-4 px-4">
     <div class="bg-light text-center rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-4">
             <form method="get" action="" class="mb-0">
-                <h6 class="mb-0 d-flex align-items-center">
-                    Preventivos Realizados |
-                    <select name="centro" class="form-select form-select-sm d-inline w-auto ms-2" onchange="this.form.submit()">
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                    <h6 class="mb-0">Preventivos Realizados |</h6>
+                    <select name="centro" 
+                            class="form-select form-select-sm w-auto"
+                            onchange="this.form.submit()">
                         <?php
                             if (!empty($ListaCentrosDeTrabajo)) {
                                 foreach ($ListaCentrosDeTrabajo as $centro) {
@@ -330,13 +348,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             }
                         ?>
                     </select>
-                </h6>
+                </div>
             </form>
 
-            <div>
-                <a href="#">Ver Todas</a>
-                <a>|</a>
-                <a href="#">Descargar Excel</a>
+            <!-- Enlaces de acción -->
+            <div class="text-md-end text-center mt-2 mt-md-0">
+                <a href="#" class="text-decoration-none me-2 text-primary fw-bold">Ver Todas</a>
+                <span class="text-muted">|</span>
+                <a href="#" class="text-decoration-none ms-2 text-success fw-bold">Descargar Excel</a>
             </div>
         </div>
 
@@ -633,7 +652,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </a>
                                 <a id="btnCargadorCard" class="col-sm-6 col-xl-4" href="#" data-open-modal="#ModalCargador">
                                     <div class="bg-light rounded d-flex align-items-center justify-content-between p-3">
-                                      <img width="50" height="50" src="https://img.icons8.com/external-yogi-aprelliyanto-glyph-yogi-aprelliyanto/50/000020/external-power-supply-computer-hardware-yogi-aprelliyanto-glyph-yogi-aprelliyanto.png" alt="external-power-supply-computer-hardware-yogi-aprelliyanto-glyph-yogi-aprelliyanto"/>
+                                        <img width="50" height="50" src="https://img.icons8.com/external-yogi-aprelliyanto-glyph-yogi-aprelliyanto/50/000020/external-power-supply-computer-hardware-yogi-aprelliyanto-glyph-yogi-aprelliyanto.png" alt="external-power-supply-computer-hardware-yogi-aprelliyanto-glyph-yogi-aprelliyanto"/>
                                         <div class="ms-3">
                                             <p class="mb-2" style="color: #000020;">Cargador</p>
                                         </div>
@@ -1029,6 +1048,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFoto1">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagen1">Cargar Imágenes</button>
+                    
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaBateria">
+                            <label class="form-check-label" for="noAplicaBateria">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarBateria" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -1043,11 +1068,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const boton = document.getElementById('btnGuardarBateria');
         const btnTomarFoto = document.getElementById('btnTomarFoto1');
         const btnCargarImagen = document.getElementById('btnCargarImagen1');
+        const noAplicaBateria = document.getElementById('noAplicaBateria');
 
     function actualizarEstado(select) {
         const icon = document.getElementById(`icon-${select.id}`);
         select.classList.remove('select-Conforme', 'select-Nivelacion', 'select-Ajuste', 'select-Lubricacion', 'select-malo', 'select-vacio', 'select-Aplica');
-
+    
             if (select.value === 'Conforme') {
                 icon.textContent = '✔️';
                 icon.style.color = 'green';
@@ -1097,6 +1123,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInput.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaBateria.addEventListener('change', () => {
+            const desactivar = noAplicaBateria.checked;
+
+            btnTomarFoto.disabled = desactivar;
+            btnCargarImagen.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInput.value = "";
+                fileInput.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInput.removeAttribute('data-null');
+            }
+        });
+
         boton.addEventListener('click', () => {
             let valido = true;
 
@@ -1107,8 +1150,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInput.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaBateria.checked && fileInput.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -1137,6 +1181,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInput.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaBateria.checked) {
+                fileInput.value = ""; // sin archivos
+                fileInput.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnBateriaCard').querySelector('div');
@@ -1434,7 +1484,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="Criterio_25" class="form-label">Cable de autoSostenido</label>
+                    <label for="Criterio_25" class="form-label">Cable de autosostenido</label>
                     <div class="d-flex align-items-center">
                         <select class="form-select" id="Criterio_25" name="Criterio_25" required>
                             <option value="" disabled selected>Seleccione</option>
@@ -1483,6 +1533,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoElectrico">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenElectrico">Cargar Imágenes</button>
+
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaElectrico">
+                            <label class="form-check-label" for="noAplicaElectrico">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarElectrico" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -1497,6 +1553,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonElectrico = document.getElementById('btnGuardarElectrico');
         const btnTomarFotoElectrico = document.getElementById('btnTomarFotoElectrico');
         const btnCargarImagenElectrico = document.getElementById('btnCargarImagenElectrico');
+        const noAplicaElectrico = document.getElementById('noAplicaElectrico');
 
         function actualizarEstadoElectrico(selectElectrico) {
             const iconElectrico = document.getElementById(`icon-${selectElectrico.id}`);
@@ -1551,6 +1608,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputElectrico.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaElectrico.addEventListener('change', () => {
+            const desactivar = noAplicaElectrico.checked;
+
+            btnTomarFotoElectrico.disabled = desactivar;
+            btnCargarImagenElectrico.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputElectrico.value = "";
+                fileInputElectrico.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputElectrico.removeAttribute('data-null');
+            }
+        });
+
         botonElectrico.addEventListener('click', () => {
             let valido = true;
 
@@ -1561,8 +1635,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputElectrico.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaElectrico.checked && fileInputElectrico.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
             
@@ -1597,6 +1672,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputElectrico.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaElectrico.checked) {
+                fileInputElectrico.value = ""; // sin archivos
+                fileInputElectrico.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnElectricoCard').querySelector('div');
@@ -1733,6 +1814,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoTraccion">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenTraccion">Cargar Imágenes</button>
+
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaTraccion">
+                            <label class="form-check-label" for="noAplicaTraccion">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarTraccion" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -1747,6 +1834,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonTraccion = document.getElementById('btnGuardarTraccion');
         const btnTomarFotoTraccion = document.getElementById('btnTomarFotoTraccion');
         const btnCargarImagenTraccion = document.getElementById('btnCargarImagenTraccion');
+        const noAplicaTraccion = document.getElementById('noAplicaTraccion');
 
         function actualizarEstadoTraccion(selectTraccion) {
             const iconTraccion = document.getElementById(`icon-${selectTraccion.id}`);
@@ -1801,6 +1889,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputTraccion.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaTraccion.addEventListener('change', () => {
+            const desactivar = noAplicaTraccion.checked;
+
+            btnTomarFotoTraccion.disabled = desactivar;
+            btnCargarImagenTraccion.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputTraccion.value = "";
+                fileInputTraccion.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputTraccion.removeAttribute('data-null');
+            }
+        });
+
         botonTraccion.addEventListener('click', () => {
             let valido = true;
 
@@ -1811,8 +1916,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputTraccion.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaTraccion.checked && fileInputTraccion.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -1834,6 +1940,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputTraccion.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaTraccion.checked) {
+                fileInputTraccion.value = ""; // sin archivos
+                fileInputTraccion.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnTraccionCard').querySelector('div');
@@ -1970,6 +2082,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoFrenos">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenFrenos">Cargar Imágenes</button>
+                    
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaFrenos">
+                            <label class="form-check-label" for="noAplicaFrenos">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarFreno" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -1984,6 +2102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonFreno = document.getElementById('btnGuardarFreno');
         const btnTomarFotoFrenos = document.getElementById('btnTomarFotoFrenos');
         const btnCargarImagenFrenos = document.getElementById('btnCargarImagenFrenos');
+        const noAplicaFrenos = document.getElementById('noAplicaFrenos');
 
         function actualizarEstadoFreno(selectFreno) {
             const iconFreno = document.getElementById(`icon-${selectFreno.id}`);
@@ -2038,6 +2157,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputFreno.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaFrenos.addEventListener('change', () => {
+            const desactivar = noAplicaFrenos.checked;
+
+            btnTomarFotoFrenos.disabled = desactivar;
+            btnCargarImagenFrenos.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputFreno.value = "";
+                fileInputFreno.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputFreno.removeAttribute('data-null');
+            }
+        });
+
         botonFreno.addEventListener('click', () => {
             let valido = true;
 
@@ -2048,8 +2184,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputFreno.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaFrenos.checked && fileInputFreno.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -2070,6 +2207,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputFreno.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaFrenos.checked) {
+                fileInputFreno.value = ""; // sin archivos
+                fileInputFreno.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnFrenosCard').querySelector('div');
@@ -2191,6 +2334,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoDireccion">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenDireccion">Cargar Imágenes</button>
+                    
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaDireccion">
+                            <label class="form-check-label" for="noAplicaDireccion">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarDireccion" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -2205,6 +2354,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonFreno = document.getElementById('btnGuardarDireccion');
         const btnTomarFotoDireccion = document.getElementById('btnTomarFotoDireccion');
         const btnCargarImagenDireccion = document.getElementById('btnCargarImagenDireccion');
+        const noAplicaDireccion = document.getElementById('noAplicaDireccion');
 
         function actualizarEstadoDireccion(selectDireccion) {
             const iconDireccion = document.getElementById(`icon-${selectDireccion.id}`);
@@ -2259,6 +2409,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputDireccion.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaDireccion.addEventListener('change', () => {
+            const desactivar = noAplicaDireccion.checked;
+
+            btnCargarImagenDireccion.disabled = desactivar;
+            btnCargarImagenDireccion.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputDireccion.value = "";
+                fileInputDireccion.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputDireccion.removeAttribute('data-null');
+            }
+        });
+
         botonFreno.addEventListener('click', () => {
             let valido = true;
 
@@ -2269,8 +2436,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputDireccion.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaDireccion.checked && fileInputDireccion.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -2290,6 +2458,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputDireccion.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaDireccion.checked) {
+                fileInputDireccion.value = ""; // sin archivos
+                fileInputDireccion.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnDireccionCard').querySelector('div');
@@ -2456,6 +2630,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoHidraulico">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenHidraulico">Cargar Imágenes</button>
+                    
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaHidraulico">
+                            <label class="form-check-label" for="noAplicaHidraulico">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarHidraulico" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -2470,6 +2650,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonHidraulico = document.getElementById('btnGuardarHidraulico');
         const btnTomarFotoHidraulico = document.getElementById('btnTomarFotoHidraulico');
         const btnCargarImagenHidraulico = document.getElementById('btnCargarImagenHidraulico');
+        const noAplicaHidraulico = document.getElementById('noAplicaHidraulico');
 
         function actualizarEstadoHidraulico(selectHidraulico) {
             const iconHidraulico = document.getElementById(`icon-${selectHidraulico.id}`);
@@ -2524,6 +2705,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputHidraulico.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaHidraulico.addEventListener('change', () => {
+            const desactivar = noAplicaHidraulico.checked;
+
+            btnTomarFotoHidraulico.disabled = desactivar;
+            btnCargarImagenHidraulico.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputHidraulico.value = "";
+                fileInputHidraulico.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputHidraulico.removeAttribute('data-null');
+            }
+        });
+
         botonHidraulico.addEventListener('click', () => {
             let valido = true;
 
@@ -2534,8 +2732,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputHidraulico.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaHidraulico.checked && fileInputHidraulico.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -2558,6 +2757,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputHidraulico.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaHidraulico.checked) {
+                fileInputHidraulico.value = ""; // sin archivos
+                fileInputHidraulico.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnHidraulicoCard').querySelector('div');
@@ -2844,6 +3049,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoMastil">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenMastil">Cargar Imágenes</button>
+                    
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaMastil">
+                            <label class="form-check-label" for="noAplicaMastil">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarMastil" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -2858,6 +3069,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonMastil = document.getElementById('btnGuardarMastil');
         const btnTomarFotoMastil = document.getElementById('btnTomarFotoMastil');
         const btnCargarImagenMastil = document.getElementById('btnCargarImagenMastil');
+        const noAplicaMastil = document.getElementById('noAplicaMastil');
 
         function actualizarEstadoMastil(selectMastil) {
             const iconMastil = document.getElementById(`icon-${selectMastil.id}`);
@@ -2912,6 +3124,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputMastil.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaMastil.addEventListener('change', () => {
+            const desactivar = noAplicaMastil.checked;
+
+            btnTomarFotoMastil.disabled = desactivar;
+            btnCargarImagenMastil.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputMastil.value = "";
+                fileInputMastil.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputMastil.removeAttribute('data-null');
+            }
+        });
+
         botonMastil.addEventListener('click', () => {
             let valido = true;
 
@@ -2922,8 +3151,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputMastil.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaMastil.checked && fileInputMastil.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -2955,6 +3185,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputMastil.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaMastil.checked) {
+                fileInputMastil.value = ""; // sin archivos
+                fileInputMastil.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnMastilCard').querySelector('div');
@@ -3136,6 +3372,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoCarroPorta">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenCarroPorta">Cargar Imágenes</button>
+                    
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaPantografo">
+                            <label class="form-check-label" for="noAplicaPantografo">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarCarroPorta"  type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -3150,6 +3392,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonCarroPorta = document.getElementById('btnGuardarCarroPorta');
         const btnTomarFotoCarroPorta = document.getElementById('btnTomarFotoCarroPorta');
         const btnCargarImagenCarroPorta = document.getElementById('btnCargarImagenCarroPorta');
+        const noAplicaPantografo = document.getElementById('noAplicaPantografo');
 
         function actualizarEstadoCarroPorta(selectCarroPorta) {
             const iconCarroPorta = document.getElementById(`icon-${selectCarroPorta.id}`);
@@ -3204,6 +3447,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputCarroPorta.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaPantografo.addEventListener('change', () => {
+            const desactivar = noAplicaPantografo.checked;
+
+            btnTomarFotoCarroPorta.disabled = desactivar;
+            btnCargarImagenCarroPorta.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputCarroPorta.value = "";
+                fileInputCarroPorta.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputCarroPorta.removeAttribute('data-null');
+            }
+        });
+
         botonCarroPorta.addEventListener('click', () => {
             let valido = true;
 
@@ -3214,8 +3474,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputCarroPorta.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaPantografo.checked && fileInputCarroPorta.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -3239,6 +3500,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputCarroPorta.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaPantografo.checked) {
+                fileInputCarroPorta.value = ""; // sin archivos
+                fileInputCarroPorta.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnCarroPortaCard').querySelector('div');
@@ -3360,6 +3627,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoAditamientos">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenAditamientos">Cargar Imágenes</button>
+                    
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaAditamientos">
+                            <label class="form-check-label" for="noAplicaAditamientos">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarAditamientos" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -3374,6 +3647,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonAditamientos = document.getElementById('btnGuardarAditamientos');
         const btnTomarFotoAditamientos = document.getElementById('btnTomarFotoAditamientos');
         const btnCargarImagenAditamientos = document.getElementById('btnCargarImagenAditamientos');
+        const noAplicaAditamientos = document.getElementById('noAplicaAditamientos');
 
         function actualizarEstadoAditamientos(selectAditamientos) {
             const iconAditamientos = document.getElementById(`icon-${selectAditamientos.id}`);
@@ -3428,6 +3702,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputAditamientos.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaAditamientos.addEventListener('change', () => {
+            const desactivar = noAplicaAditamientos.checked;
+
+            btnTomarFotoAditamientos.disabled = desactivar;
+            btnCargarImagenAditamientos.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputAditamientos.value = "";
+                fileInputAditamientos.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputAditamientos.removeAttribute('data-null');
+            }
+        });
+
         botonAditamientos.addEventListener('click', () => {
             let valido = true;
 
@@ -3438,8 +3729,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputAditamientos.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaAditamientos.checked && fileInputAditamientos.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -3459,6 +3751,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputAditamientos.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaAditamientos.checked) {
+                fileInputAditamientos.value = ""; // sin archivos
+                fileInputAditamientos.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnAditamentosCard').querySelector('div');
@@ -3566,6 +3864,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoHorquillas">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenHorquillas">Cargar Imágenes</button>
+                    
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaHorquillas">
+                            <label class="form-check-label" for="noAplicaHorquillas">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarHorquillas" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -3580,6 +3884,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonHorquillas = document.getElementById('btnGuardarHorquillas');
         const btnTomarFotoHorquillas = document.getElementById('btnTomarFotoHorquillas');
         const btnCargarImagenHorquillas = document.getElementById('btnCargarImagenHorquillas');
+        const noAplicaHorquillas = document.getElementById('noAplicaHorquillas');
 
         function actualizarEstadoHorquillas(selectHorquillas) {
             const iconHorquillas = document.getElementById(`icon-${selectHorquillas.id}`);
@@ -3637,6 +3942,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputHorquillas.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaHorquillas.addEventListener('change', () => {
+            const desactivar = noAplicaHorquillas.checked;
+
+            btnTomarFotoHorquillas.disabled = desactivar;
+            btnCargarImagenHorquillas.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputHorquillas.value = "";
+                fileInputHorquillas.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputHorquillas.removeAttribute('data-null');
+            }
+        });
+
         botonHorquillas.addEventListener('click', () => {
             let valido = true;
 
@@ -3647,8 +3969,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputHorquillas.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaHorquillas.checked && fileInputHorquillas.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -3668,6 +3991,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputHorquillas.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaHorquillas.checked) {
+                fileInputHorquillas.value = ""; // sin archivos
+                fileInputHorquillas.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnHorquillasCard').querySelector('div');
@@ -3834,6 +4163,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoRuedas">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenRuedas">Cargar Imágenes</button>
+                    
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaRuedas">
+                            <label class="form-check-label" for="noAplicaRuedas">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarRuedas" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -3848,6 +4183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonRuedas = document.getElementById('btnGuardarRuedas');
         const btnTomarFotoRuedas = document.getElementById('btnTomarFotoRuedas');
         const btnCargarImagenRuedas = document.getElementById('btnCargarImagenRuedas');
+        const noAplicaRuedas = document.getElementById('noAplicaRuedas');
 
         function actualizarEstadoRuedas(selectRuedas) {
             const iconRuedas = document.getElementById(`icon-${selectRuedas.id}`);
@@ -3902,6 +4238,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputRuedas.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaRuedas.addEventListener('change', () => {
+            const desactivar = noAplicaRuedas.checked;
+
+            btnTomarFotoRuedas.disabled = desactivar;
+            btnCargarImagenRuedas.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputRuedas.value = "";
+                fileInputRuedas.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputRuedas.removeAttribute('data-null');
+            }
+        });
+
         botonRuedas.addEventListener('click', () => {
             let valido = true;
 
@@ -3912,8 +4265,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputRuedas.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaRuedas.checked && fileInputRuedas.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -3936,6 +4290,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputRuedas.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaRuedas.checked) {
+                fileInputRuedas.value = ""; // sin archivos
+                fileInputRuedas.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnRuedasCard').querySelector('div');
@@ -4027,6 +4387,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoChasis">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenChasis">Cargar Imágenes</button>
+
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaChasis">
+                            <label class="form-check-label" for="noAplicaChasis">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarChasis" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -4041,6 +4407,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonChasis = document.getElementById('btnGuardarChasis');
         const btnTomarFotoChasis = document.getElementById('btnTomarFotoChasis');
         const btnCargarImagenChasis = document.getElementById('btnCargarImagenChasis');
+        const noAplicaChasis = document.getElementById('noAplicaChasis');
 
         function actualizarEstadoChasis(selectChasis) {
             const iconChasis = document.getElementById(`icon-${selectChasis.id}`);
@@ -4095,6 +4462,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputChasis.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaChasis.addEventListener('change', () => {
+            const desactivar = noAplicaChasis.checked;
+
+            btnTomarFotoChasis.disabled = desactivar;
+            btnCargarImagenChasis.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputChasis.value = "";
+                fileInputChasis.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputChasis.removeAttribute('data-null');
+            }
+        });
+
         botonChasis.addEventListener('click', () => {
             let valido = true;
 
@@ -4105,8 +4489,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputChasis.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaChasis.checked && fileInputChasis.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -4125,6 +4510,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputChasis.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaChasis.checked) {
+                fileInputChasis.value = ""; // sin archivos
+                fileInputChasis.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnChasisCard').querySelector('div');
@@ -4231,6 +4622,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoLuces">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenLuces">Cargar Imágenes</button>
+                    
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaluces">
+                            <label class="form-check-label" for="noAplicaluces">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarLuces" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -4245,6 +4642,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonLuces = document.getElementById('btnGuardarLuces');
         const btnTomarFotoLuces = document.getElementById('btnTomarFotoLuces');
         const btnCargarImagenLuces = document.getElementById('btnCargarImagenLuces');
+        const noAplicaluces = document.getElementById('noAplicaluces');
 
         function actualizarEstadoLuces(selectLuces) {
             const iconLuces = document.getElementById(`icon-${selectLuces.id}`);
@@ -4299,6 +4697,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputLuces.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaluces.addEventListener('change', () => {
+            const desactivar = noAplicaluces.checked;
+
+            btnTomarFotoLuces.disabled = desactivar;
+            btnCargarImagenLuces.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputLuces.value = "";
+                fileInputLuces.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputLuces.removeAttribute('data-null');
+            }
+        });
+
         botonLuces.addEventListener('click', () => {
             let valido = true;
 
@@ -4309,8 +4724,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputLuces.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaluces.checked && fileInputLuces.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -4329,6 +4745,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputLuces.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaluces.checked) {
+                fileInputLuces.value = ""; // sin archivos
+                fileInputLuces.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnLucesCard').querySelector('div');
@@ -4420,6 +4842,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoLubricacion">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenLubricacion">Cargar Imágenes</button>
+
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaLubricacion">
+                            <label class="form-check-label" for="noAplicaLubricacion">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarLubricacion" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -4434,6 +4862,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonLubricacion = document.getElementById('btnGuardarLubricacion');
         const btnTomarFotoLubricacion = document.getElementById('btnTomarFotoLubricacion');
         const btnCargarImagenLubricacion = document.getElementById('btnCargarImagenLubricacion');
+        const noAplicaLubricacion = document.getElementById('noAplicaLubricacion');
 
         function actualizarEstadoLubricacion(selectLubricacion) {
             const iconLubricacion = document.getElementById(`icon-${selectLubricacion.id}`);
@@ -4488,6 +4917,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputLubricacion.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaLubricacion.addEventListener('change', () => {
+            const desactivar = noAplicaLubricacion.checked;
+
+            btnTomarFotoLubricacion.disabled = desactivar;
+            btnCargarImagenLubricacion.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputLubricacion.value = "";
+                fileInputLubricacion.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputLubricacion.removeAttribute('data-null');
+            }
+        });
+
         botonLubricacion.addEventListener('click', () => {
             let valido = true;
 
@@ -4498,8 +4944,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputLubricacion.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaLubricacion.checked && fileInputLubricacion.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -4517,6 +4964,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputLubricacion.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaLubricacion.checked) {
+                fileInputLubricacion.value = ""; // sin archivos
+                fileInputLubricacion.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnLubricacionCard').querySelector('div');
@@ -4627,6 +5080,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoCargador">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenCargador">Cargar Imágenes</button>
+                    
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaCargador">
+                            <label class="form-check-label" for="noAplicaCargador">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarCargador" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -4641,6 +5100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonCargador = document.getElementById('btnGuardarCargador');
         const btnTomarFotoCargador = document.getElementById('btnTomarFotoCargador');
         const btnCargarImagenCargador = document.getElementById('btnCargarImagenCargador');
+        const noAplicaCargador = document.getElementById('noAplicaCargador');
 
         function actualizarEstadoCargador(selectCargador) {
             const iconCargador = document.getElementById(`icon-${selectCargador.id}`);
@@ -4695,6 +5155,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputCargador.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaCargador.addEventListener('change', () => {
+            const desactivar = noAplicaCargador.checked;
+
+            btnTomarFotoCargador.disabled = desactivar;
+            btnCargarImagenCargador.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputCargador.value = "";
+                fileInputCargador.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputCargador.removeAttribute('data-null');
+            }
+        });
+
         botonCargador.addEventListener('click', () => {
             let valido = true;
 
@@ -4705,8 +5182,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputCargador.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaCargador.checked && fileInputCargador.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -4734,6 +5212,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputCargador.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaCargador.checked) {
+                fileInputCargador.value = ""; // sin archivos
+                fileInputCargador.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnCargadorCard').querySelector('div');
@@ -4900,6 +5384,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-primary" id="btnTomarFotoRevision">Tomar Foto</button>
                         <button type="button" class="btn btn-outline-secondary" id="btnCargarImagenRevision">Cargar Imágenes</button>
+                    
+                        <!-- ✅ Nuevo selector "No aplica" -->
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" id="noAplicaRevision">
+                            <label class="form-check-label" for="noAplicaRevision">No aplica</label>
+                        </div>
                     </div>
                 </div>
                 <button id="btnGuardarRevision" type="button" class="btn text-white" style="background-color: #000020;">Guardar Diagnóstico</button>
@@ -4914,6 +5404,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const botonRevision = document.getElementById('btnGuardarRevision');
         const btnTomarFotoRevision = document.getElementById('btnTomarFotoRevision');
         const btnCargarImagenRevision = document.getElementById('btnCargarImagenRevision');
+        const noAplicaRevision = document.getElementById('noAplicaRevision');
 
         function actualizarEstadoRevision(selectRevision) {
             const iconRevision = document.getElementById(`icon-${selectRevision.id}`);
@@ -4968,6 +5459,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             fileInputRevision.click();
         });
 
+        // ✅ Activar/desactivar por "No aplica"
+        noAplicaRevision.addEventListener('change', () => {
+            const desactivar = noAplicaRevision.checked;
+
+            btnTomarFotoRevision.disabled = desactivar;
+            btnCargarImagenRevision.disabled = desactivar;
+
+            if (desactivar) {
+                // Si marca "No aplica", limpia y marca como NULL
+                fileInputRevision.value = "";
+                fileInputRevision.setAttribute('data-null', 'true');
+            } else {
+                // Si desmarca, vuelve a habilitar
+                fileInputRevision.removeAttribute('data-null');
+            }
+        });
+
         botonRevision.addEventListener('click', () => {
             let valido = true;
 
@@ -4978,8 +5486,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
 
-            if (fileInputRevision.files.length === 0) {
-                alert('Debe subir al menos una imagen del diagnóstico.');
+            // ⚠️ Validar solo si no está marcado "No aplica"
+            if (!noAplicaRevision.checked && fileInputRevision.files.length === 0) {
+                alert('Debe subir al menos una imagen del diagnóstico o marcar "No aplica".');
                 valido = false;
             }
 
@@ -5002,6 +5511,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 archivos.push(fileInputRevision.files[i].name);
             }
             console.log("Imágenes cargadas:", archivos);
+
+            // ✅ Guardar valor NULL si "No aplica"
+            if (noAplicaRevision.checked) {
+                fileInputRevision.value = ""; // sin archivos
+                fileInputRevision.setAttribute('data-null', 'true');
+            }
 
             // ✅ Cambiar color del card
             const card = document.getElementById('btnRevisionCard').querySelector('div');

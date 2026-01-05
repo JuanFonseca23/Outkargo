@@ -4,12 +4,8 @@ $ProductosController = new ProductosController;
 $DataEntrada = $ProductosController->VerTraslado($_GET['ID']);
 
 if ($DataEntrada){
-    if($DataEntrada['Estado'] == 1){
-        $Filas = $ProductosController->MostrarDetallesProductosTraslado($_GET['ID']);
-    }
-    else if ($DataEntrada['Estado'] == 2){
-        $Filas = $ProductosController->MostrarDetallesProductosTrasladoTemp($_GET['ID']);
-    }
+    $Filas = $ProductosController->MostrarDetallesProductosTraslado($_GET['ID']);
+
 }
 
 if ($_SERVER['HTTP_HOST'] == 'localhost') {

@@ -264,208 +264,208 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_11'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Bujes</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_57'] ?></td>
-                <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">LUBRICACIÓN</td>
+                <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">ADITAMENTOS</td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Controlador</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_12'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Rodamientos</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_58'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Engrase puente trasero</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_103'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Side shift</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_79'] ?></td>
             </tr> 
             <tr>
                 <td colspan="2" style="font-weight: bold;">No de Controlador</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Numero_Controlador'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Cadenas</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_59'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Engrase mastil</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_104'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Fork positioner</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_80'] ?></td>
             </tr> 
             <tr>
                 <td colspan="2" style="font-weight: bold;">Displey</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_13'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Poleas</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_60'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Lubricacíon cadenas y secciones mastil</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_105'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Clamp</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_81'] ?></td>
+                
             </tr> 
             <tr>
                 <td colspan="2" style="font-weight: bold;">Contactor linea</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_14'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Pasadores cadenas</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_61'] ?></td>
-                <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">CARGADOR</td>
+                <td colspan="2" style="font-weight: bold;">Cascade Tubular</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_82'] ?></td>
             </tr> 
             <tr>
                 <td colspan="2" style="font-weight: bold;">Contactor direccion</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_15'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Mangueras free lift</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_62'] ?></td>
-                <td colspan="2" style="font-weight: bold;">N° Cargador</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Numero_Cargador'] ?></td>
+                <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">CARGADOR</td>
             </tr> 
             <tr>
                 <td colspan="2" style="font-weight: bold;">Contactor elevacion</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_16'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Mangueras side shift</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_63'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Inspeccion visual</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_106'] ?></td>
+                <td colspan="2" style="font-weight: bold;">N° Cargador</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Numero_Cargador'] ?></td>
             </tr> 
             <tr>
                 <td colspan="2" style="font-weight: bold;">Contactor marcha</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_17'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Mangueras fork positioner</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_64'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Cables de potencia</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_107'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Inspeccion visual</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_106'] ?></td>
             </tr> 
             <tr>
                 <td colspan="2" style="font-weight: bold;">Micros</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_18'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Tuberías</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_65'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Conector Anderson</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_108'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Cables de potencia</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_107'] ?></td>
             </tr> 
             <tr>
                 <td colspan="2" style="font-weight: bold;">Switch de ignicion</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_19'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Racores</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_66'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Voltaje</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_109'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Conector Anderson</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_108'] ?></td>
             </tr> 
             <tr>
                 <td colspan="2" style="font-weight: bold;">Potenciómetro de aceleración</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_20'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Cilindros de inclinación</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_67'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Amperaje</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_110'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Voltaje</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_109'] ?></td>
             </tr> 
             <tr>
                 <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">SISTEMA DE TRACCIÓN</td>
                 <td colspan="2" style="font-weight: bold;">Cilindro de free lift</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_68'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Fusible</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_111'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Amperaje</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_110'] ?></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Motor de tracción</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_21'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Cilindros laterales</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_69'] ?></td>
-                <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">REVISION DE EQUIPO</td>
+                <td colspan="2" style="font-weight: bold;">Fusible</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_111'] ?></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Escobillas</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_22'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Cilindro de side shift</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_70'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Limpieza del equipo</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_112'] ?></td>
+                <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">REVISION DE EQUIPO</td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Micros de marchas</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_23'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Cilindros de fork positioner</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_71'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Horómetro</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_113'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Limpieza del equipo</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_112'] ?></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Transmisión</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_24'] ?></td>
                 <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">CARRO PORTA HORQUILLAS</td>
-                <td colspan="2" style="font-weight: bold;">Etiquetas de seguridad</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_114'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Horómetro</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_113'] ?></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Nivel de valvulina</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_25'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Ajuste carro porta horquillas</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_72'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Limpieza área de trabajo</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_115'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Etiquetas de seguridad</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_114'] ?></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Tornilleria</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_26'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Rodamientos</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_73'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Manual de operaciones</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_116'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Limpieza área de trabajo</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_115'] ?></td>
             </tr>
             <tr>
                 <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">SISTEMA DE FRENOS</td>
                 <td colspan="2" style="font-weight: bold;">Cadenas</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_74'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Tapas</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_117'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Manual de operaciones</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_116'] ?></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Liquido de frenos</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_27'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Pasadores</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_75'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Capó y amortiguador</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_118'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Tapas</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_117'] ?></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Bomba de freno principal</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_28'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Parilla o Espejo</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_76'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Silla</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_119'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Capó y amortiguador</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_118'] ?></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Estado de bandas</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_29'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Mordazas</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_77'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Cinturon de seguridad</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_120'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Silla</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_119'] ?></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Rodamientos</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_30'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Deslizadores</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_78'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Extintor</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_121'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Cinturon de seguridad</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_120'] ?></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Freno de estacionamiento</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_31'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Side shift</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_79'] ?></td>
-                <td colspan="2"></td>
-                <td ></td>
+                <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">LUBRICACIÓN</td>
+                <td colspan="2" style="font-weight: bold;">Extintor</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_121'] ?></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Eficiencia de frenado</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_32'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Fork positioner</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_80'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Engrase puente trasero</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_103'] ?></td>
                 <td colspan="2"></td>
                 <td ></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Guayas de parqueo</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_33'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Clamp</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_81'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Engrase mastil</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_104'] ?></td>
                 <td colspan="2"></td>
                 <td ></td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Pedal de freno</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_34'] ?></td>
-                <td colspan="2" style="font-weight: bold;">Cascade Tubular</td>
-                <td style="text-align:center;"><?= $DataDetalleM['Criterio_82'] ?></td>
+                <td colspan="2" style="font-weight: bold;">Lubricacíon cadenas y secciones mastil</td>
+                <td style="text-align:center;"><?= $DataDetalleM['Criterio_105'] ?></td>
                 <td colspan="2"></td>
                 <td ></td>
             </tr>

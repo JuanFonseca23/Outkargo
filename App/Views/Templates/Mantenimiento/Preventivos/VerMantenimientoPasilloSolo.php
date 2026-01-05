@@ -368,7 +368,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
                 <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">CARGADOR</td>
             </tr>
             <tr>
-                <td colspan="2" style="font-weight: bold;">Cables de autoSostenido</td>
+                <td colspan="2" style="font-weight: bold;">Cables de autosostenido</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_25'] ?></td>
                 <td colspan="2" style="font-weight: bold;">Mangueras pantógrafo</td>
                 <td style="text-align:center;"><?= $DataDetalleM['Criterio_72'] ?></td>
@@ -586,7 +586,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
             </tr>
         </thead>
         <tbody>
-            <td th colspan="4"><?= $DataDetalleM['Observaciones']?></td>
+            <td colspan="4"><?= $DataDetalleM['Observaciones']?></td>
         </tbody>
     </table>
 
