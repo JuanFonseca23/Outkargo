@@ -99,6 +99,7 @@
                                 require_once "Overhauling.php";
                                 require_once "Huella.php";
                                 require_once "Mantenimiento.php";
+                                require_once "OrdenesCompra.php";
                                 break;
 
                             case '2': //Practicante ingeniería software

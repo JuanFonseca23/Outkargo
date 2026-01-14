@@ -1,6 +1,5 @@
 <?php
     return[
-        
         'Overhauling/BuscarTecnico' => 'Views/Templates/Overhauling/DiagnosticoInicial/BuscarTecnicos.php',
         'Overhauling/Criterios' => 'Views/Templates/Overhauling/DiagnosticoInicial/Criterios.php',
         'Overhauling/FirmaDiagnostico' => 'Views/Templates/Overhauling/DiagnosticoInicial/FirmaDiagnostico.php',

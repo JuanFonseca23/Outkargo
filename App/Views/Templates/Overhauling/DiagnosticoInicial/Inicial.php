@@ -356,18 +356,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="row g-4">
         <div class="col-sm-6 col-xl-3">
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                <img width="50" height="50" src="https://img.icons8.com/pastel-glyph/50/000020/hand-truck--v2.png" alt="hand-truck--v2"/>
+                <img width="50" height="50" src="https://img.icons8.com/ink/50/000020/purchase-order.png" alt="purchase-order"/>
                 <div class="ms-3">
-                    <p class="mb-2" style="color: #000020;">Preventivos Realizados</p>
+                    <p class="mb-2" style="color: #000020;">Diagnosticos Realizados</p>
                     <h6 class="mb-0" style="color: #000020;"><?= $NoDiagnosticos['NoDiagnosticos'] ?></h6>
                 </div>
             </div>
         </div>
         <a class="col-sm-6 col-xl-3" data-bs-toggle="modal" data-bs-target="#NumerDocumentoModal">
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                <img width="50" height="50" src="https://img.icons8.com/pastel-glyph/100/000020/hand-truck--v1.png" alt="hand-truck--v2" style="transform: scaleX(-1);" />
+                <img width="50" height="50" src="https://img.icons8.com/ink/50/000020/purchase-order.png" alt="purchase-order"/>
                 <div class="ms-3">
-                    <p class="mb-2" style="color: #000020;">Preventivo</p>
+                    <p class="mb-2" style="color: #000020;">Realizar Diagnostico Inicial</p>
                 </div>
             </div>
         </a>
