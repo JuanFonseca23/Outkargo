@@ -246,6 +246,15 @@
             return $stmt->fetch(PDO::FETCH_ASSOC); 
         }
 
+        public function verificarEstadoFirmaSalida1($ID_Salida) {
+            $sql = "SELECT Firma_Estado_Salida FROM salida_insumos WHERE ID = :ID_Salida";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(":ID_Salida", $ID_Salida);
+            $stmt->execute();
+        
+            return $stmt->fetch(PDO::FETCH_ASSOC); 
+        }
+
         public function verificarEstadoFirmaT($ID_Traslado) {
             $sql = "SELECT Firma_Estado_Recibe FROM traslado_insumos WHERE ID = :ID_Traslado";
             $stmt = $this->PDO->prepare($sql);
@@ -958,25 +967,45 @@
             return true;
         }
 
-        public function FirmarSalida($ID_Usuario, $ID_Recibe, $ID_Supervisor, $ID_Centro, $ID_Destino, $No_Formulario, $Fecha_Realizado, $Estado, $Firma, $Firma_Estado_Recibe) {
-            $sql = "INSERT INTO salida_insumos (ID_Usuario, ID_Recibe, ID_Supervisor, ID_Centro, ID_Destino, Numero, Fecha_Realizado, Fecha_Firma_Recibe, Fecha_Firma_Supervisor, Estado, Firma_Salida, Firma_Recibe, Firma_Supervisor, Firma_Estado_Recibe, Firma_Supervisor_Estado, Descripcion_Anulacion)
-                    VALUES (:ID_Usuario, :ID_Recibe, :ID_Supervisor, :ID_Centro, :ID_Destino, :Numero, :Fecha_Realizado, NULL, NULL, :Estado, :Firma, NULL, NULL, :Firma_Estado_Recibe, :Firma_Estado_Recibe, NULL)";
+        public function FirmarSalida($ID_Usuario, $ID_Recibe, $ID_Supervisor, $ID_Centro, $ID_Destino, $ID_Orden, $No_Formulario, $Tipo_Origen, $Fecha_Realizado, $Fecha_Recibe, $Estado, $Firma_Usuario, $Firma, $Firma_Estado_Salida, $Firma_Estado_Recibe) {
+            $Firma_Estado_Supervisor = 2;
+            $sql = "INSERT INTO salida_insumos (ID_Usuario, ID_Recibe, ID_Supervisor, ID_Centro, ID_Destino, ID_Origen, Numero, Tipo_Origen, Fecha_Realizado, Fecha_Firma_Recibe, Fecha_Firma_Supervisor, Estado, Firma_Salida, Firma_Recibe, Firma_Supervisor, Firma_Estado_Salida, Firma_Estado_Recibe, Firma_Supervisor_Estado, Descripcion_Anulacion)
+                    VALUES (:ID_Usuario, :ID_Recibe, :ID_Supervisor, :ID_Centro, :ID_Destino, :ID_Orden, :Numero, :Tipo_Origen, :Fecha_Realizado, :Fecha_Recibe, NULL, :Estado, :Firma_Usuario, :Firma, NULL, :Firma_Estado_Salida, :Firma_Estado_Recibe, :Firma_Estado_Supervisor, NULL)";
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(":ID_Usuario", $ID_Usuario);
             $stmt->bindParam(":ID_Recibe", $ID_Recibe);
-            $stmt->bindParam(":ID_Centro", $ID_Centro);
             $stmt->bindParam(":ID_Supervisor", $ID_Supervisor);
+            $stmt->bindParam(":ID_Centro", $ID_Centro);
             $stmt->bindParam(":ID_Destino", $ID_Destino);
+            $stmt->bindParam(":ID_Orden", $ID_Orden);
             $stmt->bindParam(":Numero", $No_Formulario);
+            $stmt->bindParam(":Tipo_Origen", $Tipo_Origen);
             $stmt->bindParam(":Fecha_Realizado", $Fecha_Realizado);
+            $stmt->bindParam(":Fecha_Recibe", $Fecha_Recibe);
             $stmt->bindParam(":Estado", $Estado);
+            $stmt->bindParam(":Firma_Usuario", $Firma_Usuario); 
             $stmt->bindParam(":Firma", $Firma); 
+            $stmt->bindParam(":Firma_Estado_Salida", $Firma_Estado_Salida); 
             $stmt->bindParam(":Firma_Estado_Recibe", $Firma_Estado_Recibe); 
+            $stmt->bindParam(":Firma_Estado_Supervisor", $Firma_Estado_Supervisor); 
             if($stmt->execute()){
                 return $this->PDO->lastInsertId(); 
             }else{
                 return false; 
             }
+        }
+
+        public function FirmarSalida1 ($ID, $Firma_Supervisor, $Firma_Supervisor_Estado){
+            $sql = "UPDATE salida_insumos SET Firma_Salida = :Firma_Supervisor, Firma_Estado_Salida = :Firma_Supervisor_Estado WHERE ID = :ID";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(":ID", $ID);
+            $stmt->bindParam(":Firma_Supervisor", $Firma_Supervisor); 
+            $stmt->bindParam(":Firma_Supervisor_Estado", $Firma_Supervisor_Estado); 
+            if($stmt->execute()){
+                return true;
+            }else{
+                return false;
+            } 
         }
 
         public function FirmarSalidaRecibe ($ID_Salida, $Fecha_Recibe, $Firma, $Firma_Estado_Recibe){
@@ -1087,10 +1116,9 @@
         }
 
         public function MostrarDetallesProductosSalida($ID) {
-            $stmt = $this->PDO->prepare("SELECT ded.ID, p.Codigo, p.Nombre, ded.Cantidad, ded.N_Factura, m.Numero, ded.Observaciones
+            $stmt = $this->PDO->prepare("SELECT ded.ID, p.Codigo, p.Nombre, ded.Cantidad, ded.N_Factura
                 FROM detalles_salida_insumos ded
                 JOIN insumos p ON ded.ID_Producto = p.ID
-                LEFT JOIN montacargas m ON ded.ID_Montacargas = m.ID
                 WHERE ded.ID_Salida = :id
                 ORDER BY p.Codigo ASC");
             $stmt->bindParam(":id", $ID);
@@ -1100,11 +1128,10 @@
         }   
 
         public function MostrarDetallesProductosSalidaTemp($ID) {
-            $stmt = $this->PDO->prepare("SELECT dted.ID, p.Codigo, p.Nombre, dted.Cantidad, dted.N_Factura, m.Numero, dted.Observaciones
+            $stmt = $this->PDO->prepare("SELECT dted.ID, p.Codigo, p.Nombre, dted.Cantidad, dted.N_Factura
                 FROM detalles_temp_salida_insumos dted
                 JOIN insumos p ON dted.ID_Producto = p.ID
-                LEFT JOIN montacargas m ON dted.ID_Montacargas = m.ID
-                JOIN traslado_insumos ed ON dted.ID_Usuario = ed.ID_Usuario
+                JOIN salida_insumos ed ON dted.ID_Usuario = ed.ID_Usuario
                 WHERE ed.ID = :id
                 ORDER BY p.Codigo ASC");
             $stmt->bindParam(":id", $ID);
@@ -1141,6 +1168,17 @@
             return $entradaData ? $entradaData['TotalCantidad'] : 0;
         }
 
+        public function DescontarInventario($ID, $Usar, $ID_Centro){
+            $sql = "UPDATE detalle_inventario_insumos
+                    SET Cantidad = Cantidad - :Usar
+                    WHERE ID = :ID AND ID_Centro = :ID_Centro";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':Usar', $Usar);
+            $stmt->bindParam(':ID', $ID);
+            $stmt->bindParam(':ID_Centro', $ID_Centro);
+            return $stmt->execute();
+        }
+
         public function ObtenerCantidadEnTemp($ID_Usuario, $ID_Producto) {
             $sql = "SELECT SUM(Cantidad) as Total FROM detalles_temp_traslado_insumos WHERE ID_Usuario = :ID_Usuario AND ID_Producto = :ID_Producto";
             $stmt = $this->PDO->prepare($sql);
@@ -1174,6 +1212,18 @@
             }
 
             return $Facturas;
+        }
+
+        public function ObtenerProductosPEPS($ID_Insumo, $ID_Centro){
+            $sql ="SELECT ID, N_Factura, N_Lote, Cantidad, valor_unitario
+                   FROM detalle_inventario_insumos
+                   WHERE ID_Insumo = :ID_Insumo AND ID_Centro = :ID_Centro AND Cantidad > 0 
+                   ORDER BY Fecha_Ingreso ASC";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(":ID_Insumo", $ID_Insumo);
+            $stmt->bindParam(":ID_Centro", $ID_Centro);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public function LeerUltimoRegistroTraslado($ID) {
@@ -1345,6 +1395,22 @@
             } else {
                 return false; 
             }                
+        }
+
+        public function RegistrarDetalleSalida ($Mecanico, $ID_Salida, $ID_Insumo, $Usar, $N_Factura, $N_Lote, $valor_unitario){
+            $Valor_Total = $Usar * $valor_unitario;
+            $sql = "INSERT INTO detalles_salida_insumos (ID_Usuario, ID_Salida, ID_Producto, Cantidad, N_Factura, Lote, valor_unitario, valor_total, ID_Producto_Seleccionado)
+                    VALUES (:Mecanico, :ID_Salida, :ID_Insumo, :Usar, :N_Factura, :N_Lote, :valor_unitario, :Valor_Total, 0)";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':Mecanico', $Mecanico);
+            $stmt->bindParam(':ID_Salida', $ID_Salida);
+            $stmt->bindParam(':ID_Insumo', $ID_Insumo);
+            $stmt->bindParam(':Usar', $Usar);
+            $stmt->bindParam(':N_Factura', $N_Factura);
+            $stmt->bindParam(':N_Lote', $N_Lote);
+            $stmt->bindParam(':valor_unitario', $valor_unitario);
+            $stmt->bindParam(':Valor_Total', $Valor_Total);
+            return $stmt->execute();
         }
         
         public function RestarTrasladoTemp($ID_Producto, $ID_Usuario, $ID) {

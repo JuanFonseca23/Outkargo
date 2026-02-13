@@ -8,43 +8,35 @@
     include_once "App/Controllers/OrdenesCompraController.php";
 
     $UsuariosController = new UsuarioController();
-    $OrdenesCompraController = new OrdenesCompraController;
+    $OrdenesCompraController = new OrdenesCompraController();
+
+    $DataSolicitud = $OrdenesCompraController->VerSolicitud($_GET['ID']);
+    
+    $Filas = $OrdenesCompraController->MostrarDetallesSolicitud($_GET['ID']);
+    $ID_Solicitud = $_GET['ID'];
 
     date_default_timezone_set('America/Bogota');
     $Fecha = date("d/m/Y");
-    $ID_Solicitud = $_GET['ID'];
+    $CantidadDetalles = is_array($Filas) ? count($Filas) : 0;
 
-
-    $Filas = $OrdenesCompraController->DetallesTempSolicitudCompra($_SESSION['ID']);
-    $CantidadDetalles = is_array($Filas) ? count($Filas) : 0; 
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if ($_POST['Tipo'] === "1") {
-            $ID_Solicitante = $_SESSION['ID'];
-            $NombreCreo = $_SESSION['Nombre1'];
-            $Cantidad = $_POST['Cantidad'];
-            $Descripcion = $_POST['Descripcion1'];
-            $Medidas = trim($_POST['Medidas'] ?? '') ?: NULL;
-            $Precio_Unitario = isset($_POST['Precio_Unitario']) && $_POST['Precio_Unitario'] !== '' ? floatval($_POST['Precio_Unitario']) : 0;
-            $Precio_Total = isset($_POST['Precio_Total']) && $_POST['Precio_Total'] !== ''? floatval($_POST['Precio_Total']) : 0;
-            if ($OrdenesCompraController->InsertarSolicitudTemp($Cantidad, $Descripcion, $Medidas, $Precio_Unitario, $Precio_Total, $ID_Solicitante)) {
-                header("Location: Solicitud?TipoSolicitud=" . $TipoSolicitud . (isset($OverhaulingNumero) ? "&OverhaulingNumero=" . $OverhaulingNumero : ""));
-                exit;
-            } else {
-                echo "<script>alert('Error al agregar el repuesto temporal.');</script>";
-            }
-        }
-        if ($_POST['Tipo'] === "2") {
-            $ID_Solicitante = $_SESSION['ID'];
-            $ID = $_POST['ID'];
-
-            if ($OrdenesCompraController->EliminarSolicitudTemp($ID_Solicitante, $ID)) {
-                header("Location: Solicitud?TipoSolicitud=" . $TipoSolicitud . (isset($OverhaulingNumero) ? "&OverhaulingNumero=" . $OverhaulingNumero : ""));
-                exit;
-            } else {
-                echo "<script>alert('Error al eliminar el repuesto temporal.');</script>";
-            }
-        }
+    if ($DataSolicitud['Estado'] === 'REVISADO') {
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+        echo "
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Atención',
+                    text: 'Ya has firmado esta solicitud.',
+                    icon: 'warning',
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'InicioSolicitud'; 
+                    }
+                });
+            });
+        </script>";
+        exit;
     }
 ?>
 <!DOCTYPE html>
@@ -117,7 +109,6 @@
             max-width: 180px;
         }
 
-
         .text-center{text-align:center;}
         .text-right{text-align:right;}
         .text-red{color:#c00000;font-weight:bold;}
@@ -131,22 +122,6 @@
         }
 
         /* ===== BOTONES ===== */
-        .btn-add{
-            background:#0d6efd;
-            color:#fff;
-            border: 1px solid #000;
-            border-radius: 5px;
-            padding:6px 10px;
-            cursor:pointer;
-        }
-        .btn-remove{
-            background:#dc3545;
-            color:#fff;
-            border: 1px solid #000;
-            border-radius: 5px;
-            padding:6px 10px;
-            cursor:pointer;
-        }
         .btn-guardar{
             background:#198754;
             color:#fff;
@@ -157,13 +132,19 @@
         }
 
         /* ===== FIRMA DIGITAL ===== */
+        .tabla-firma {
+            width: 420px;             
+            /* margin: 0 auto 12px auto;  centrada */
+        }
         #firmaCanvas {
             border: 1px solid #ccc;
             width: 100%;
-            min-height: 220px;
+            max-width: 380px;         
+            height: 180px;
             touch-action: none;
+            display: block;
+            margin: auto;
         }
-
         .firma-actions{
             margin-top:6px;
         }
@@ -175,91 +156,160 @@
             cursor:pointer;
         }
 
+        .tabla-wrapper{
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .tablaDetalles{
+            min-width: 720px;        
+            white-space: nowrap;   
+        }
+
+        /* ===== FILA APROBADA ===== */
+        .fila-aprobada {
+            background-color: #d4edda !important;   /* verde suave */
+        }
+
+        .fila-aprobada td,
+        .fila-aprobada th {
+            background-color: #d4edda !important;
+        }
+
+        /* ===== FILA RECHAZADA ===== */
+        .fila-rechazada {
+            background-color: #f8d7da !important;   /* rojo suave */
+        }
+
+        .fila-rechazada td,
+        .fila-rechazada th {
+            background-color: #f8d7da !important;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media screen and (max-width: 768px) {
             body{
-                font-family: Arial, Helvetica, sans-serif;
                 font-size: 9px;
-                margin: 0;
                 padding: 7px;
-                color: #000;
             }
 
-            .text-center{text-align:center;}
-            .text-right{text-align:right;}
-            .text-red{color:#c00000;font-weight:bold;}
-            .bg-gray{background:#e6e6e6;}
-
             table{
-                width: 100%;
-                border-collapse: collapse;
                 margin-bottom: 2px;
                 border: 1px solid #000;
             }
+
             th, td{
                 border: 1px solid #000;
                 padding: 4px;
             }
-            th{
-                background: #f0f0f0;
-            }
+
             .titulo{
                 font-size: 11px;
-                font-weight: bold;
-                text-align: center;
             }
+
             .logo img{
                 max-width: 110px;
             }
 
-            .btn-add{
-                background:#0d6efd;
-                color:#fff;
-                border: 1px solid #000;
-                border-radius: 5px;
-                font-size: 10px;
-                padding:4px 8px;
-                cursor:pointer;
-            }
-
-            .btn-guardar{
-                background:#ff5000;
-                color:#fff;
-                border: 1px solid #000;
-                border-radius: 5px;
-                font-size: 10px;
-                padding:4px 8px;
-                cursor:pointer;
-            }
-
+            .btn-add,
+            .btn-guardar,
             .btn-remove{
-                background:#dc3545;
-                color:#fff;
-                border: 1px solid #000;
-                border-radius: 5px;
                 font-size: 10px;
                 padding:4px 8px;
-                cursor:pointer;
             }
 
-            #firmaCanvas{
-                width:100%;
-                height:120px;
-                border:1px solid #000;
-                background:#fff;
-                touch-action:none;
+            .tabla-firma {
+                width: 100%;
             }
-            .firma-actions{
-                margin-top:6px;
+
+            #firmaCanvas {
+                max-width: 100%;
+                height: 150px;
             }
+
             .firma-actions button{
                 padding:3px 9px;
-                border:1px solid #000;
-                border-radius: 5px;
                 font-size: 10px;
                 font-weight: bold;
-                background:#f0f0f0;
-                cursor:pointer;
+            }
+        }
+
+        /* ===== RESPONSIVE MOVIL MEDIO (371px – 414px) ===== */
+        @media screen and (max-width: 414px) and (min-width: 371px) {
+
+            body{
+                font-size: 8.5px;
+                padding: 5px;
+            }
+
+            th, td{
+                padding: 3px;
+            }
+
+            .titulo{
+                font-size: 10px;
+            }
+
+            .logo img{
+                max-width: 95px;
+            }
+
+            .btn-add,
+            .btn-guardar,
+            .btn-remove{
+                font-size: 9px;
+                padding: 3px 7px;
+            }
+
+            #firmaCanvas {
+                height: 135px;
+            }
+
+            input{
+                padding: 4px;
+                font-size: 9px;
+            }
+        }
+
+        /* ===== RESPONSIVE EXTRA PEQUEÑO (≤ 370px) ===== */
+        @media screen and (max-width: 370px) {
+
+            body{
+                font-size: 8px;
+                padding: 4px;
+            }
+
+            th, td{
+                padding: 2px;
+            }
+
+            .titulo{
+                font-size: 9px;
+            }
+
+            .logo img{
+                max-width: 85px;
+            }
+
+            .btn-add,
+            .btn-guardar,
+            .btn-remove{
+                font-size: 8px;
+                padding: 3px 6px;
+            }
+
+            #firmaCanvas {
+                height: 120px;
+            }
+
+            .firma-actions button{
+                font-size: 8px;
+                padding: 2px 6px;
+            }
+
+            input{
+                padding: 3px;
+                font-size: 8px;
             }
         }
     </style>
@@ -288,138 +338,111 @@
     <table>
         <tr>
             <th>Solicitante</th>
-            <td><?= $_SESSION['NombreCompleto'] ?></td>
-            <th>Centro de trabajo</th>
-            <td><?= $_SESSION['Centro'] ?></td>
-            <th style="width: 70px;">No. Orden</th>
-            <td style="width: 70px;" class="text-red text-center">------</td>
-            <th style="width: 70px;">Fecha</th>
-            <td style="width: 70px;"><?= $Fecha ?></td>
+            <td colspan="2"><?= $DataSolicitud['NombreSolicita'] ?></td>
+            <th>No. Orden</th>
+            <td style="text-align: center;"><?= $DataSolicitud['Numero'] ?></td>
+            <th>Fecha</th>
+            <td><?= $DataSolicitud['Fecha_Solicitud'] ?></td>
+        </tr>
+        <tr>
+            <th colspan="2">Autorizado por:</th>
+            <td colspan="2"><?= $_SESSION['NombreCompleto'] ?></td>
+            <th >Centro de trabajo</th>
+            <td colspan="2"><?= $DataSolicitud['CentroSolicita'] ?></td>
         </tr>
         <tr>
             <th>Descripción</th>
-            <td colspan="7"><?= $Descripcion ?></td>
+            <td colspan="6"><?= $DataSolicitud['Descripcion'] ?></td>
         </tr>
     </table>
-
-    <!-- INGREO DE DATOS -->
-    <form method="post" id="formAgregar">
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th style="width: 70px;">Cantidad</th>
-                <th>Descripción</th>
-                <th>Medidas</th>
-                <th style="width: 110px;">Precio Unitario</th>
-                <th style="width: 110px;">Precio Total</th>
-                <th style="width: 80px;">Acción</th>
-            </tr>
-        </thead> 
-        <tbody>
-            <tr>
-                <td></td>
-                <td>
-                    <input type="number" name="Cantidad" class="cantidad"
-                           min="1" required oninput="calcularTotal(this)">
-                </td>
-                <td>
-                    <input type="text" name="Descripcion1" required>
-                </td>
-                <td><input type="text" name="Medidas"></td>
-                <td>
-                    <input type="number" name="Precio_Unitario" class="precio-unitario"
-                           oninput="calcularTotal(this)">
-                </td>
-                <td>
-                    $<span class="precio-total">0.00</span>
-                    <input type="hidden" name="Precio_Total">
-                </td>
-                <td>
-                    <button type="submit" class="btn-add">Agregar</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <input type="hidden" name="Tipo" value="1">
-</form>
-
 
     <!-- DETALLES -->
-    <table>
-        <thead>
-            <tr><th colspan="7" class="bg-gray text-center">DETALLE DE REPUESTOS / INSUMOS</th></tr>
-            <tr>
-                <th>#</th>
-                <th style="width: 70px;">Cantidad</th>
-                <th>Descripción</th>
-                <th>Medidas</th>
-                <th style="width: 110px;">Precio Unitario</th>
-                <th style="width: 110px;">Precio Total</th>
-                <th style="width: 80px;">Acción</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-                $Numero = 0;
-                $SumaTotal = 0;
-                if ($Filas) {
-                    foreach ($Filas as $Fila) {
-                        if ($Fila['Cantidad'] > 0) {
-                            $Numero = $Numero + 1;
-                            $SumaTotal += $Fila['Precio_Total']; 
-            ?>
-            <tr>
-                <th><?= $Numero ?></th>
-                <td style="text-align: center;"><?= $Fila['Cantidad'] ?></td>
-                <td style="text-align: center;"><?= $Fila['Descripcion'] ?></td>
-                <td style="text-align: center;"><?= $Fila['Medidas'] ?></td>
-                <td style="text-align: right;">$ <?= number_format($Fila['Precio_Unitario'], 2, ',', '.') ?></td>
-                <td style="text-align: right;">$ <?= number_format($Fila['Precio_Total'], 2, ',', '.') ?></td>
-                <form method="post">
-                    <input type="hidden" name="ID" value="<?= $Fila['ID'] ?>">
-                    <input type="hidden" name="Tipo" value="2">
-                    <td style="text-align: center;">
-                        <button type="submit" class="btn-remove">Eliminar</button>
-                    </td>
-                </form>
-            
-            </tr>
-            <?php
-                        }
-                    }
-                }
-            ?>
-        </tbody>
-        <tfoot>
-            <tr>
-                <th colspan="5" class="text-right">TOTAL</th>
-                <td colspan="2" style="text-align: right;">$ <?= number_format($SumaTotal, 2, ',', '.') ?></td>
-            </tr>
-        </tfoot>
-    </table>
-
-    
-    <!-- FIRMA -->
-    <table >
-        <tr>
-            <th colspan="2" class="bg-gray text-center">FIRMA DEL SOLICITANTE</th>
-        </tr>
-        <tr>
-            <td colspan="2" data-label="Firma">
-                <canvas id="firmaCanvas"></canvas>
-                <div class="firma-actions">
-                <button type="button" onclick="limpiarFirma()">Limpiar firma</button>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td data-label="Nombre"><strong>Nombre:</strong><?= $_SESSION['NombreCompleto'] ?></td>
-            <td data-label="Fecha"><strong>Fecha:</strong><?= $Fecha ?></td>
-        </tr>
-    </table>
-
     <form method="POST" id="formEnviar">
+        <div class="tabla-wrapper">
+            <table id="tablaDetalles">
+                <thead>
+                    <tr><th colspan="8" class="bg-gray text-center">DETALLE DE REPUESTOS / INSUMOS</th></tr>
+                    <tr>
+                        <th>#</th>
+                        <th style="width: 70px;">Cantidad</th>
+                        <th>Descripción</th>
+                        <th>Medidas</th>
+                        <th style="width: 110px;">Precio Unitario</th>
+                        <th style="width: 110px;">Precio Total</th>
+                        <th style="width: 50px;">Aprobado</th>
+                        <th style="width: 50px;">Rechazado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $Numero = 0;
+                        $SumaTotal = 0;
+                        if ($Filas) {
+                            foreach ($Filas as $Fila) {
+                                if ($Fila['Cantidad'] > 0) {
+                                    $Numero = $Numero + 1;
+                                    $SumaTotal += $Fila['Precio_Total']; 
+                    ?>
+                    <tr data-precio="<?= $Fila['Precio_Total'] ?>">
+                        <input type="hidden" name="detalle_id[]" value="<?= $Fila['ID'] ?>">
+                        <input type="hidden" name="estado[<?= $Fila['ID'] ?>]" class="input-estado"  value="APROBADO">
+
+                        <th><?= $Numero ?></th>
+                        <td style="text-align: center;"><?= $Fila['Cantidad'] ?></td>
+                        <td style="text-align: center;"><?= $Fila['Descripcion'] ?></td>
+                        <td style="text-align: center;"><?= $Fila['Medidas'] ?></td>
+                        <td style="text-align: right;">$ <?= number_format($Fila['Precio_Unitario'], 2, ',', '.') ?></td>
+                        <td style="text-align: right;">$ <?= number_format($Fila['Precio_Total'], 2, ',', '.') ?></td>
+
+                        <td style="text-align: center;"> 
+                            <input type="checkbox" class="chk-aprobado" data-id="<?= $Fila['ID'] ?>">
+                        </td>
+
+                        <td style="text-align: center;">
+                            <input type="checkbox" class="chk-rechazado" data-id="<?= $Fila['ID'] ?>">
+                        </td>
+                    </tr>
+
+                    <?php
+                                }
+                            }
+                        }
+                    ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5" class="text-right">TOTAL</th>
+                        <td colspan="3" style="text-align: right;">
+                            $ <span id="totalGeneral"><?= number_format($SumaTotal, 2, ',', '.') ?></span>
+                        </td>
+
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    
+       <!-- FIRMA -->
+        <table class="tabla-firma">
+            <tr>
+                <th colspan="2" class="bg-gray text-center">FIRMA AUTORIZA</th>
+            </tr>
+            <tr>
+                <td colspan="2" data-label="Firma" class="text-center">
+                    <canvas id="firmaCanvas"></canvas>
+                    <div class="firma-actions">
+                        <button type="button" onclick="limpiarFirma()">Limpiar firma</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td data-label="Nombre">
+                    <strong>Nombre:</strong> <?= $_SESSION['NombreCompleto'] ?>
+                </td>
+                <td data-label="Fecha">
+                    <strong>Fecha:</strong> <?= $Fecha ?>
+                </td>
+            </tr>
+        </table>
         <input type="hidden" name="firma" id="firma">
         <input type="hidden" name="Tipo" value="3">
         <button type="submit" class="btn-guardar">Enviar</button>
@@ -428,176 +451,223 @@
     <?php
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($_POST['Tipo'] === "3") {
-                $Firma = $_POST['firma'];
-                $ID_Solicitante = $_SESSION['ID'];
-                $ID_Centro = $_SESSION['NoCentro'];
-                $NombreCreo = $_SESSION['Nombre1'];
-                $Fecha_Solicitud = $Fecha;
-                $Descripcion;
-                $OrdenesCompraController->InsertarSolicitudCompra($ID_Solicitante, $ID_Centro, $Firma, $Fecha_Solicitud, $NombreCreo, $Descripcion);
-            } 
+                $Firma       = $_POST['firma'] ?? '';
+                $ID_Autoriza = $_SESSION['ID'];
+                $Numero_Orden = $DataSolicitud['Numero'];
+                $NombreCreo  = $_SESSION['Nombre1'];
+                $Estados     = $_POST['estado'] ?? [];
+                $OrdenesCompraController->AutorizarSolicitudCompra($ID_Solicitud, $Estados, $Firma, $ID_Autoriza, $NombreCreo, $Numero_Orden);
+            }
         }
     ?>
 
     <script>
-        function calcularTotal(el) {
-            const fila = el.closest("tr");
-            const cantidad = parseFloat(fila.querySelector(".cantidad").value) || 0;
-            const precio = parseFloat(fila.querySelector(".precio-unitario").value) || 0;
-            const total = cantidad * precio;
+        function recalcularTotal() {
+            let total = 0;
 
-            fila.querySelector(".precio-total").textContent = total.toFixed(2);
-            fila.querySelector("input[name='Precio_Total']").value = total.toFixed(2);
+            document.querySelectorAll('#tablaDetalles tbody tr').forEach(row => {
+                const precio = parseFloat(row.dataset.precio) || 0;
+                const aprobado = row.querySelector('.chk-aprobado');
+                const rechazado = row.querySelector('.chk-rechazado');
+
+                if (!aprobado || !rechazado) return;
+
+                if (aprobado.checked && !rechazado.checked) {
+                    total += precio;
+                }
+            });
+
+            document.getElementById('totalGeneral').innerText =
+                total.toLocaleString('es-CO', { minimumFractionDigits: 2 });
         }
+
+        // Control exclusivo: solo uno puede estar activo
+        document.getElementById('tablaDetalles').addEventListener('change', function(e) {
+
+            const fila = e.target.closest('tr');
+            if (!fila) return;
+
+            const aprobado  = fila.querySelector('.chk-aprobado');
+            const rechazado = fila.querySelector('.chk-rechazado');
+
+            const id = e.target.dataset.id;
+            const inputEstado = document.querySelector(
+                'input[name="estado[' + id + ']"]'
+            );
+
+            if (!inputEstado) return;
+
+            if (e.target.classList.contains('chk-aprobado')) {
+                rechazado.checked = !aprobado.checked;
+                inputEstado.value = aprobado.checked ? 'APROBADO' : 'RECHAZADO';
+            }
+
+            if (e.target.classList.contains('chk-rechazado')) {
+                aprobado.checked = !rechazado.checked;
+                inputEstado.value = rechazado.checked ? 'RECHAZADO' : 'APROBADO';
+            }
+
+            // ===== EFECTO VISUAL =====
+            fila.classList.remove('fila-aprobada', 'fila-rechazada');
+
+            if (rechazado.checked) {
+                fila.classList.add('fila-rechazada');
+            } 
+            else if (aprobado.checked) {
+                fila.classList.add('fila-aprobada');
+            }
+
+            recalcularTotal();
+        });
+
+        // Inicializar total al cargar
+        recalcularTotal();
 
         const canvas = document.getElementById('firmaCanvas');
-const ctx = canvas.getContext('2d');
-let dibujando = false;
+        const ctx = canvas.getContext('2d');
+        let dibujando = false;
 
-// ================== CONFIGURACIÓN DE TAMAÑO (IMPORTANTE) ==================
-function ajustarTamanioCanvas() {
+        // ================== CONFIGURACIÓN DE TAMAÑO (IMPORTANTE) ==================
+        function ajustarTamanioCanvas() {
 
-    // Tamaño visible mínimo (puedes ajustarlo)
-    const anchoVisible = canvas.parentElement.offsetWidth || 350;
-    const altoVisible  = 220;
+            const anchoVisible = Math.min(canvas.parentElement.offsetWidth, 380);
+            const altoVisible  = 180;
 
-    canvas.style.width  = anchoVisible + "px";
-    canvas.style.height = altoVisible + "px";
+            canvas.style.width  = anchoVisible + "px";
+            canvas.style.height = altoVisible + "px";
 
-    const ratio = window.devicePixelRatio || 1;
+            const ratio = window.devicePixelRatio || 1;
 
-    canvas.width  = anchoVisible * ratio;
-    canvas.height = altoVisible * ratio;
+            canvas.width  = anchoVisible * ratio;
+            canvas.height = altoVisible * ratio;
 
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+            ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-    // Estilo del trazo
-    ctx.lineWidth   = 3.2;   // más grueso para móvil
-    ctx.lineCap     = "round";
-    ctx.lineJoin    = "round";
-    ctx.strokeStyle = "#000";
-}
-
-ajustarTamanioCanvas();
-window.addEventListener('resize', ajustarTamanioCanvas);
-
-// ==================== FUNCIÓN COORDENADAS ====================
-function obtenerPosicion(evento) {
-    const rect = canvas.getBoundingClientRect();
-
-    if (evento.touches) {
-        return {
-            x: evento.touches[0].clientX - rect.left,
-            y: evento.touches[0].clientY - rect.top
-        };
-    } else {
-        return {
-            x: evento.offsetX,
-            y: evento.offsetY
-        };
-    }
-}
-
-// ==================== EVENTOS MOUSE ====================
-canvas.addEventListener('mousedown', (e) => {
-    dibujando = true;
-    const pos = obtenerPosicion(e);
-    ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
-});
-
-canvas.addEventListener('mousemove', (e) => {
-    if (!dibujando) return;
-    const pos = obtenerPosicion(e);
-    ctx.lineTo(pos.x, pos.y);
-    ctx.stroke();
-});
-
-canvas.addEventListener('mouseup', () => {
-    if (dibujando) {
-        dibujando = false;
-        guardarFirmaEnCampo();
-    }
-});
-
-canvas.addEventListener('mouseleave', () => {
-    if (dibujando) {
-        dibujando = false;
-        guardarFirmaEnCampo();
-    }
-});
-
-// ==================== EVENTOS TOUCH ====================
-canvas.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    dibujando = true;
-    const pos = obtenerPosicion(e);
-    ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
-});
-
-canvas.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-    if (!dibujando) return;
-    const pos = obtenerPosicion(e);
-    ctx.lineTo(pos.x, pos.y);
-    ctx.stroke();
-});
-
-canvas.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    if (dibujando) {
-        dibujando = false;
-        guardarFirmaEnCampo();
-    }
-});
-
-// ==================== GUARDAR FIRMA ====================
-function guardarFirmaEnCampo() {
-    document.getElementById('firma').value = canvas.toDataURL('image/png');
-}
-
-// ==================== LIMPIAR FIRMA ====================
-function limpiarFirma() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    document.getElementById('firma').value = '';
-}
-
-// ==================== VALIDAR CANVAS VACÍO ====================
-function canvasVacio(c) {
-    const datos = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
-    for (let i = 3; i < datos.length; i += 4) {
-        if (datos[i] !== 0) {
-            return false;
+            ctx.lineWidth   = 3.2;
+            ctx.lineCap     = "round";
+            ctx.lineJoin    = "round";
+            ctx.strokeStyle = "#000";
         }
-    }
-    return true;
-}
 
-// ==================== VALIDACIÓN AL ENVIAR ====================
-const cantidadDetalles = <?= $CantidadDetalles ?>;
-const formEnviar = document.getElementById('formEnviar');
+        ajustarTamanioCanvas();
+        window.addEventListener('resize', ajustarTamanioCanvas);
 
-if (formEnviar) {
-    formEnviar.addEventListener('submit', function (e) {
+        // ==================== FUNCIÓN COORDENADAS ====================
+        function obtenerPosicion(evento) {
+            const rect = canvas.getBoundingClientRect();
 
-        if (cantidadDetalles === 0) {
+            if (evento.touches) {
+                return {
+                    x: evento.touches[0].clientX - rect.left,
+                    y: evento.touches[0].clientY - rect.top
+                };
+            } else {
+                return {
+                    x: evento.offsetX,
+                    y: evento.offsetY
+                };
+            }
+        }
+
+        // ==================== EVENTOS MOUSE ====================
+        canvas.addEventListener('mousedown', (e) => {
+            dibujando = true;
+            const pos = obtenerPosicion(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!dibujando) return;
+            const pos = obtenerPosicion(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            if (dibujando) {
+                dibujando = false;
+                guardarFirmaEnCampo();
+            }
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            if (dibujando) {
+                dibujando = false;
+                guardarFirmaEnCampo();
+            }
+        });
+
+        // ==================== EVENTOS TOUCH ====================
+        canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            alertify.error("Debe agregar al menos un repuesto o insumo antes de enviar la solicitud.");
-            return false;
-        }
+            dibujando = true;
+            const pos = obtenerPosicion(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        });
 
-        if (canvasVacio(canvas)) {
+        canvas.addEventListener('touchmove', (e) => {
             e.preventDefault();
-            alertify.error("Debe firmar la solicitud antes de enviarla.");
-            return false;
+            if (!dibujando) return;
+            const pos = obtenerPosicion(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            if (dibujando) {
+                dibujando = false;
+                guardarFirmaEnCampo();
+            }
+        });
+
+        // ==================== GUARDAR FIRMA ====================
+        function guardarFirmaEnCampo() {
+            document.getElementById('firma').value = canvas.toDataURL('image/png');
         }
 
-        document.getElementById('firma').value = canvas.toDataURL('image/png');
-        return true;
-    });
-}
+        // ==================== LIMPIAR FIRMA ====================
+        function limpiarFirma() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('firma').value = '';
+        }
 
+        // ==================== VALIDAR CANVAS VACÍO ====================
+        function canvasVacio(c) {
+            const datos = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+            for (let i = 3; i < datos.length; i += 4) {
+                if (datos[i] !== 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // ==================== VALIDACIÓN AL ENVIAR ====================
+        const cantidadDetalles = <?= $CantidadDetalles ?>;
+        const formEnviar = document.getElementById('formEnviar');
+
+        if (formEnviar) {
+            formEnviar.addEventListener('submit', function (e) {
+
+                if (cantidadDetalles === 0) {
+                    e.preventDefault();
+                    alertify.error("Debe agregar al menos un repuesto o insumo antes de enviar la solicitud.");
+                    return false;
+                }
+
+                if (canvasVacio(canvas)) {
+                    e.preventDefault();
+                    alertify.error("Debe firmar la solicitud antes de enviarla.");
+                    return false;
+                }
+
+                document.getElementById('firma').value = canvas.toDataURL('image/png');
+                return true;
+            });
+        }
     </script>
 </body>
 </html>

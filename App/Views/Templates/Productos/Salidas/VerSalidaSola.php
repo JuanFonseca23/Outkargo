@@ -5,7 +5,7 @@ $DataEntrada = $ProductosController->VerSalida($_GET['ID']);
 
 $Filas = $ProductosController->MostrarDetallesProductosSalida($_GET['ID']);
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
-    $baseUrl = 'http://localhost/outkargo2/';
+    $baseUrl = 'http://localhost/OUTKARGO/';
 } else {
     $baseUrl = 'https://outkargo.com.co/';
 }
@@ -115,9 +115,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
                 <th width="50px">Cantidad</th>
                 <th width="100px">Codigo</th>
                 <th style="text-align: left;">Descripción</th>
-                <th># Montacargas</th>
                 <th># Factura</th>     
-                <th>Observaciones</th>  
             </tr>
             <?php
             $Numero = 0;
@@ -131,9 +129,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
                         <td style="text-align: center;"><?= $Fila['Cantidad'] ?></td>
                         <td style="text-align: center;"><?= $Fila['Codigo'] ?></td>
                         <td><?= $Fila['Nombre'] ?></td>
-                        <td style="text-align: center"><?= $Fila['Numero'] ?? 'No Aplica' ?></td>
                         <td style="text-align: center;"><?= $Fila['N_Factura']?></td>
-                        <td style="text-align: center;"><?= $Fila['Observaciones']?></td>
                     </tr>
             <?php
                 }

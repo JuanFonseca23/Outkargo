@@ -63,6 +63,7 @@
     $BlogRoutes = include 'App/Routes/Blog_Routes.php';
     $OverallRoutes = include 'App/Routes/Overhauling_Routes.php';
     $OrdenesCompraRoutes = include 'App/Routes/OrdenesCompra_Routes.php';
+    $OrdenesTrabajoRoutes = include 'App/Routes/OrdenesTrabajo_Routes.php';
 
 
     // Merge de todas las rutas
@@ -80,6 +81,7 @@
         $BlogRoutes,
         $OverallRoutes,
         $OrdenesCompraRoutes,
+        $OrdenesTrabajoRoutes,
         [
             '' => 'Views/Templates/Principal/Inicio.php',
             '/' => 'Views/Templates/Principal/Index.php',

@@ -163,11 +163,19 @@
         }
 
         /* ===== FIRMA DIGITAL ===== */
+        .tabla-firma {
+            width: 420px;             
+            /* margin: 0 auto 12px auto;  centrada */
+        }
+
         #firmaCanvas {
             border: 1px solid #ccc;
             width: 100%;
-            min-height: 220px;
+            max-width: 380px;         
+            height: 180px;
             touch-action: none;
+            display: block;
+            margin: auto;
         }
 
         .firma-actions{
@@ -248,12 +256,13 @@
                 cursor:pointer;
             }
 
-            #firmaCanvas{
-                width:100%;
-                height:120px;
-                border:1px solid #000;
-                background:#fff;
-                touch-action:none;
+            .tabla-firma {
+                width: 100%;
+            }
+
+            #firmaCanvas {
+                max-width: 100%;
+                height: 150px;
             }
             .firma-actions{
                 margin-top:6px;
@@ -266,6 +275,103 @@
                 font-weight: bold;
                 background:#f0f0f0;
                 cursor:pointer;
+            }
+
+        }
+
+        /* ===== RESPONSIVE MOVIL MEDIO (371px – 414px) ===== */
+        @media screen and (max-width: 414px) and (min-width: 371px) {
+            body{
+                font-size: 8.5px;
+                padding: 5px;
+            }
+
+            table{
+                margin-bottom: 2px;
+            }
+
+            th, td{
+                padding: 3px;
+            }
+
+            .titulo{
+                font-size: 10px;
+            }
+
+            .logo img{
+                max-width: 95px;
+            }
+
+            /* Botones */
+            .btn-add,
+            .btn-guardar,
+            .btn-remove{
+                font-size: 9px;
+                padding: 3px 7px;
+            }
+
+            /* Canvas firma */
+            #firmaCanvas {
+                height: 135px;
+            }
+
+            /* Inputs */
+            input{
+                padding: 4px;
+                font-size: 9px;
+            }
+
+        }
+
+        /* ===== RESPONSIVE EXTRA PEQUEÑO (320px – 370px) ===== */
+        @media screen and (max-width: 370px) {
+            body{
+                font-size: 8px;
+                padding: 4px;
+            }
+
+            table{
+                margin-bottom: 1px;
+            }
+
+            th, td{
+                padding: 2px;
+            }
+
+            .titulo{
+                font-size: 9px;
+            }
+
+            .logo img{
+                max-width: 85px;
+            }
+
+            /* Botones */
+            .btn-add,
+            .btn-guardar,
+            .btn-remove{
+                font-size: 8px;
+                padding: 3px 6px;
+            }
+
+            /* Tabla firma */
+            .tabla-firma {
+                width: 100%;
+            }
+
+            #firmaCanvas {
+                height: 120px;
+            }
+
+            .firma-actions button{
+                font-size: 8px;
+                padding: 2px 6px;
+            }
+
+            /* Inputs */
+            input{
+                padding: 3px;
+                font-size: 8px;
             }
         }
     </style>
@@ -407,23 +513,28 @@
 
     
     <!-- FIRMA -->
-    <table >
+    <table class="tabla-firma">
         <tr>
             <th colspan="2" class="bg-gray text-center">FIRMA DEL SOLICITANTE</th>
         </tr>
         <tr>
-            <td colspan="2" data-label="Firma">
+            <td colspan="2" data-label="Firma" class="text-center">
                 <canvas id="firmaCanvas"></canvas>
                 <div class="firma-actions">
-                <button type="button" onclick="limpiarFirma()">Limpiar firma</button>
+                    <button type="button" onclick="limpiarFirma()">Limpiar firma</button>
                 </div>
             </td>
         </tr>
         <tr>
-            <td data-label="Nombre"><strong>Nombre:</strong><?= $_SESSION['NombreCompleto'] ?></td>
-            <td data-label="Fecha"><strong>Fecha:</strong><?= $Fecha ?></td>
+            <td data-label="Nombre">
+                <strong>Nombre:</strong> <?= $_SESSION['NombreCompleto'] ?>
+            </td>
+            <td data-label="Fecha">
+                <strong>Fecha:</strong> <?= $Fecha ?>
+            </td>
         </tr>
     </table>
+
 
     <form method="POST" id="formEnviar">
         <input type="hidden" name="firma" id="firma">
@@ -457,153 +568,150 @@
         }
 
         const canvas = document.getElementById('firmaCanvas');
-const ctx = canvas.getContext('2d');
-let dibujando = false;
+        const ctx = canvas.getContext('2d');
+        let dibujando = false;
 
-// ================== CONFIGURACIÓN DE TAMAÑO (IMPORTANTE) ==================
-function ajustarTamanioCanvas() {
+        // ================== CONFIGURACIÓN DE TAMAÑO (IMPORTANTE) ==================
+        function ajustarTamanioCanvas() {
 
-    // Tamaño visible mínimo (puedes ajustarlo)
-    const anchoVisible = canvas.parentElement.offsetWidth || 350;
-    const altoVisible  = 220;
+            const anchoVisible = Math.min(canvas.parentElement.offsetWidth, 380);
+            const altoVisible  = 180;
 
-    canvas.style.width  = anchoVisible + "px";
-    canvas.style.height = altoVisible + "px";
+            canvas.style.width  = anchoVisible + "px";
+            canvas.style.height = altoVisible + "px";
 
-    const ratio = window.devicePixelRatio || 1;
+            const ratio = window.devicePixelRatio || 1;
 
-    canvas.width  = anchoVisible * ratio;
-    canvas.height = altoVisible * ratio;
+            canvas.width  = anchoVisible * ratio;
+            canvas.height = altoVisible * ratio;
 
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+            ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-    // Estilo del trazo
-    ctx.lineWidth   = 3.2;   // más grueso para móvil
-    ctx.lineCap     = "round";
-    ctx.lineJoin    = "round";
-    ctx.strokeStyle = "#000";
-}
-
-ajustarTamanioCanvas();
-window.addEventListener('resize', ajustarTamanioCanvas);
-
-// ==================== FUNCIÓN COORDENADAS ====================
-function obtenerPosicion(evento) {
-    const rect = canvas.getBoundingClientRect();
-
-    if (evento.touches) {
-        return {
-            x: evento.touches[0].clientX - rect.left,
-            y: evento.touches[0].clientY - rect.top
-        };
-    } else {
-        return {
-            x: evento.offsetX,
-            y: evento.offsetY
-        };
-    }
-}
-
-// ==================== EVENTOS MOUSE ====================
-canvas.addEventListener('mousedown', (e) => {
-    dibujando = true;
-    const pos = obtenerPosicion(e);
-    ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
-});
-
-canvas.addEventListener('mousemove', (e) => {
-    if (!dibujando) return;
-    const pos = obtenerPosicion(e);
-    ctx.lineTo(pos.x, pos.y);
-    ctx.stroke();
-});
-
-canvas.addEventListener('mouseup', () => {
-    if (dibujando) {
-        dibujando = false;
-        guardarFirmaEnCampo();
-    }
-});
-
-canvas.addEventListener('mouseleave', () => {
-    if (dibujando) {
-        dibujando = false;
-        guardarFirmaEnCampo();
-    }
-});
-
-// ==================== EVENTOS TOUCH ====================
-canvas.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    dibujando = true;
-    const pos = obtenerPosicion(e);
-    ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
-});
-
-canvas.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-    if (!dibujando) return;
-    const pos = obtenerPosicion(e);
-    ctx.lineTo(pos.x, pos.y);
-    ctx.stroke();
-});
-
-canvas.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    if (dibujando) {
-        dibujando = false;
-        guardarFirmaEnCampo();
-    }
-});
-
-// ==================== GUARDAR FIRMA ====================
-function guardarFirmaEnCampo() {
-    document.getElementById('firma').value = canvas.toDataURL('image/png');
-}
-
-// ==================== LIMPIAR FIRMA ====================
-function limpiarFirma() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    document.getElementById('firma').value = '';
-}
-
-// ==================== VALIDAR CANVAS VACÍO ====================
-function canvasVacio(c) {
-    const datos = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
-    for (let i = 3; i < datos.length; i += 4) {
-        if (datos[i] !== 0) {
-            return false;
+            ctx.lineWidth   = 3.2;
+            ctx.lineCap     = "round";
+            ctx.lineJoin    = "round";
+            ctx.strokeStyle = "#000";
         }
-    }
-    return true;
-}
 
-// ==================== VALIDACIÓN AL ENVIAR ====================
-const cantidadDetalles = <?= $CantidadDetalles ?>;
-const formEnviar = document.getElementById('formEnviar');
+        ajustarTamanioCanvas();
+        window.addEventListener('resize', ajustarTamanioCanvas);
 
-if (formEnviar) {
-    formEnviar.addEventListener('submit', function (e) {
+        // ==================== FUNCIÓN COORDENADAS ====================
+        function obtenerPosicion(evento) {
+            const rect = canvas.getBoundingClientRect();
 
-        if (cantidadDetalles === 0) {
+            if (evento.touches) {
+                return {
+                    x: evento.touches[0].clientX - rect.left,
+                    y: evento.touches[0].clientY - rect.top
+                };
+            } else {
+                return {
+                    x: evento.offsetX,
+                    y: evento.offsetY
+                };
+            }
+        }
+
+        // ==================== EVENTOS MOUSE ====================
+        canvas.addEventListener('mousedown', (e) => {
+            dibujando = true;
+            const pos = obtenerPosicion(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!dibujando) return;
+            const pos = obtenerPosicion(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            if (dibujando) {
+                dibujando = false;
+                guardarFirmaEnCampo();
+            }
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            if (dibujando) {
+                dibujando = false;
+                guardarFirmaEnCampo();
+            }
+        });
+
+        // ==================== EVENTOS TOUCH ====================
+        canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            alertify.error("Debe agregar al menos un repuesto o insumo antes de enviar la solicitud.");
-            return false;
-        }
+            dibujando = true;
+            const pos = obtenerPosicion(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        });
 
-        if (canvasVacio(canvas)) {
+        canvas.addEventListener('touchmove', (e) => {
             e.preventDefault();
-            alertify.error("Debe firmar la solicitud antes de enviarla.");
-            return false;
+            if (!dibujando) return;
+            const pos = obtenerPosicion(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            if (dibujando) {
+                dibujando = false;
+                guardarFirmaEnCampo();
+            }
+        });
+
+        // ==================== GUARDAR FIRMA ====================
+        function guardarFirmaEnCampo() {
+            document.getElementById('firma').value = canvas.toDataURL('image/png');
         }
 
-        document.getElementById('firma').value = canvas.toDataURL('image/png');
-        return true;
-    });
-}
+        // ==================== LIMPIAR FIRMA ====================
+        function limpiarFirma() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('firma').value = '';
+        }
 
+        // ==================== VALIDAR CANVAS VACÍO ====================
+        function canvasVacio(c) {
+            const datos = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+            for (let i = 3; i < datos.length; i += 4) {
+                if (datos[i] !== 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // ==================== VALIDACIÓN AL ENVIAR ====================
+        const cantidadDetalles = <?= $CantidadDetalles ?>;
+        const formEnviar = document.getElementById('formEnviar');
+
+        if (formEnviar) {
+            formEnviar.addEventListener('submit', function (e) {
+
+                if (cantidadDetalles === 0) {
+                    e.preventDefault();
+                    alertify.error("Debe agregar al menos un repuesto o insumo antes de enviar la solicitud.");
+                    return false;
+                }
+
+                if (canvasVacio(canvas)) {
+                    e.preventDefault();
+                    alertify.error("Debe firmar la solicitud antes de enviarla.");
+                    return false;
+                }
+
+                document.getElementById('firma').value = canvas.toDataURL('image/png');
+                return true;
+            });
+        }
     </script>
 </body>
 </html>

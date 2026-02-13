@@ -100,6 +100,7 @@
                                 require_once "Huella.php";
                                 require_once "Mantenimiento.php";
                                 require_once "OrdenesCompra.php";
+                                require_once "OrdenesTrabajo.php";
                                 break;
 
                             case '2': //Practicante ingeniería software

@@ -11,22 +11,50 @@
         }
 
         // Métodos
-       public function BuscarDestinatarios($q){
-        $sql = "SELECT 
-                    ID AS id,
-                    NombreCompleto AS nombre,
-                    Correo AS email
-                FROM usuario
-                WHERE NombreCompleto LIKE :q
-                OR Correo LIKE :q
-                ORDER BY NombreCompleto";
+        public function ActualizarEstadoDetalleSolicitud($ID_Detalle, $Estado){
+            $sql = "UPDATE detalles_solicitud_compra Set Estado = :Estado WHERE ID = :ID_Detalle";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID_Detalle', $ID_Detalle);
+            $stmt->bindParam(':Estado', $Estado);
+            $stmt->execute();
+            return $stmt->rowCount(); 
+        }
 
-        $stmt = $this->PDO->prepare($sql);
-        $stmt->bindValue(':q', "%$q%", PDO::PARAM_STR);
-        $stmt->execute();
+        public function AutorizarSolicitudCompra($ID_Solicitud, $ID_Autoriza, $Firma, $FechaAutoriza){
+            $sql = "UPDATE solicitud_compra Set ID_Autoriza = :ID_Autoriza, Firma_Autoriza = :Firma, Fecha_Autoriza = :FechaAutoriza, Estado = 'REVISADO' WHERE ID = :ID_Solicitud";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID_Solicitud', $ID_Solicitud);
+            $stmt->bindParam(':ID_Autoriza', $ID_Autoriza);
+            $stmt->bindParam(':Firma', $Firma);
+            $stmt->bindParam(':FechaAutoriza', $FechaAutoriza);
+            $stmt->execute();
+            return $stmt->rowCount(); 
+        }
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+        public function BuscarDestinatarios($q){
+            $sql = "SELECT 
+                        ID AS id,
+                        NombreCompleto AS nombre,
+                        Correo AS email
+                    FROM usuario
+                    WHERE NombreCompleto LIKE :q
+                    OR Correo LIKE :q
+                    ORDER BY NombreCompleto";
+
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':q', "%$q%", PDO::PARAM_STR);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function ContarSolicitudesPorCentro($ID_Centro) {
+            $sql = "SELECT COUNT(*) as Nosolicitudes FROM solicitud_compra WHERE ID_Centro = :ID_Centro";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID_Centro', $ID_Centro);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
 
         public function DetallesSolicitusCompra($ID_Solicitud) {
             $sql = "SELECT t.ID_Usuario, t.Cantidad, t.Descripcion, t.Medidas, t.Precio_Unitario, t.Precio_Total
@@ -126,6 +154,18 @@
             return $stmt->execute();
         }
 
+        public function leerSolicitudesCompra($ID_Centro) {
+            $sql = "SELECT usuario_solicita.NombreCompleto AS NombreUsuario, 
+                           solicitud_compra.*
+                    FROM solicitud_compra
+                    LEFT JOIN usuario AS usuario_solicita ON solicitud_compra.ID_Usuario = usuario_solicita.ID
+                    WHERE solicitud_compra.ID_Centro = :ID_Centro";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID_Centro', $ID_Centro);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }                               
+
         public function MostrarDetallesSolicitud($ID){
             $sql = "SELECT * FROM detalles_solicitud_compra WHERE ID_Solicitud = :ID";
             $stmt = $this->PDO->prepare($sql);
@@ -156,7 +196,6 @@
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-
         public function ObtenerNumeroFormularioSolicitud(){
             $sql = "SELECT `Numero` FROM solicitud_compra ORDER BY ID DESC LIMIT 1";
             $stmt = $this->PDO->prepare($sql);
@@ -166,7 +205,9 @@
         }
 
         public function TraerOverhauling() {
-            $sql = "SELECT ID, Numero FROM overhauling_inicial";
+            $sql = "SELECT o.ID, o.Numero, d.Modelo AS Modelo, d.Serie AS Serie, d.Marca AS Marca
+                    FROM overhauling_inicial o
+                    INNER JOIN detalles_overhauling_inicial d ON d.ID_Overhauling = o.ID";
             $stmt = $this->PDO->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

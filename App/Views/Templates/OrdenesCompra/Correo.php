@@ -5,13 +5,9 @@ include_once "App/Controllers/OrdenesCompraController.php";
 $OrdenesCompraController = new OrdenesCompraController;
 
 // Recuperamos parámetros (por POST o GET)
-// $Asunto = $_POST['Mensaje'] ?? $_GET['Mensaje'] ?? '';
-// $ID_Solicitud = $_POST['ID_Solicitud'] ?? $_GET['ID_Solicitud'] ?? null;
-// $Numero = $_POST['Numero'] ?? $_GET['Numero'] ?? null;
-
-$Asunto = 'Solicitud de compra 000015' ;
-$ID_Solicitud = 15;
-$Numero = '000015';
+$Asunto = $_POST['Mensaje'] ?? $_GET['Mensaje'] ?? '';
+$ID_Solicitud = $_POST['ID_Solicitud'] ?? $_GET['ID_Solicitud'] ?? null;
+$Numero = $_POST['Numero'] ?? $_GET['Numero'] ?? null;
 
 // Escapamos para seguridad HTML
 $Asunto = htmlspecialchars($Asunto);
@@ -23,20 +19,11 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
 } else {
     $baseUrl = 'https://outkargo.com.co/';
 }
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $ID_Correos = $_POST['para'] ?? [];       
-    $Asunto1    = $_POST['asunto'] ?? '';
-    $Mensaje    = $_POST['mensaje'] ?? '';
-    $Link       = $_POST['adjunto_url'] ?? null;
-    $OrdenesCompraController -> EnviarCorreos($ID_Solicitud, $ID_Correos, $Asunto1, $Mensaje, $Link);
-}
 ?>
 
 <!-- Tom Select: Librerías CSS y JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css">
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
-
 <!-- CSS personalizado -->
 <style>
     .ts-dropdown {
@@ -184,6 +171,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
+<?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $ID_Correos = $_POST['para'] ?? [];       
+        $Asunto1    = $_POST['asunto'] ?? '';
+        $Mensaje    = $_POST['mensaje'] ?? '';
+        $Link       = $_POST['adjunto_url'] ?? null;
+        $OrdenesCompraController -> EnviarCorreos($ID_Solicitud, $ID_Correos, $Asunto1, $Mensaje, $Link);
+    }
+?>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

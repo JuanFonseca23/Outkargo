@@ -21,6 +21,7 @@
         'Productos/InicioSalida' => 'Views/Templates/Productos/Salidas/InicioSalida.php',
         'Productos/InicioSalidaSedes' => 'Views/Templates/Productos/Salidas/InicioSalidaSedes.php',
         'Productos/VerSalida' => 'Views/Templates/Productos/Salidas/VerSalida.php',
+        'Productos/FirmarEntrega' => 'Views/Templates/Productos/Salidas/FirmarEntrega.php',
         'Productos/FirmaSalida' => 'Views/Templates/Productos/Salidas/FirmaSalida.php',
         'Productos/FirmaSalidaReceptor' => 'Views/Templates/Productos/Salidas/FirmaSalidaReceptor.php',
         'Productos/FirmaSupervisorSalida' => 'Views/Templates/Productos/Salidas/FirmaSupervisorSalida.php',

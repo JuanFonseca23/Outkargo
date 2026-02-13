@@ -92,8 +92,10 @@
 
         public function FirmarOverhaulingSupervisor ($ID_Mantenimiento, $Firma) {
             $EstadoFirmaSupervisor = 1;
+            $EstadoTrabajo = 2;
             $FechaFirma = date("d/m/Y");
             if ($this->Modelo_Overhauling->FirmarOverhaulingSupervisor($ID_Mantenimiento, $Firma, $FechaFirma, $EstadoFirmaSupervisor)) {
+                $this->Modelo_Overhauling->ActualizarEstadoTrabajoOverhauling($ID_Mantenimiento, $EstadoTrabajo);
                 echo "
                 <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
                 <script>
@@ -293,7 +295,7 @@
             $FechaCreado = date("d/m/Y");
             $EstadoFirmaSupervisor = 0;
             $EstadoFirmaMecanico = 0;
-            $Estado_Trabajo = 'Pendiente';
+            $Estado_Trabajo = 0;
             $ultimoCodigo = $this->Modelo_Overhauling->ObtenerUltimoCodigoDiagnostico();
             if ($ultimoCodigo) {
                $nuevoCodigo = str_pad(intval(substr($ultimoCodigo, 2)) + 1, 6, "0", STR_PAD_LEFT);

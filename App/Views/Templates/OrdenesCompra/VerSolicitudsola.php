@@ -1,6 +1,6 @@
 <?php
 include_once "App/Controllers/OrdenesCompraController.php";
-$OrdenesCompraController = new OrdenesCompraController;
+$OrdenesCompraController = new OrdenesCompraController();
 $DataSolicitud = $OrdenesCompraController->VerSolicitud($_GET['ID']);
 
 $Filas = $OrdenesCompraController->MostrarDetallesSolicitud($_GET['ID']);
@@ -28,8 +28,6 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     <!-- Default theme -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
 
-
-
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,6 +44,27 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
 
     <!-- Template Stylesheet -->
     <link href="../../App/Views/Resources/Css/Dashboard/style.css" rel="stylesheet">
+    <style>
+        /* ===== FILA APROBADA ===== */
+        .fila-aprobada {
+            background-color: #d4edda !important;   /* verde suave */
+        }
+
+        .fila-aprobada td,
+        .fila-aprobada th {
+            background-color: #d4edda !important;
+        }
+
+        /* ===== FILA RECHAZADA ===== */
+        .fila-rechazada {
+            background-color: #f8d7da !important;   /* rojo suave */
+        }
+
+        .fila-rechazada td,
+        .fila-rechazada th {
+            background-color: #f8d7da !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -117,8 +136,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
         .tabla-firmas td {
             font-size: 12px;
         }
-</style>
-
+    </style>
 
     <table border="1">
         <thead>
@@ -138,6 +156,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
             </tr>
         </thead>
     </table>
+    
     <table border="1">
         <tr>
             <th>Solicitante</th>
@@ -162,7 +181,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     <table border="1">
         <thead>
             <tr>
-                <th colspan="6" class="Titulo2">DETALLE DE REPUESTOS / INSUMOS</th>
+                <th colspan="7" class="Titulo2">DETALLE DE REPUESTOS / INSUMOS</th>
             </tr>
         </thead>
         <tbody>
@@ -173,6 +192,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
                 <th style="text-align: center;">Medidas</th>
                 <th style="width: 110px;">Precio Unitario</th>
                 <th style="width: 110px;">Precio Total</th>
+                <th style="width: 110px;">Estado</th>
             </tr>
             <?php
             $Numero = 0;
@@ -180,16 +200,21 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
             if ($Filas) {
                 foreach ($Filas as $Fila) {
                     $Numero = $Numero + 1;
-                    $SumaTotal += $Fila['Precio_Total']; 
-
+                    if (strtoupper($Fila['Estado']) === 'APROBADO') {
+                        $SumaTotal += $Fila['Precio_Total'];
+                        $claseFila = 'fila-aprobada';
+                    }else{
+                         $claseFila = 'fila-rechazada';
+                    }
             ?>
-                    <tr>
+                    <tr class="<?= $claseFila ?>">
                         <td style="text-align: center;"><?= $Numero ?></td>
                         <td style="text-align: center;"><?= $Fila['Cantidad'] ?></td>
                         <td style="text-align: left;"><?= $Fila['Descripcion'] ?></td>
                         <td style="text-align: left;"><?= $Fila['Medidas'] ?></td>
                         <td style="text-align: center;">$<?= number_format($Fila['Precio_Unitario'], 0, ',', '.') ?></td>
                         <td style="text-align: center;">$<?= number_format($Fila['Precio_Total'], 0, ',', '.') ?></td>
+                        <td style="text-align: center;"><?= $Fila['Estado'] ?></td>
                     </tr>
             <?php
                 }
@@ -199,7 +224,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
         <tfoot>
             <tr>
                 <th colspan="5" class="text-right">TOTAL</th>
-                <td style="text-align: right;">$ <?= number_format($SumaTotal, 2, ',', '.') ?></td>
+                <td colspan="2" style="text-align: right;">$ <?= number_format($SumaTotal, 2, ',', '.') ?></td>
             </tr>
         </tfoot>
     </table>

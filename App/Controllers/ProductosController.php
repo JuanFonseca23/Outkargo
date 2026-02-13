@@ -789,6 +789,11 @@
             return $Resultado; 
         }
 
+        public function verificarEstadoFirmaSalida1($ID_Salida) {
+            $Resultado = $this->Modelo_Productos->verificarEstadoFirmaSalida1($ID_Salida);
+            return $Resultado; 
+        }
+
         public function DetallesSalida($ID_Usuario){
             if ($DataSalida = $this->Modelo_Productos->DetallesSalida($ID_Usuario)){
                 return $DataSalida;
@@ -885,7 +890,7 @@
             }
         }
 
-        public function FirmarSalida($No_Documento, $ID_Recibe, $ID_Usuario, $ID_Centro, $ID_Destino, $Firma, $Nombre_Ingresa, $ID_Supervisor, $CorreoSupervisor, $Nombre_Supervisor){
+        public function FirmarSalida($No_Documento, $ID_Recibe, $ID_Usuario, $ID_Centro, $ID_Destino, $Firma_Usuario, $Nombre_Ingresa, $ID_Supervisor, $CorreoSupervisor, $Nombre_Supervisor){
             $Ultimo_Formulario= $this->Modelo_Productos->ObtenerNumeroFormularioSalida();
             if ($Ultimo_Formulario) {
                 $No_Formulario = str_pad(intval($Ultimo_Formulario) + 1, 6, "0", STR_PAD_LEFT);
@@ -894,8 +899,13 @@
             }
             $Estado = 2;            
             $Fecha_Realizado = date("d/m/Y");      
+            $Fecha_Recibe = NULL;
+            $Firma_Estado_Salida = 1;
             $Firma_Estado_Recibe = 2;
-            if($ID =$this->Modelo_Productos->FirmarSalida($ID_Usuario, $ID_Recibe, $ID_Supervisor, $ID_Centro, $ID_Destino, $No_Formulario, $Fecha_Realizado, $Estado, $Firma, $Firma_Estado_Recibe)){
+            $Firma = NULL;
+            $ID_Origen = NULL;
+            $Tipo_Origen = NULL;
+            if($ID =$this->Modelo_Productos->FirmarSalida($ID_Usuario, $ID_Recibe, $ID_Supervisor, $ID_Centro, $ID_Destino, $ID_Origen, $No_Formulario, $Tipo_Origen, $Fecha_Realizado, $Fecha_Recibe, $Estado, $Firma_Usuario, $Firma, $Firma_Estado_Salida, $Firma_Estado_Recibe)){
                 $ID_Salida=$ID;
                 $this->Modelo_Productos->ProductosSalida($ID_Salida);
                 $this->GenerarCorreoSalida($CorreoSupervisor, $Nombre_Supervisor, $No_Documento, $No_Formulario, $ID_Salida);
@@ -935,6 +945,50 @@
                         });
                     </script>";
             }           
+        }
+
+        public function FirmarSalida1($ID, $Usuario, $Nombre_Ingresa, $No_Formulario, $Firma_Supervisor){
+            $Firma_Supervisor_Estado = 1;
+            if ($this->Modelo_Productos->FirmarSalida1($ID, $Firma_Supervisor, $Firma_Supervisor_Estado)) {
+                $Correo = $this->Modelo_Productos->ObtenerCorreo($Usuario);
+                $this->GenerarCorreoConfirmacionSalida($Correo, $Nombre_Ingresa, $No_Formulario);
+                $ID_Usuario1 =$Usuario;
+                $ID_Usuario2 = Null;
+                $Creo = 'autorizo';
+                $Frase = $Nombre_Ingresa.' Autorizo la salida de producto con el numero: '.$No_Formulario;
+                $this->Controller_ActividadUsuarios->RegistrarActividadUsuario($ID_Usuario1,$ID_Usuario2,$Creo,$Frase);
+                echo "
+                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                    <script>
+                        Swal.fire({
+                            title: 'Firmado Correctamente!',
+                            text: 'La salida ha sido firmada con éxito.',
+                            icon: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'Continuar',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = 'InicioSalida';
+                            }
+                        });
+                    </script>";
+            } else {
+                echo "
+                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                    <script>
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'ERROR: Comuníquese con el área de sistemas.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        });
+                    </script>";
+            }
+            
         }
 
         public function FirmarSalidaRecibe($ID_Salida, $No_Formulario, $ID_Recibe, $Nombre_Ingresa, $Firma){         
@@ -1610,7 +1664,6 @@
                 echo "El mensaje no pudo ser enviado. Mailer Error: {$mail->ErrorInfo}";
             }
         }
-
         private function GenerarCorreoConfirmacionSalida ($Correo, $Nombre_Ingresa, $No_Formulario) {
             $mail = new PHPMailer(true);    
             try {

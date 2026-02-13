@@ -86,7 +86,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
         <thead>
             <tr>
                 <th rowspan="3"><img src="<?= $baseUrl ?>App/Views/Img/Outkargo.png" width="200px"></th>
-                <th rowspan="3" class="Titulo" style="font-size: 14px;" >REPORTE DE MANTENIMIENTO PREVENTIVO ELECTRICA PASILLO ANGOSTO</th>
+                <th rowspan="3" class="Titulo" style="font-size: 14px;" >REPORTE DE MANTENIMIENTO CORRECTIVO</th>
                 <th>CODIGO:</th>
                 <td>F-212</td>
             </tr>

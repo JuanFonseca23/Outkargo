@@ -11,6 +11,13 @@
         }
 
         // Métodos
+        public function ActualizarEstadoTrabajoOverhauling($ID_Mantenimiento, $EstadoTrabajo){
+            $sql = "UPDATE trabajos_overhauling SET Estado_Trabajo = :Estado_Trabajo WHERE ID_Overhauling = :ID_Mantenimiento";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(":Estado_Trabajo", $EstadoTrabajo);
+            $stmt->bindParam(":ID_Mantenimiento", $ID_Mantenimiento);
+            return $stmt->execute();
+        }
 
         public function ContarDiagnosticos($ID_Centro) {
             $sql = "SELECT COUNT(*) as NoDiagnosticos FROM overhauling_inicial WHERE ID_Centro = :ID_Centro";

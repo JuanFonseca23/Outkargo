@@ -215,7 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                                                 $Bateria, $Electrico, $Traccion, $Frenos, $Direccion, $Hidraulico, $Mastil, $CarroPorta, $Lubricacion, $Horquillas, $Chasis, $Ruedas, $Luces, $Aditamientos, $Cargador, 
                                                                                 $Revision, $Auxiliares, $Suspension, $Pantografo, $Motor, $Refrigeracion, $Combustion, $Transmision, $Caja, $Componentes, $Ausencia, $Revisiones, $Funcionamiento, $Correas, 
                                                                                 $Unidad, $Panel, $Pintura, $trabajos, $NombreCreo)){
-         echo "
+            echo "
             <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
             <script>
                 Swal.fire({

@@ -24,6 +24,54 @@
             $this->Controller_Usuarios = new UsuarioController();
         }
         // Métodos
+        public function AutorizarSolicitudCompra($ID_Solicitud, $Estados, $Firma, $ID_Autoriza, $NombreCreo, $Numero_Orden){ 
+            $FechaAutoriza = date("d/m/Y");
+            $resultado = $this->Modelo_OrdenesCompra->AutorizarSolicitudCompra($ID_Solicitud, $ID_Autoriza, $Firma, $FechaAutoriza);
+
+            if ($resultado > 0) {
+
+                if (is_array($Estados)) {
+                    foreach ($Estados as $ID_Detalle => $Estado) {
+                        $this->Modelo_OrdenesCompra->ActualizarEstadoDetalleSolicitud($ID_Detalle, $Estado);
+                    }
+                }
+
+                $ID_Usuario1 = $ID_Autoriza;
+                $ID_Usuario2 = null;
+                $Creo = 'autorizo';
+                $Frase = $NombreCreo . ' Autorizó la solicitud de compra #' . $Numero_Orden;
+
+                $this->Controller_ActividadUsuarios->RegistrarActividadUsuario($ID_Usuario1, $ID_Usuario2, $Creo, $Frase);
+                echo "
+                <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                <script>
+                    Swal.fire({
+                        title: '¡Firmado Correctamente!',
+                        text: 'La solicitud ha sido revisada correctamente.',
+                        icon: 'success',
+                        confirmButtonText: 'Continuar',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = 'InicioSolicitud';
+                        }
+                    });
+                </script>";
+                }else {
+                    echo "
+                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                    <script>
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'No se pudo revisar la solicitud.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar'
+                        });
+                    </script>";
+                }
+        }
+
         public function BuscarDestinatarios(){
             header('Content-Type: application/json; charset=utf-8');
             $Q = $_GET['q'] ?? '';
@@ -34,6 +82,11 @@
             $Resultados = $this->Modelo_OrdenesCompra->BuscarDestinatarios($Q);
             echo json_encode($Resultados);
             exit;
+        }
+
+        public function ContarSolicitudesPorCentro($ID_Centro) {
+            $Resultado = $this->Modelo_OrdenesCompra->ContarSolicitudesPorCentro($ID_Centro);
+            return $Resultado ? $Resultado : 0;
         }
 
         public function DetallesTempSolicitudCompra($ID_Usuario) {
@@ -172,11 +225,15 @@
                 </body>
                 </html>';
                 $mail->send();
+                echo "
+                    <script>
+                        window.location.href = 'InicioSolicitud';
+                    </script>";
+                exit;
             }
             catch (Exception $e) {
                 echo "El mensaje no pudo ser enviado. Mailer Error: {$mail->ErrorInfo}";
             }
-
         }
 
         public function InsertarSolicitudCompra($ID_Usuario, $ID_Centro, $Firma_Solicita, $Fecha_Solicitud, $Nombre_Ingresa, $Descripcion) {
@@ -242,6 +299,13 @@
 
         public function InsertarSolicitudTemp($Cantidad, $Descripcion, $Medidas, $Precio_Unitario, $Precio_Total, $ID_Usuario) {
             return $this->Modelo_OrdenesCompra->InsertarSolicitudTemp($Cantidad, $Descripcion, $Medidas, $Precio_Unitario, $Precio_Total, $ID_Usuario);
+        }
+
+        public function leerSolicitudesCompra($ID_Centro) {
+            if ($this->Modelo_OrdenesCompra->leerSolicitudesCompra($ID_Centro)) {
+                $Resultado = $this->Modelo_OrdenesCompra->leerSolicitudesCompra($ID_Centro);
+                return $Resultado;
+            }
         }
 
         public function MostrarDetallesSolicitud($ID){
