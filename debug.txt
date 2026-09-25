@@ -1,4 +1,1 @@
-{"Novedades":[{"txt":"52767367","enBD":false},{"txt":"951","enBD":false},{"txt":"gdsgg","enBD":false}],"ID_Mantenimiento":"1","ID_Montacargas":1,"Tipo_Mantenimiento":"Preventivo"}{"ID_Mantenimiento":"1","ID_Novedad":"3","Tipo_Mantenimiento":"Preventivo"}
-{"ID_Mantenimiento":"1","ID_Novedad":"4","Tipo_Mantenimiento":"Preventivo"}
-{"ID_Mantenimiento":"1","ID_Novedad":"5","Tipo_Mantenimiento":"Preventivo"}
-{"ID_Mantenimiento":"1","ID_Novedad":"2","Tipo_Mantenimiento":"Preventivo"}
+{"Novedades":[{"txt":"Prueba de agregar novedad","enBD":false}],"ID_Mantenimiento":"14","ID_Montacargas":1,"Tipo_Mantenimiento":"Correctivo"}

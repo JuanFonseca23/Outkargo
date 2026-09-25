@@ -1396,10 +1396,10 @@
             }                
         }
 
-        public function RegistrarDetalleSalida ($Mecanico, $ID_Salida, $ID_Insumo, $Usar, $N_Factura, $N_Lote, $valor_unitario){
+        public function RegistrarDetalleSalida ($Mecanico, $ID_Salida, $ID_Insumo, $Usar, $N_Factura, $N_Lote, $valor_unitario, $Observaciones){
             $Valor_Total = $Usar * $valor_unitario;
-            $sql = "INSERT INTO detalles_salida_insumos (ID_Usuario, ID_Salida, ID_Producto, Cantidad, N_Factura, Lote, valor_unitario, valor_total, ID_Producto_Seleccionado)
-                    VALUES (:Mecanico, :ID_Salida, :ID_Insumo, :Usar, :N_Factura, :N_Lote, :valor_unitario, :Valor_Total, 0)";
+            $sql = "INSERT INTO detalles_salida_insumos (ID_Usuario, ID_Salida, ID_Producto, Cantidad, N_Factura, Lote, valor_unitario, valor_total, Observaciones, ID_Producto_Seleccionado)
+                    VALUES (:Mecanico, :ID_Salida, :ID_Insumo, :Usar, :N_Factura, :N_Lote, :valor_unitario, :Valor_Total, :Observaciones, 0)";
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(':Mecanico', $Mecanico);
             $stmt->bindParam(':ID_Salida', $ID_Salida);
@@ -1409,6 +1409,7 @@
             $stmt->bindParam(':N_Lote', $N_Lote);
             $stmt->bindParam(':valor_unitario', $valor_unitario);
             $stmt->bindParam(':Valor_Total', $Valor_Total);
+            $stmt->bindParam(':Observaciones', $Observaciones);
             return $stmt->execute();
         }
         

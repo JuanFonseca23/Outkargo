@@ -1,7 +1,6 @@
 <?php
 session_start();
 include_once "App/Controllers/MantenimientosController.php";
-
 header('Content-Type: application/json');
 
 $MantenimientosController = new MantenimientosController();
@@ -26,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $TipoMontacargas = $_POST['tipoMontacargas'];
     $TipoMantenimiento = $_POST['tipoMantenimiento'];
-    $Fecha = date("d/m/Y");
+    $Fecha = date('Y-m-d');
 
     try {
         $Resultados = $MantenimientosController->CrearMantenimientoBorrador($ID_Usuario, $ID_Montacargas, $ID_Centro, $ID_Area, $ID_Operario, $Fecha, $Externo, $Operario_Externo, $TipoMontacargas, $TipoMantenimiento);    
@@ -38,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "ID_Mantenimiento" => $ID_Mantenimiento,
             "Detalles" => $Detalles,
             "ID_Detalle" => $ID_Detalle,
-            "ID_Montacargas" => $ID_Montacargas
+            "ID_Montacargas" => $ID_Montacargas,
+            "ID_Centro" => $ID_Centro
         ]);
 
     } catch (Exception $e) {

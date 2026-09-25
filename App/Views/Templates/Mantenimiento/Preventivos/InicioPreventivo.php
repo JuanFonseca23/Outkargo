@@ -19,7 +19,8 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
 } else {
     $baseUrl = 'https://outkargo.com.co/';
 }
-
+$Mantenimientos = $MantenimientosController->LeerMantenimientos();
+$NoMantenimientos = $MantenimientosController->ContarMantenimientos();
 
 ?>
 
@@ -46,7 +47,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
                 </div>
                 <div class="stat-text">
                     <div class="stat-label">Preventivos</div>
-                    <div class="stat-value" id="contadorPreventivos">—</div>
+                    <div class="stat-value" id="contadorPreventivos"><?= $NoMantenimientos['NoMantenimientos'] ?></div>
                 </div>
             </div>
         </div>
@@ -67,7 +68,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
         </div>
 
         <div class="col-6 col-xl-3">
-            <a href="#" class="stat-card clickable" style="text-decoration:none;">
+            <div class="stat-card clickable" id="btnAbrirBuscarMantenimiento" role="button" tabindex="0" style="cursor:pointer;">
                 <div class="stat-icon bg-dark-soft">
                     <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
                         <path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" stroke="#000020" stroke-width="2" stroke-linecap="round"/>
@@ -75,13 +76,15 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
                 </div>
                 <div class="stat-text">
                     <div class="stat-label">Herramienta</div>
-                    <div class="stat-value" style="font-size:.95rem;">Buscar</div>
+                    <div class="stat-value" style="font-size:.95rem;">
+                        Buscar
+                    </div>
                 </div>
-            </a>
+            </div>
         </div>
 
         <div class="col-6 col-xl-3">
-            <a href="#" class="stat-card clickable" style="text-decoration:none;">
+            <a href="#" class="stat-card clickable" id="btnAbrirInformesMantenimiento" role="button" tabindex="0" style="cursor:pointer;">
                 <div class="stat-icon bg-orange-soft">
                     <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
                         <path d="M9 17v-2m3 2v-4m3 4v-6M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1z" stroke="#ff5000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -98,40 +101,66 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
 </div>
 
 <!-- TABLA -->
-<div class="container-fluid pt-3 pt-md-4 px-2 px-md-4 pb-5">
-    <div class="table-card">
-        <div class="table-card-header">
-            <h6>
-                <svg width="15" height="15" fill="none" viewBox="0 0 24 24">
-                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="#000020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Preventivos Realizados
-            </h6>
-            <div class="d-flex gap-2 align-items-center flex-wrap">
-                <a href="#" class="btn btn-sm btn-outline-secondary rounded-pill px-2 px-md-3" style="font-size:.72rem;">Ver Todas</a>
-                <a href="#" class="btn btn-sm rounded-pill px-2 px-md-3" style="background:var(--color-dark);color:#fff;font-size:.72rem;">↓ Excel</a>
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-light rounded p-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-4">
+            <div class="d-flex align-items-center flex-wrap gap-2">
+                <h6 class="mb-0">Preventivos Realizados</h6>
+            </div>
+            <div class="text-md-end text-center mt-2 mt-md-0">
+                <a href="ExportarExcelPreventivo" class="text-decoration-none ms-2 text-success fw-bold">Descargar Excel</a>
             </div>
         </div>
-        <div class="table-responsive">
-            <table class="table table-hover mb-0 text-start align-middle" id="myTable" style="min-width:600px;">
-                <thead>
-                    <tr>
-                        <th class="text-center" style="width:40px;">N°</th>
-                        <th>Serie</th>
-                        <th>Horómetro</th>
-                        <th>Operario</th>
-                        <th>Fecha</th>
-                        <th>Tipo</th>
-                        <th class="text-center">Estado</th>
-                        <th class="text-center" style="width:90px;">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
+
+        <div id="contenedorMantenimientos"><!-- generado por JS --></div>
     </div>
 </div>
 
+<!-- MODAL BORRADOR PREVENTIVO -->
+<div class="modal fade" id="modalBorradorPreventivo" tabindex="-1" aria-labelledby="modalBorradorPreventivoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:min(460px, calc(100vw - 1rem));">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header modal-header-custom">
+                <div>
+                    <h5 class="modal-title mb-0" id="modalBorradorPreventivoLabel">⚠️ Mantenimiento en progreso </h5>
+                    <small class="text-white-50" style="font-size:.72rem;">
+                        Se encontró un mantenimiento preventivo pendiente
+                    </small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"> </button>
+            </div>
+            <div class="modal-body p-3 p-md-4">
+                <div class="text-center">
+                    <div style="width:64px; height:64px; margin:0 auto 16px; border-radius:50%; background:#fff3cd; display:flex; align-items:center; justify-content:center; font-size:30px;"> 💾 </div>
+                    <h6 style="color:var(--color-dark); font-weight:700; margin-bottom:8px;">
+                        Tienes un mantenimiento guardado
+                    </h6>
+                    <p style="font-size:.84rem; color:#6c757d; margin-bottom:8px;">
+                        Encontramos un mantenimiento preventivo que quedó en estado <strong>BORRADOR</strong>.
+                    </p>
+                    <p style="font-size:.82rem; color:#6c757d; margin-bottom:0;">
+                        ¿Deseas continuar desde donde lo dejaste?
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer p-2 p-md-3" style="background:#f8f9fc; border-top:1px solid #e8e8f0;">
+                <div class="d-flex justify-content-center gap-2 w-100 flex-wrap">
+                    <button type="button" class="btn-outline-custom btn btn-sm" id="btnRechazarBorrador">
+                        No, iniciar nuevo
+                    </button>
+
+                    <button type="button" class="btn-primary-custom btn btn-sm" id="btnContinuarBorrador">
+                        Sí, continuar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <!-- MODAL 1 — DATOS INICIALES  -->
 <div class="modal fade" id="NumerDocumentoModal" tabindex="-1" aria-labelledby="NumerDocumentoModalLabel" aria-hidden="true">
@@ -228,7 +257,6 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
         </div>
     </div>
 </div>
-
 
 <!-- MODAL 2 — FORMULARIO MANTENIMIENTO -->
 <div class="modal fade" id="agregarMantenimiento" tabindex="-1" aria-labelledby="agregarMantenimientoModalLabel" aria-hidden="true">
@@ -354,15 +382,30 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
                                             if ($DataSupervisores) {
                                                 foreach ($DataSupervisores as $Supervisor) {
                                         ?>
-                                        <option value="<?= htmlspecialchars($Supervisor['ID'] . '|' . $Supervisor['Correo']) ?>">
-                                            <?= htmlspecialchars($Supervisor['NombreCompleto']) ?>
-                                        </option>
+                                            <option value="<?= htmlspecialchars($Supervisor['ID'] . '|' . $Supervisor['Correo']) ?>">
+                                                <?= htmlspecialchars($Supervisor['NombreCompleto']) ?>
+                                            </option>
                                         <?php
                                                 }
-                                            }                                   
+                                            }
                                         ?>
                                     </select>
-
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-lbl">Operedaro o Supervisor (Quien Recibe)</span>
+                                    <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-1">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span id="labelInterno1" class="label-active" style="font-size:.78rem;">Interno</span>
+                                            <div class="form-check form-switch m-0">
+                                                <input class="form-check-input" type="checkbox" id="tipoOperarioSwitch1">
+                                            </div>
+                                            <span id="labelExterno1" class="label-inactive" style="font-size:.78rem;">Externo</span>
+                                        </div>
+                                    </div>
+                                    <select class="form-select" name="ID_Operario1" id="ID_Operario1" required>
+                                        <option value="" disabled selected>Seleccione operario</option>
+                                    </select>
+                                    <input type="text" class="form-control mt-2 d-none" id="OperarioExterno1" name="OperarioExterno1" placeholder="Nombre completo del operario externo">
                                 </div>
                             </div>
 
@@ -713,6 +756,298 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     </div>
 </div>
 
+<!-- MODAL 8 FIRMAS TECNICOS-->
+<div class="modal fade" id="modalFirmasMantenimiento" tabindex="-1" aria-labelledby="modalFirmasMantenimientoLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" style="max-width:min(700px, calc(100vw - .5rem)); margin:.25rem auto;">
+       <div class="modal-content border-0 shadow">
+            <div class="modal-header modal-header-custom">
+                <div style="min-width:0;">
+                    <h5 class="modal-title mb-0">📋 Firmas de los mecánicos</h5>
+                </div>
+            </div>
+            <div class="modal-body p-3 p-md-4">
+                <div class="alert alert-info">
+                    Cada mecánico que participó en el mantenimiento debe registrar su firma.
+                </div>
+                <div id="contenedorFirmasMecanicos">
+                    <!-- Las firmas se generan aquí dinámicamente -->
+                </div>
+
+            </div>
+            <div class="modal-footer p-2 p-md-3" style="background:#f8f9fc;border-top:1px solid #e8e8f0;">
+                <button type="button" class="btn btn-primary" id="btnGuardarFirmas"> Guardar firmas</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL 9 FIRMAS SUPERVISOR/OPERARIO/TECNICOS-->
+<div class="modal fade" id="modalFirma" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModalFirma">Firmar mantenimiento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="ID_MantenimientoFirma">
+                <input type="hidden" id="TipoFirma">
+                <input type="hidden"  id="ID_MecanicoFirma">
+                <div class="text-center mb-3">
+                    <p id="textoModalFirma">Realice su firma</p>
+                </div>
+                <div class="border rounded p-2">
+                    <canvas id="canvasFirma1" width="500" height="250" style="width:100%; height:250px; touch-action:none;"></canvas>
+                </div>
+                <div class="d-flex justify-content-end mt-2">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="limpiarFirma()">Limpiar</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button"class="btn btn-primary" onclick="guardarFirma()">Firmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL 10 BUSCAR -->
+<div class="modal fade" id="modalBuscarMantenimiento" tabindex="-1" aria-labelledby="modalBuscarMantenimientoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header modal-header-custom">
+                <div>
+                    <h5 class="modal-title mb-0" id="modalBuscarMantenimientoLabel">
+                        🔎 Buscar mantenimiento
+                    </h5>
+                    <small class="text-white-50" style="font-size:.72rem;">
+                        Ingresa uno o varios parámetros de búsqueda
+                    </small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body p-3 p-md-4">
+                <form id="formBuscarMantenimiento">
+                    <div class="section-divider">
+                        <span>Parámetros de búsqueda</span>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label-sm"> Centro de trabajo</label>
+                            <select class="form-select" id="buscarCentro">
+                                <option value=""> Todos </option>
+                                <?php
+                                    if ($ListaCentrosDeTrabajo) {
+                                        foreach ($ListaCentrosDeTrabajo as $ListaCentroDeTrabajo) {
+                                            echo "
+                                                <option value='{$ListaCentroDeTrabajo['Nombre']}'>
+                                                    " . htmlspecialchars($ListaCentroDeTrabajo['Nombre']) . "
+                                                </option>
+                                            ";
+                                        }
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <!-- MONTACARGAS -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label-sm"> Montacargas</label>
+                            <input type="text" class="form-control" id="buscarMontacargas" placeholder="Número, marca, modelo o serie">
+                        </div>
+
+                        <!-- TIPO MANTENIMIENTO -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label-sm"> Tipo de mantenimiento</label>
+                            <select class="form-select" id="buscarTipoMantenimiento">
+                                <option value="">Todos</option>
+                                <option value="250_Horas">250 Horas</option>
+                                <option value="1000_Horas">1000 Horas</option>
+                                <option value="2000_Horas">2000 Horas</option>
+                            </select>
+                        </div>
+
+                        <!-- TIPO MONTACARGAS -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label-sm">Tipo de montacargas</label>
+                            <select class="form-select"id="buscarTipoMontacargas">
+                                <option value=""> Todos </option>
+                                <option value="combustion">Combustión</option>
+                                <option value="contrabalanceada">Contrabalanceada</option>
+                                <option value="pasillo">Pasillo</option>
+                                <option value="manlift">Manlift</option>
+                            </select>
+                        </div>
+
+                        <!-- FECHA DESDE -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label-sm">Fecha desde</label>
+                            <input type="date" class="form-control" id="buscarFechaDesde">
+                        </div>
+
+                        <!-- FECHA HASTA -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label-sm"> Fecha hasta</label>
+                            <input type="date" class="form-control" id="buscarFechaHasta">
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="button" class="btn-outline-custom btn" id="btnLimpiarBusqueda"> 
+                            Limpiar
+                        </button>
+                        <button type="submit" class="btn-primary-custom btn">
+                            🔎 Buscar
+                        </button>
+
+                    </div>
+                </form>
+
+                <!-- RESULTADOS -->
+                <div id="resultadoBusquedaMantenimiento" class="mt-4" style="display:none;">
+                    <div class="section-divider">
+                        <span>Resultados</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead style="background:var(--color-dark);color:#fff;">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Mantenimiento</th>
+                                    <th>Montacargas</th>
+                                    <th>Centro</th>
+                                    <th>Tipo</th>
+                                    <th>Fecha</th>
+                                    <th>Accion</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodyResultadosBusqueda"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL 11 — INFORMES -->
+<div class="modal fade" id="modalInformeMantenimiento" tabindex="-1" aria-labelledby="modalInformeMantenimientoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header modal-header-custom">
+                <div>
+                    <h5 class="modal-title mb-0" id="modalInformeMantenimientoLabel">
+                        📊 Informes de mantenimiento
+                    </h5>
+                    <small class="text-white-50" style="font-size:.72rem;">
+                        Selecciona el informe y el formato de generación
+                    </small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body p-3 p-md-4">
+                <form id="formInformeMantenimiento">
+                    <!-- TIPO DE INFORME -->
+                    <div class="section-divider">
+                        <span>Tipo de informe</span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label-sm">Informe</label>
+                        <select class="form-select" id="tipoInforme" required>
+                            <option value="">Seleccione un informe</option>
+                            <option value="F_145">Matriz de seguimiento de mantenimientos preventivos</option>
+                        </select>
+                    </div>
+                    <!-- FORMATO -->
+                    <div class="section-divider mt-4">
+                        <span>Formato</span>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <div class="form-check border rounded p-3">
+                                <input class="form-check-input" type="radio" name="formatoInforme" id="formatoPDF" value="pdf" checked>
+                                <label class="form-check-label" for="formatoPDF">
+                                    <strong>📄 PDF</strong>
+                                    <br>
+                                    <small class="text-muted">Informe listo para imprimir o enviar</small>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-check border rounded p-3">
+                                <input class="form-check-input" type="radio" name="formatoInforme" id="formatoExcel" value="excel">
+                                <label class="form-check-label" for="formatoExcel">
+                                    <strong>📊 Excel</strong>
+                                    <br>
+                                    <small class="text-muted">Datos para análisis y filtros</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FILTROS -->
+                    <div class="section-divider mt-4">
+                        <span>Filtros</span>
+                    </div>
+                    <div class="row g-3">
+                        <!-- CENTRO -->
+                        <input type="hidden" class="form-control" id="informeNombre" value="<?= htmlspecialchars($_SESSION['NombreCompleto']) ?>">
+                        <div class="col-12 col-md-12">
+                            <label class="form-label-sm">Centro de trabajo</label>
+                            <select class="form-select" id="informeCentro">
+                                <option value="">Todos</option>
+                                <?php
+                                    if ($ListaCentrosDeTrabajo) {
+                                        foreach ($ListaCentrosDeTrabajo as $centro) {
+                                            echo "
+                                                <option value='" . $centro['ID'] . "'>
+                                                    " . htmlspecialchars($centro['Nombre']) . "
+                                                </option>";
+                                        }
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <!-- MONTACARGAS -->
+                       <div class="col-12 col-md-6">
+                            <label class="form-label-sm">Montacargas</label>
+                            <input type="text" class="form-control" id="informeMontacargas" placeholder="Número, serie, marca o modelo">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label-sm">Tipo de mantenimiento</label>
+                            <select class="form-select" id="informeTipo">
+                                <option value=""> Todos</option>
+                                <option value="250_Horas">250 Horas</option>
+                                <option value="1000_Horas">1000 Horas</option>
+                                <option value="2000_Horas">2000Horas</option>
+                            </select>
+                        </div>
+                        <!-- FECHA DESDE -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label-sm">Fecha desde</label>
+                            <input type="date" class="form-control" id="informeFechaDesde">
+                        </div>
+                        <!-- FECHA HASTA -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label-sm">Fecha hasta</label>
+                            <input type="date" class="form-control" id="informeFechaHasta">
+                        </div>
+                    </div>
+
+                    <!-- BOTONES -->
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <button type="button" class="btn btn-outline-secondary" id="btnLimpiarInforme">
+                            Limpiar
+                        </button>
+                        <button type="submit" class="btn-primary-custom btn">
+                            📊 Generar informe
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- LIGHTBOX — VER IMAGEN GRANDE -->
 <div id="lightboxOverlay"
     style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.88);
@@ -733,6 +1068,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     window.ID_Sesion = <?= $_SESSION['ID'] ?>;
     window.CRITERIOS_DATA = <?= $criteriosJSON ?>;
     window.baseUrl = "<?= $baseUrl ?>";
+    window.MANTENIMIENTOS_DATA = <?= json_encode($Mantenimientos ?: []) ?>;
 </script>
 <script src="<?= $baseUrl ?>App/Views/Js/Mantenimientos/Preventivo.js" defer></script>
 

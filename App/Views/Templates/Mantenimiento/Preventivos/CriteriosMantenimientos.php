@@ -971,15 +971,15 @@ $Criterios = [
         "Sistema Hidraulico"=>[
             //PASILLO
             "pasillo" => [
-                ["label"=> "Nivel aceite hidraulico",                 "name"=> "pasillo_60", "id"=>"pasillo_60", "hidden"=> "Criterio_60"],
-                ["label"=> "Motor de sistema hidraulico",             "name"=> "pasillo_61", "id"=>"pasillo_61", "hidden"=> "Criterio_61"],
-                ["label"=> "Escobillas",                              "name"=> "pasillo_62", "id"=>"pasillo_62", "hidden"=> "Criterio_62"],
-                ["label"=> "Bomba sistema hidraulico",                "name"=> "pasillo_63", "id"=>"pasillo_63", "hidden"=> "Criterio_63"],
-                ["label"=> "Filtro de retorno",                       "name"=> "pasillo_64", "id"=>"pasillo_64", "hidden"=> "Criterio_64"],
-                ["label"=> "Cuerpo de válvulas",                      "name"=> "pasillo_65", "id"=>"pasillo_65", "hidden"=> "Criterio_65"],
-                ["label"=> "Electro válvulas",                        "name"=> "pasillo_66", "id"=>"pasillo_66", "hidden"=> "Criterio_66"],
-                ["label"=> "Mangueras",                               "name"=> "pasillo_67", "id"=>"pasillo_67", "hidden"=> "Criterio_67"],
-                ["label"=> "Micros de funciones hidráulicas",         "name"=> "pasillo_68", "id"=>"pasillo_68", "hidden"=> "Criterio_68"]
+                ["label"=> "Nivel aceite hidraulico",                 "name"=> "pasillo_59", "id"=>"pasillo_59", "hidden"=> "Criterio_59"],
+                ["label"=> "Motor de sistema hidraulico",             "name"=> "pasillo_60", "id"=>"pasillo_60", "hidden"=> "Criterio_60"],
+                ["label"=> "Escobillas",                              "name"=> "pasillo_61", "id"=>"pasillo_61", "hidden"=> "Criterio_61"],
+                ["label"=> "Bomba sistema hidraulico",                "name"=> "pasillo_62", "id"=>"pasillo_62", "hidden"=> "Criterio_62"],
+                ["label"=> "Filtro de retorno",                       "name"=> "pasillo_63", "id"=>"pasillo_63", "hidden"=> "Criterio_63"],
+                ["label"=> "Cuerpo de válvulas",                      "name"=> "pasillo_64", "id"=>"pasillo_64", "hidden"=> "Criterio_64"],
+                ["label"=> "Electro válvulas",                        "name"=> "pasillo_65", "id"=>"pasillo_65", "hidden"=> "Criterio_65"],
+                ["label"=> "Mangueras",                               "name"=> "pasillo_66", "id"=>"pasillo_66", "hidden"=> "Criterio_66"],
+                ["label"=> "Micros de funciones hidráulicas",         "name"=> "pasillo_67", "id"=>"pasillo_67", "hidden"=> "Criterio_67"]
             ],
             // CONTRABALANCEADA
             "contrabalanceada" => [
@@ -1021,23 +1021,23 @@ $Criterios = [
         "Mastil"=>[
             //PASILLO
             "pasillo" => [
-                ["label"=> "Ajuste mastil",                                   "name"=> "pasillo_69", "id"=>"pasillo_69", "hidden"=> "Criterio_69"],
-                ["label"=> "Estado secciones",                                "name"=> "pasillo_70", "id"=>"pasillo_70", "hidden"=> "Criterio_70"],
-                ["label"=> "Bujes",                                           "name"=> "pasillo_71", "id"=>"pasillo_71", "hidden"=> "Criterio_71"],
-                ["label"=> "Rodamientos",                                     "name"=> "pasillo_72", "id"=>"pasillo_72", "hidden"=> "Criterio_72"],
-                ["label"=> "Cadenas",                                         "name"=> "pasillo_73", "id"=>"pasillo_73", "hidden"=> "Criterio_73"],
-                ["label"=> "Poleas",                                          "name"=> "pasillo_74", "id"=>"pasillo_74", "hidden"=> "Criterio_74"],
-                ["label"=> "Pasadores cadenas",                               "name"=> "pasillo_75", "id"=>"pasillo_75", "hidden"=> "Criterio_75"],
-                ["label"=> "Mangueras free lift",                             "name"=> "pasillo_76", "id"=>"pasillo_76", "hidden"=> "Criterio_76"],
-                ["label"=> "Mangueras side shift",                            "name"=> "pasillo_77", "id"=>"pasillo_77", "hidden"=> "Criterio_77"],
-                ["label"=> "Mangueras pantógrafo",                            "name"=> "pasillo_78", "id"=>"pasillo_78", "hidden"=> "Criterio_78"],
-                ["label"=> "Tuberías",                                        "name"=> "pasillo_79", "id"=>"pasillo_79", "hidden"=> "Criterio_79"],
-                ["label"=> "Racores",                                         "name"=> "pasillo_80", "id"=>"pasillo_80", "hidden"=> "Criterio_80"],
-                ["label"=> "Cilindro de free lift",                           "name"=> "pasillo_81", "id"=>"pasillo_78", "hidden"=> "Criterio_78"],
-                ["label"=> "Cilindros laterales",                             "name"=> "pasillo_82", "id"=>"pasillo_79", "hidden"=> "Criterio_79"],
-                ["label"=> "Cilindro de side shif",                           "name"=> "pasillo_83", "id"=>"pasillo_80", "hidden"=> "Criterio_80"],
-                ["label"=> "Cilindros de pantógrafo",                         "name"=> "pasillo_84", "id"=>"pasillo_81", "hidden"=> "Criterio_81"],
-                ["label"=> "Bloque de válvulas funciones auxiliares",         "name"=> "pasillo_85", "id"=>"pasillo_82", "hidden"=> "Criterio_82"]    
+                ["label"=> "Ajuste mastil",                                   "name"=> "pasillo_68", "id"=>"pasillo_68", "hidden"=> "Criterio_68"],
+                ["label"=> "Estado secciones",                                "name"=> "pasillo_69", "id"=>"pasillo_69", "hidden"=> "Criterio_69"],
+                ["label"=> "Bujes",                                           "name"=> "pasillo_70", "id"=>"pasillo_70", "hidden"=> "Criterio_70"],
+                ["label"=> "Rodamientos",                                     "name"=> "pasillo_71", "id"=>"pasillo_71", "hidden"=> "Criterio_71"],
+                ["label"=> "Cadenas",                                         "name"=> "pasillo_72", "id"=>"pasillo_72", "hidden"=> "Criterio_72"],
+                ["label"=> "Poleas",                                          "name"=> "pasillo_73", "id"=>"pasillo_73", "hidden"=> "Criterio_73"],
+                ["label"=> "Pasadores cadenas",                               "name"=> "pasillo_74", "id"=>"pasillo_74", "hidden"=> "Criterio_74"],
+                ["label"=> "Mangueras free lift",                             "name"=> "pasillo_75", "id"=>"pasillo_75", "hidden"=> "Criterio_75"],
+                ["label"=> "Mangueras side shift",                            "name"=> "pasillo_76", "id"=>"pasillo_76", "hidden"=> "Criterio_76"],
+                ["label"=> "Mangueras pantógrafo",                            "name"=> "pasillo_77", "id"=>"pasillo_77", "hidden"=> "Criterio_77"],
+                ["label"=> "Tuberías",                                        "name"=> "pasillo_78", "id"=>"pasillo_78", "hidden"=> "Criterio_78"],
+                ["label"=> "Racores",                                         "name"=> "pasillo_79", "id"=>"pasillo_79", "hidden"=> "Criterio_79"],
+                ["label"=> "Cilindro de free lift",                           "name"=> "pasillo_80", "id"=>"pasillo_80", "hidden"=> "Criterio_80"],
+                ["label"=> "Cilindros laterales",                             "name"=> "pasillo_81", "id"=>"pasillo_81", "hidden"=> "Criterio_81"],
+                ["label"=> "Cilindro de side shift",                          "name"=> "pasillo_82", "id"=>"pasillo_82", "hidden"=> "Criterio_82"],
+                ["label"=> "Cilindros de pantógrafo",                         "name"=> "pasillo_83", "id"=>"pasillo_83", "hidden"=> "Criterio_83"],
+                ["label"=> "Bloque de válvulas funciones auxiliares",         "name"=> "pasillo_84", "id"=>"pasillo_84", "hidden"=> "Criterio_84"]    
             ],
             // CONTRABALANCEADA
             "contrabalanceada" => [
@@ -1083,13 +1083,13 @@ $Criterios = [
         "Horquillas"=>[
             //PASILLO
             "pasillo" => [
-                ["label"=> "Seguros",                                                                             "name"=> "pasillo_96", "id"=>"pasillo_96", "hidden"=> "Criterio_96"],
-                ["label"=> "Mordaza superior",                                                                    "name"=> "pasillo_97", "id"=>"pasillo_97", "hidden"=> "Criterio_97"],
-                ["label"=> "Mordaza inferior",                                                                    "name"=> "pasillo_98", "id"=>"pasillo_98", "hidden"=> "Criterio_98"],
+                ["label"=> "Seguros",                                                                             "name"=> "pasillo_95", "id"=>"pasillo_95", "hidden"=> "Criterio_95"],
+                ["label"=> "Mordaza superior",                                                                    "name"=> "pasillo_96", "id"=>"pasillo_96", "hidden"=> "Criterio_96"],
+                ["label"=> "Mordaza inferior",                                                                    "name"=> "pasillo_97", "id"=>"pasillo_97", "hidden"=> "Criterio_97"],
                 ["label"=> "Clase de horquillas",                                                                 "name"=> "pasillo_ClaseH", "id"=>"pasillo_ClaseH", "hidden"=> "ClaseH"],
                 ["label"=> "Longitud (m)",                                                                        "name"=> "pasillo_LongitudH", "id"=>"pasillo_LongitudH", "hidden"=> "LongitudH"],
-                ["label"=> "Estado de horquillas (Inspeccion visual ver F208 como referencia)",                   "name"=> "pasillo_99", "id"=>"pasillo_99", "hidden"=> "Criterio_99"],
-                ["label"=> "Prueba de tintas",                                                                    "name"=> "pasillo_100", "id"=>"pasillo_100", "hidden"=> "Criterio_100"] 
+                ["label"=> "Estado de horquillas (Inspeccion visual ver F208 como referencia)",                   "name"=> "pasillo_98", "id"=>"pasillo_98", "hidden"=> "Criterio_98"],
+                ["label"=> "Prueba de tintas",                                                                    "name"=> "pasillo_99", "id"=>"pasillo_99", "hidden"=> "Criterio_99"] 
             ],
             // CONTRABALANCEADA
             "contrabalanceada" => [
@@ -1115,15 +1115,15 @@ $Criterios = [
         "Ruedas"=>[
             //PASILLO
             "pasillo" => [
-                ["label"=> "Desgaste ruedas de tracción",              "name"=> "pasillo_101", "id"=>"pasillo_101", "hidden"=> "Criterio_101"],
-                ["label"=> "Desgaste ruedas de caster",                "name"=> "pasillo_102", "id"=>"pasillo_102", "hidden"=> "Criterio_102"],
-                ["label"=> "Desgaste ruedas de carga",                 "name"=> "pasillo_103", "id"=>"pasillo_103", "hidden"=> "Criterio_103"],
-                ["label"=> "Estado de rines de tracción",              "name"=> "pasillo_104", "id"=>"pasillo_104", "hidden"=> "Criterio_104"],
-                ["label"=> "Estado de rines de caster",                "name"=> "pasillo_105", "id"=>"pasillo_105", "hidden"=> "Criterio_105"],
-                ["label"=> "Estado de rines de carga",                 "name"=> "pasillo_106", "id"=>"pasillo_106", "hidden"=> "Criterio_106"],
-                ["label"=> "Balancines",                               "name"=> "pasillo_107", "id"=>"pasillo_107", "hidden"=> "Criterio_107"],
-                ["label"=> "Tornillos",                                "name"=> "pasillo_108", "id"=>"pasillo_108", "hidden"=> "Criterio_108"],
-                ["label"=> "Bujes",                                    "name"=> "pasillo_109", "id"=>"pasillo_109", "hidden"=> "Criterio_109"] 
+                ["label"=> "Desgaste ruedas de tracción",              "name"=> "pasillo_100", "id"=>"pasillo_100", "hidden"=> "Criterio_100"],
+                ["label"=> "Desgaste ruedas de caster",                "name"=> "pasillo_101", "id"=>"pasillo_101", "hidden"=> "Criterio_101"],
+                ["label"=> "Desgaste ruedas de carga",                 "name"=> "pasillo_102", "id"=>"pasillo_102", "hidden"=> "Criterio_102"],
+                ["label"=> "Estado de rines de tracción",              "name"=> "pasillo_103", "id"=>"pasillo_103", "hidden"=> "Criterio_103"],
+                ["label"=> "Estado de rines de caster",                "name"=> "pasillo_104", "id"=>"pasillo_104", "hidden"=> "Criterio_104"],
+                ["label"=> "Estado de rines de carga",                 "name"=> "pasillo_105", "id"=>"pasillo_105", "hidden"=> "Criterio_105"],
+                ["label"=> "Balancines",                               "name"=> "pasillo_106", "id"=>"pasillo_106", "hidden"=> "Criterio_106"],
+                ["label"=> "Tornillos",                                "name"=> "pasillo_107", "id"=>"pasillo_107", "hidden"=> "Criterio_107"],
+                ["label"=> "Bujes",                                    "name"=> "pasillo_108", "id"=>"pasillo_108", "hidden"=> "Criterio_108"] 
             ],
             // CONTRABALANCEADA
             "contrabalanceada" => [
@@ -1150,9 +1150,9 @@ $Criterios = [
         "Chasis"=>[
             //PASILLO
             "pasillo" => [
-                ["label"=> "Ajustes de conjunto",           "name"=> "pasillo_110", "id"=>"pasillo_110", "hidden"=> "Criterio_110"],
-                ["label"=> "Chequear soportes",             "name"=> "pasillo_111", "id"=>"pasillo_111", "hidden"=> "Criterio_111"],
-                ["label"=> "Tornilleria",                   "name"=> "pasillo_112", "id"=>"pasillo_112", "hidden"=> "Criterio_112"] 
+                ["label"=> "Ajustes de conjunto",           "name"=> "pasillo_109", "id"=>"pasillo_109", "hidden"=> "Criterio_109"],
+                ["label"=> "Chequear soportes",             "name"=> "pasillo_110", "id"=>"pasillo_110", "hidden"=> "Criterio_110"],
+                ["label"=> "Tornilleria",                   "name"=> "pasillo_111", "id"=>"pasillo_111", "hidden"=> "Criterio_111"] 
             ],
             // CONTRABALANCEADA
             "contrabalanceada" => [
@@ -1170,11 +1170,11 @@ $Criterios = [
         "Luces y Alarmas"=>[
             //PASILLO
             "pasillo" => [
-                ["label"=> "Luces frontales",               "name"=> "pasillo_113", "id"=>"pasillo_113", "hidden"=> "Criterio_113"],
-                ["label"=> "Luz estroboscopia",             "name"=> "pasillo_114", "id"=>"pasillo_114", "hidden"=> "Criterio_114"],
-                ["label"=> "Blue light",                    "name"=> "pasillo_115", "id"=>"pasillo_115", "hidden"=> "Criterio_115"],
-                ["label"=> "Pito bocina",                   "name"=> "pasillo_116", "id"=>"pasillo_116", "hidden"=> "Criterio_116"],
-                ["label"=> "Alarma reversa",                "name"=> "pasillo_117", "id"=>"pasillo_117", "hidden"=> "Criterio_117"] 
+                ["label"=> "Luces frontales",               "name"=> "pasillo_112", "id"=>"pasillo_112", "hidden"=> "Criterio_112"],
+                ["label"=> "Luz estroboscopia",             "name"=> "pasillo_113", "id"=>"pasillo_113", "hidden"=> "Criterio_113"],
+                ["label"=> "Blue light",                    "name"=> "pasillo_114", "id"=>"pasillo_114", "hidden"=> "Criterio_114"],
+                ["label"=> "Pito bocina",                   "name"=> "pasillo_115", "id"=>"pasillo_115", "hidden"=> "Criterio_115"],
+                ["label"=> "Alarma reversa",                "name"=> "pasillo_116", "id"=>"pasillo_116", "hidden"=> "Criterio_116"] 
             ],
             // CONTRABALANCEADA
             "contrabalanceada" => [
@@ -1189,10 +1189,10 @@ $Criterios = [
         "Lubricación"=>[
             //PASILLO
             "pasillo" => [
-                ["label"=> "Engrase de caster",                               "name"=> "pasillo_118", "id"=>"pasillo_118", "hidden"=> "Criterio_118"],
-                ["label"=> "Engrase de tande",                                "name"=> "pasillo_119", "id"=>"pasillo_119", "hidden"=> "Criterio_119"],
-                ["label"=> "Engrase de pantógrafo",                           "name"=> "pasillo_120", "id"=>"pasillo_120", "hidden"=> "Criterio_120"],
-                ["label"=> "Lubricación cadenas y secciones mastil",          "name"=> "pasillo_121", "id"=>"pasillo_121", "hidden"=> "Criterio_121"]
+                ["label"=> "Engrase de caster",                               "name"=> "pasillo_117", "id"=>"pasillo_117", "hidden"=> "Criterio_117"],
+                ["label"=> "Engrase de tande",                                "name"=> "pasillo_118", "id"=>"pasillo_118", "hidden"=> "Criterio_118"],
+                ["label"=> "Engrase de pantógrafo",                           "name"=> "pasillo_119", "id"=>"pasillo_119", "hidden"=> "Criterio_119"],
+                ["label"=> "Lubricación cadenas y secciones mastil",          "name"=> "pasillo_120", "id"=>"pasillo_120", "hidden"=> "Criterio_120"]
             ],
             // CONTRABALANCEADA
             "contrabalanceada" => [
@@ -1216,11 +1216,11 @@ $Criterios = [
         "Cargador"=>[
             //PASILLO
             "pasillo" => [
-                ["label"=> "Inspeccion visual",       "name"=> "pasillo_122", "id"=>"pasillo_122", "hidden"=> "Criterio_122"],
-                ["label"=> "Cables de potencia",      "name"=> "pasillo_123", "id"=>"pasillo_123", "hidden"=> "Criterio_123"],
-                ["label"=> "Conector Anderson",       "name"=> "pasillo_124", "id"=>"pasillo_124", "hidden"=> "Criterio_124"],
-                ["label"=> "Voltaje",                 "name"=> "pasillo_125", "id"=>"pasillo_125", "hidden"=> "Criterio_125"],
-                ["label"=> "Amperaje",                "name"=> "pasillo_126", "id"=>"pasillo_126", "hidden"=> "Criterio_126"] 
+                ["label"=> "Inspeccion visual",       "name"=> "pasillo_121", "id"=>"pasillo_121", "hidden"=> "Criterio_121"],
+                ["label"=> "Cables de potencia",      "name"=> "pasillo_122", "id"=>"pasillo_122", "hidden"=> "Criterio_122"],
+                ["label"=> "Conector Anderson",       "name"=> "pasillo_123", "id"=>"pasillo_123", "hidden"=> "Criterio_123"],
+                ["label"=> "Voltaje",                 "name"=> "pasillo_124", "id"=>"pasillo_124", "hidden"=> "Criterio_124"],
+                ["label"=> "Amperaje",                "name"=> "pasillo_125", "id"=>"pasillo_125", "hidden"=> "Criterio_125"] 
             ],
             // CONTRABALANCEADA
             "contrabalanceada" => [
@@ -1244,9 +1244,9 @@ $Criterios = [
         "Estado de Pintura"=>[
             //PASILLO
             "pasillo" => [
-                ["label"=> "Estado general de pintura del chasís",                  "name"=> "pasillo_127", "id"=>"pasillo_127", "hidden"=> "Criterio_127"],
-                ["label"=> "Pintura en mástil y secciones móviles",                 "name"=> "pasillo_128", "id"=>"pasillo_128", "hidden"=> "Criterio_128"],
-                ["label"=> "Pintura en protecciones laterales y cubiertas",         "name"=> "pasillo_129", "id"=>"pasillo_129", "hidden"=> "Criterio_129"]
+                ["label"=> "Estado general de pintura del chasís",                  "name"=> "pasillo_126", "id"=>"pasillo_126", "hidden"=> "Criterio_126"],
+                ["label"=> "Pintura en mástil y secciones móviles",                 "name"=> "pasillo_127", "id"=>"pasillo_127", "hidden"=> "Criterio_127"],
+                ["label"=> "Pintura en protecciones laterales y cubiertas",         "name"=> "pasillo_128", "id"=>"pasillo_128", "hidden"=> "Criterio_128"]
             ],
             // CONTRABALANCEADA
             "contrabalanceada" => [
@@ -1269,15 +1269,15 @@ $Criterios = [
         "Revision de Equipo"=>[
             //PASILLO
             "pasillo" => [
-                ["label"=> "Limpieza de equipo",           "name"=> "pasillo_130", "id"=>"pasillo_130", "hidden"=> "Criterio_130"],
-                ["label"=> "Horómetro",                    "name"=> "pasillo_131", "id"=>"pasillo_131", "hidden"=> "Criterio_131"],
-                ["label"=> "Etiquetas de seguridad",       "name"=> "pasillo_132", "id"=>"pasillo_132", "hidden"=> "Criterio_132"],
-                ["label"=> "Limpieza área de trabajo",     "name"=> "pasillo_133", "id"=>"pasillo_133", "hidden"=> "Criterio_133"],
-                ["label"=> "Manual de operaciones",        "name"=> "pasillo_134", "id"=>"pasillo_134", "hidden"=> "Criterio_134"],
-                ["label"=> "Tapas",                        "name"=> "pasillo_135", "id"=>"pasillo_135", "hidden"=> "Criterio_135"],
-                ["label"=> "Silla",                        "name"=> "pasillo_136", "id"=>"pasillo_136", "hidden"=> "Criterio_136"],
-                ["label"=> "Cinturon de seguridad",        "name"=> "pasillo_137", "id"=>"pasillo_137", "hidden"=> "Criterio_137"],
-                ["label"=> "Extintor",                     "name"=> "pasillo_138", "id"=>"pasillo_138", "hidden"=> "Criterio_138"] 
+                ["label"=> "Limpieza de equipo",           "name"=> "pasillo_129", "id"=>"pasillo_129", "hidden"=> "Criterio_129"],
+                ["label"=> "Horómetro",                    "name"=> "pasillo_130", "id"=>"pasillo_130", "hidden"=> "Criterio_130"],
+                ["label"=> "Etiquetas de seguridad",       "name"=> "pasillo_131", "id"=>"pasillo_131", "hidden"=> "Criterio_131"],
+                ["label"=> "Limpieza área de trabajo",     "name"=> "pasillo_132", "id"=>"pasillo_132", "hidden"=> "Criterio_132"],
+                ["label"=> "Manual de operaciones",        "name"=> "pasillo_133", "id"=>"pasillo_133", "hidden"=> "Criterio_133"],
+                ["label"=> "Tapas",                        "name"=> "pasillo_134", "id"=>"pasillo_134", "hidden"=> "Criterio_134"],
+                ["label"=> "Silla",                        "name"=> "pasillo_135", "id"=>"pasillo_135", "hidden"=> "Criterio_135"],
+                ["label"=> "Cinturon de seguridad",        "name"=> "pasillo_136", "id"=>"pasillo_136", "hidden"=> "Criterio_136"],
+                ["label"=> "Extintor",                     "name"=> "pasillo_137", "id"=>"pasillo_137", "hidden"=> "Criterio_137"] 
             ],
             // CONTRABALANCEADA
             "contrabalanceada" => [
@@ -1348,16 +1348,16 @@ $Criterios = [
         "Pantografo"=>[
             //PASILLO
             "pasillo" => [
-                ["label"=> "Ajuste de pantógrafo",               "name"=> "pasillo_86", "id"=>"pasillo_86", "hidden"=> "Criterio_86"],
-                ["label"=> "Rodamientos",                        "name"=> "pasillo_87", "id"=>"pasillo_87", "hidden"=> "Criterio_87"],
-                ["label"=> "Cadenas",                            "name"=> "pasillo_88", "id"=>"pasillo_88", "hidden"=> "Criterio_88"],
-                ["label"=> "Pasadores",                          "name"=> "pasillo_89", "id"=>"pasillo_89", "hidden"=> "Criterio_89"],
-                ["label"=> "Parilla (espejo)",                   "name"=> "pasillo_90", "id"=>"pasillo_90", "hidden"=> "Criterio_90"],
-                ["label"=> "Mordazas",                           "name"=> "pasillo_91", "id"=>"pasillo_91", "hidden"=> "Criterio_91"],
-                ["label"=> "Deslizadores",                       "name"=> "pasillo_92", "id"=>"pasillo_92", "hidden"=> "Criterio_92"],
-                ["label"=> "Bloque de tilt down",                "name"=> "pasillo_93", "id"=>"pasillo_93", "hidden"=> "Criterio_93"],
-                ["label"=> "Mangueras",                          "name"=> "pasillo_94", "id"=>"pasillo_94", "hidden"=> "Criterio_94"],
-                ["label"=> "Topes de reach (caucho)",            "name"=> "pasillo_95", "id"=>"pasillo_95", "hidden"=> "Criterio_95"]
+                ["label"=> "Ajuste de pantógrafo",               "name"=> "pasillo_85", "id"=>"pasillo_85", "hidden"=> "Criterio_85"],
+                ["label"=> "Rodamientos",                        "name"=> "pasillo_86", "id"=>"pasillo_86", "hidden"=> "Criterio_86"],
+                ["label"=> "Cadenas",                            "name"=> "pasillo_87", "id"=>"pasillo_87", "hidden"=> "Criterio_87"],
+                ["label"=> "Pasadores",                          "name"=> "pasillo_88", "id"=>"pasillo_88", "hidden"=> "Criterio_88"],
+                ["label"=> "Parilla (espejo)",                   "name"=> "pasillo_89", "id"=>"pasillo_89", "hidden"=> "Criterio_89"],
+                ["label"=> "Mordazas",                           "name"=> "pasillo_90", "id"=>"pasillo_90", "hidden"=> "Criterio_90"],
+                ["label"=> "Deslizadores",                       "name"=> "pasillo_91", "id"=>"pasillo_91", "hidden"=> "Criterio_91"],
+                ["label"=> "Bloque de tilt down",                "name"=> "pasillo_92", "id"=>"pasillo_92", "hidden"=> "Criterio_92"],
+                ["label"=> "Mangueras",                          "name"=> "pasillo_93", "id"=>"pasillo_93", "hidden"=> "Criterio_93"],
+                ["label"=> "Topes de reach (caucho)",            "name"=> "pasillo_94", "id"=>"pasillo_94", "hidden"=> "Criterio_94"]
             ]
         ],
         "Componentes Estructurales"=>[
@@ -1799,11 +1799,11 @@ $Criterios = [
                 ["label"=> "Mangueras pantógrafo",                            "name"=> "pasillo_78", "id"=>"pasillo_78", "hidden"=> "Criterio_78"],
                 ["label"=> "Tuberías",                                        "name"=> "pasillo_79", "id"=>"pasillo_79", "hidden"=> "Criterio_79"],
                 ["label"=> "Racores",                                         "name"=> "pasillo_80", "id"=>"pasillo_80", "hidden"=> "Criterio_80"],
-                ["label"=> "Cilindro de free lift",                           "name"=> "pasillo_81", "id"=>"pasillo_78", "hidden"=> "Criterio_78"],
-                ["label"=> "Cilindros laterales",                             "name"=> "pasillo_82", "id"=>"pasillo_79", "hidden"=> "Criterio_79"],
-                ["label"=> "Cilindro de side shif",                           "name"=> "pasillo_83", "id"=>"pasillo_80", "hidden"=> "Criterio_80"],
-                ["label"=> "Cilindros de pantógrafo",                         "name"=> "pasillo_84", "id"=>"pasillo_81", "hidden"=> "Criterio_81"],
-                ["label"=> "Bloque de válvulas funciones auxiliares",         "name"=> "pasillo_85", "id"=>"pasillo_82", "hidden"=> "Criterio_82"]    
+                ["label"=> "Cilindro de free lift",                           "name"=> "pasillo_81", "id"=>"pasillo_78", "hidden"=> "Criterio_81"],
+                ["label"=> "Cilindros laterales",                             "name"=> "pasillo_82", "id"=>"pasillo_79", "hidden"=> "Criterio_82"],
+                ["label"=> "Cilindro de side shift",                          "name"=> "pasillo_83", "id"=>"pasillo_80", "hidden"=> "Criterio_83"],
+                ["label"=> "Cilindros de pantógrafo",                         "name"=> "pasillo_84", "id"=>"pasillo_81", "hidden"=> "Criterio_84"],
+                ["label"=> "Bloque de válvulas funciones auxiliares",         "name"=> "pasillo_85", "id"=>"pasillo_82", "hidden"=> "Criterio_85"]    
             ],
             // CONTRABALANCEADA
             "contrabalanceada" => [
