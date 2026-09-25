@@ -334,7 +334,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label class="form-label">Centro de Trabajo</label>
                                     <input type="text" class="form-control" id="CentroTexto" value="<?= htmlspecialchars($_SESSION['Centro']) ?>" readonly>
                                     <!-- Select cargado desde PHP -->
-                                    <select class="form-select d-none" id="CentroSelect" name="CentroTrabajo">
+                                    <select class="form-select d-none" id="CentroSelect" name="CentroTrabajo" >
                                         <option value="">Seleccione centro...</option>
                                             <?php foreach ($ListaCentrosDeTrabajo as $centro): ?>
                                                 <option value="<?= $centro['ID'] ?>">
@@ -412,38 +412,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const trabajosHidden     = $('#TrabajosHidden');
 
         // CAMBIO TIPO SOLICITUD
-        $('#TipoSolicitud').on('change', function () {
-
-            const tipo = $(this).val();
-
-            grupo.addClass('d-none');
-            selectDiagnostico.html('<option value="">Seleccione...</option>');
-            contenedorTrabajos.html('');
-            trabajosHidden.val('');   // limpiar selección
-
-            if (tipo === 'MantenimientoP' || tipo === 'MantenimientoC') {
-                centroInput.addClass('d-none');
-                centroSelect.removeClass('d-none');
-            } else {
-                centroInput.removeClass('d-none');
-                centroSelect.addClass('d-none').val('');
-            }
-
+        function cargarDiagnosticos() {
+            const tipo = $('#TipoSolicitud').val();
+            const idCentro = $('#CentroSelect').val() || '';
             let urlDiagnostico = null;
+
             if (tipo === 'Overhauling') {
                 urlDiagnostico = 'TraerOverhauling';
-            } else if (tipo === 'MantenimientoP') {
-                urlDiagnostico = 'TraerOverhauling';
-            } else if (tipo === 'MantenimientoC') {
-                urlDiagnostico = 'TraerOverhauling';
-            } else if (tipo === 'Repuesto') {
+            } 
+            else if (tipo === 'MantenimientoP') {
+                if (!idCentro) return;
+                urlDiagnostico = 'TraerOverhauling?ID_Centro=' + idCentro;
+            } 
+            else if (tipo === 'MantenimientoC') {
+                if (!idCentro) return;
+                urlDiagnostico = 'TraerMantenimientosC?ID_Centro=' + idCentro;
+            } 
+            else if (tipo === 'Repuesto') {
                 urlDiagnostico = 'TraerSolicitudes';
-            } else {
+            } 
+            else {
                 return;
             }
 
             grupo.removeClass('d-none');
             selectDiagnostico.html('<option value="">Cargando...</option>');
+
+            console.log(urlDiagnostico);
 
             $.get(urlDiagnostico).done(function (data) {
 
@@ -463,6 +458,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     let texto = '';
                     if (tipo === 'Repuesto') {
                         texto = item.Numero;
+                    } else if (tipo === 'MantenimientoC') {
+                        texto = item.Numero;
                     } else {
                         texto = `#${item.Marca} / ${item.Modelo} / ${item.Serie}`;
                     }
@@ -477,9 +474,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }).fail(() => {
                 selectDiagnostico.html('<option value="">Error al cargar datos</option>');
             });
+        }
+        
+        $('#TipoSolicitud').on('change', function () {
+            const tipo = $(this).val();
 
+            grupo.addClass('d-none');
+            selectDiagnostico.html('<option value="">Seleccione...</option>');
+            contenedorTrabajos.html('');
+            trabajosHidden.val('');
+
+            if (tipo === 'MantenimientoP' || tipo === 'MantenimientoC') {
+                centroInput.addClass('d-none');
+                centroSelect.removeClass('d-none');
+            } else {
+                centroInput.removeClass('d-none');
+                centroSelect.addClass('d-none').val('');
+            }
+
+            cargarDiagnosticos();
         });
 
+        $('#CentroSelect').on('change', function () {
+            cargarDiagnosticos();
+        });
         // CARGAR TRABAJOS
         $('#DiagnosticoInicial').on('change', function () {
 

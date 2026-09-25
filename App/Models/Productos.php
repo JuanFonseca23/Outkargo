@@ -352,7 +352,7 @@
         }
 
         public function insertarProducto($ID_Producto, $ID_Centro, $Cantidad, $Valor, $N_Factura, $Fecha_Ingreso){
-            $sql = "INSERT INTO detalle_inventario_insumos (ID_Insumo, ID_Centro, N_Factura, Cantidad, valor_unitario, Fecha_Ingreso) VALUES (:ID_Insumo, :ID_Centro, :N_Factura, :Cantidad, :Valor, :Fecha_Ingreso)";
+            $sql = "INSERT INTO detalle_inventario_insumos (ID_Insumo, ID_Centro, N_Factura, N_Lote, Cantidad, valor_unitario, Fecha_Ingreso) VALUES (:ID_Insumo, :ID_Centro, :N_Factura, NULL, :Cantidad, :Valor, :Fecha_Ingreso)";
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(':ID_Insumo', $ID_Producto);
             $stmt->bindParam(':ID_Centro', $ID_Centro);
@@ -670,8 +670,8 @@
                         $stmt->execute();
                         
                         // Insertar un nuevo registro en detalle_inventario_insumos
-                        $stmt = $this->PDO->prepare("INSERT INTO detalle_inventario_insumos (ID_Insumo, ID_Centro, ID_Entrada, Cantidad, N_Factura, valor_unitario, Fecha_Ingreso) 
-                                                     VALUES (:ID_Producto, :ID_Centro, :ID_Entrada, :Cantidad, :N_Factura, :valor_unitario, :Fecha_Ingreso)");
+                        $stmt = $this->PDO->prepare("INSERT INTO detalle_inventario_insumos (ID_Insumo, ID_Centro, ID_Entrada, Cantidad, N_Factura, N_Lote, valor_unitario, Fecha_Ingreso) 
+                                                     VALUES (:ID_Producto, :ID_Centro, :ID_Entrada, :Cantidad, :N_Factura, NULL, :valor_unitario, :Fecha_Ingreso)");
                         $stmt->bindParam(":ID_Producto", $entrada['ID_Producto']);
                         $stmt->bindParam(":ID_Centro", $entrada['ID_Centro']);
                         $stmt->bindParam(":Cantidad", $cantidadConvertida);
@@ -880,18 +880,17 @@
             return $row['Total'] ?? 0; 
         }
 
-        public function insertarSalidaTemp($ID_Usuario, $ID_Producto, $Cantidad,  $Medida, $ID_Montacarga, $Factura, $Observaciones, $ValorUnitario, $ValorTotal, $ID_Producto_Seleccionado) { 
+        public function insertarSalidaTemp($ID_Usuario, $ID_Producto, $Cantidad,  $Medida, $N_Lote, $Factura, $ValorUnitario, $ValorTotal, $ID_Producto_Seleccionado) { 
             $sql = "INSERT INTO detalles_temp_salida_insumos 
-                    (ID_Usuario, ID_Producto, ID_Montacargas, N_Factura, Cantidad, Medida, Observaciones, valor_unitario, valor_total, ID_Producto_Seleccionado) 
-                    VALUES (:ID_Usuario, :ID_Producto, :ID_Montacarga, :Factura, :Cantidad, :Medida, :Observaciones, :ValorUnitario, :ValorTotal, :ID_Producto_Seleccionado)"; 
+                    (ID_Usuario, ID_Producto, N_Factura, N_Lote, Cantidad, Medida, valor_unitario, valor_total, ID_Producto_Seleccionado) 
+                    VALUES (:ID_Usuario, :ID_Producto, :Factura, :N_Lote, :Cantidad, :Medida, :ValorUnitario, :ValorTotal, :ID_Producto_Seleccionado)"; 
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(":ID_Usuario", $ID_Usuario);
             $stmt->bindParam(":ID_Producto", $ID_Producto);
             $stmt->bindParam(":Cantidad", $Cantidad);
             $stmt->bindParam(":Medida", $Medida);
-            $stmt->bindParam(":ID_Montacarga", $ID_Montacarga);
+            $stmt->bindParam(":N_Lote", $N_Lote);
             $stmt->bindParam(":Factura", $Factura);
-            $stmt->bindParam(":Observaciones", $Observaciones);
             $stmt->bindParam(":ValorUnitario", $ValorUnitario);
             $stmt->bindParam(":ValorTotal", $ValorTotal);
             $stmt->bindParam(":ID_Producto_Seleccionado", $ID_Producto_Seleccionado);
@@ -935,10 +934,9 @@
         }
 
         public function DetallesSalida($ID_Usuario){       
-            $sql = "SELECT montacargas.Numero AS Numero_Montacargas, insumos.Codigo AS Codigo_Producto, insumos.Nombre AS Nombre_producto, detalles_temp_salida_insumos.* 
+            $sql = "SELECT insumos.Codigo AS Codigo_Producto, insumos.Nombre AS Nombre_producto, detalles_temp_salida_insumos.* 
                     FROM detalles_temp_salida_insumos
                     JOIN insumos ON detalles_temp_salida_insumos.ID_Producto = insumos.ID
-                    LEFT JOIN montacargas ON detalles_temp_salida_insumos.ID_Montacargas  = montacargas.ID 
                     WHERE ID_Usuario = :ID_Usuario 
                     ORDER BY Codigo ASC";
             $stmt = $this->PDO->prepare($sql);
@@ -1039,7 +1037,7 @@
 
         public function ProductosSalida($ID) {
             // Obtener los detalles de la entrada y el ID_Centro desde la tabla entrada_insumos
-            $sql = "SELECT t.ID_Usuario, t.ID_Producto, t.ID_Montacargas, t.N_Factura, t.Cantidad, t.Observaciones, t.valor_unitario, t.valor_total, t.ID_Producto_Seleccionado AS Producto_Seleccionado, e.ID_Centro AS Centro_Origen
+            $sql = "SELECT t.ID_Usuario, t.ID_Producto, t.N_Factura, t.N_Lote, t.Cantidad, t.valor_unitario, t.valor_total, t.ID_Producto_Seleccionado AS Producto_Seleccionado, e.ID_Centro AS Centro_Origen
                     FROM detalles_temp_salida_insumos t
                     JOIN salida_insumos e ON t.ID_Usuario = e.ID_Usuario
                     WHERE e.ID = :ID_Salida";
@@ -1054,25 +1052,24 @@
                         $ID_Usuario = $Salida['ID_Usuario'];
                         $ID_Centro_Origen = $Salida['Centro_Origen'];
                         $ID_Producto = $Salida['ID_Producto'];
-                        $ID_Montacargas = $Salida['ID_Montacargas'];
                         $Producto_Seleccionado = $Salida['Producto_Seleccionado'];
-                        $Observaciones = $Salida['Observaciones'];
                         $Cantidad = $Salida['Cantidad'];
                         $Factura = $Salida['N_Factura'];
+                        $N_Lote = $Salida['N_Lote'];
                         $Valor_Unitario = $Salida['valor_unitario'];
                         $valor_total = $Salida['valor_total'];
                         // Insertar en detalles_entrada_insumos
-                        $stmt = $this->PDO->prepare("INSERT INTO detalles_salida_insumos (ID_Usuario, ID_Salida, ID_Producto, ID_Montacargas, Cantidad, N_Factura, Observaciones, valor_unitario, valor_total)
-                                                     VALUES (:ID_Usuario, :ID_Salida, :ID_Producto, :ID_Montacargas, :Cantidad, :N_Factura, :Observaciones, :valor_unitario, :valor_total)");
+                        $stmt = $this->PDO->prepare("INSERT INTO detalles_salida_insumos (ID_Usuario, ID_Salida, ID_Producto, Cantidad, N_Factura, Lote, valor_unitario, valor_total, ID_Producto_Seleccionado)
+                                                     VALUES (:ID_Usuario, :ID_Salida, :ID_Producto, :Cantidad, :N_Factura, :N_Lote, :valor_unitario, :valor_total, :ID_Producto_Seleccionado)");
                         $stmt->bindParam(":ID_Salida", $ID);
                         $stmt->bindParam(":ID_Usuario", $ID_Usuario);
                         $stmt->bindParam(":ID_Producto", $ID_Producto);
-                        $stmt->bindParam(":ID_Montacargas", $ID_Montacargas);
+                        $stmt->bindParam(":N_Lote", $N_Lote);
                         $stmt->bindParam(":Cantidad", $Cantidad);
                         $stmt->bindParam(":N_Factura", $Factura);
-                        $stmt->bindParam(":Observaciones", $Observaciones);
                         $stmt->bindParam(":valor_unitario", $Valor_Unitario);
                         $stmt->bindParam(":valor_total", $valor_total);
+                        $stmt->bindParam(":ID_Producto_Seleccionado", $Producto_Seleccionado);
                         $stmt->execute();
 
                         // Descontar del Inventario de Donde salen los productos
@@ -1172,11 +1169,13 @@
             $sql = "UPDATE detalle_inventario_insumos
                     SET Cantidad = Cantidad - :Usar
                     WHERE ID = :ID AND ID_Centro = :ID_Centro";
+
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(':Usar', $Usar);
             $stmt->bindParam(':ID', $ID);
             $stmt->bindParam(':ID_Centro', $ID_Centro);
-            return $stmt->execute();
+            $stmt->execute();
+            return $stmt->rowCount();
         }
 
         public function ObtenerCantidadEnTemp($ID_Usuario, $ID_Producto) {

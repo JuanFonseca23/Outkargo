@@ -150,10 +150,8 @@
                             $ID_Usuario = $_POST['Usuario'];
                             $ValorCantidad = $_POST['Cantidad'];
                             $Medida = $_POST['tipoMedida'];
-                            $Observaciones = !empty($_POST['Observaciones']) ? $_POST['Observaciones'] : NULL ;
                             $ID_Centro = $_SESSION['NoCentro'];
-                            $ID_Montacarga = !empty($_POST['ID_Montacarga']) ? $_POST['ID_Montacarga'] : NULL;
-                            $ProductosController->InsertarSalidaTemp($Codigo, $ValorCantidad, $Medida, $No_Documento, $Observaciones, $ID_Centro, $CentroTrabajo, $ID_Montacarga, $ID_Usuario);
+                            $ProductosController->InsertarSalidaTemp($Codigo, $ValorCantidad, $Medida, $No_Documento, $ID_Centro, $CentroTrabajo, $ID_Usuario);
                         }  
                     }
                 ?>
@@ -172,23 +170,6 @@
                     </td>
                     <th width="100px">Codigo</th>
                     <td width="50px"><input name="Codigo" required></td>
-                    <th width="100px"># de Montacargas</th>
-                    <td width="50px">
-                        <select class="form-select" name="ID_Montacarga" id="floatingSelect" aria-label="Floating label select example" >
-                            <option value="" disabled selected># de Montacargas</option>
-                            <?php
-                            if ($ListaMontacargas) {
-                                foreach ($ListaMontacargas as $ListaMontacarga) {
-                            ?>
-                                    <option value="<?= $ListaMontacarga['ID'] ?>"><?= $ListaMontacarga['Numero'] ?></option>
-                            <?php
-                                }
-                            }
-                            ?>
-                        </select>
-                    </td>
-                    <th width="200px">Observaciones</th>
-                    <td width="1000px"><textarea name="Observaciones" style="width: 98%;"></textarea></td>
                     <input type="hidden" name="Usuario" value="<?= $_SESSION['ID'] ?>">
                     <input type="hidden" name="Tipo" value="1">
                     <td width="100px" style="text-align: center;"><input type="submit" id="button1" style="background-color:rgb(0, 162, 49); color: white; border: none; padding: px; cursor: pointer; align-items: center; justify-content: center; border-radius: 10%; box-sizing: border-box; font-size: 14px; font-weight: bold;" value="Agregar"></td>
@@ -222,9 +203,7 @@
                     }
                 ?>
                 <th width="500px">Descripción</th>
-                <th width="150px"># Montacargas</th>
-                <th>Número de Factura</th>     
-                <th>Observaciones</th>           
+                <th>Número de Factura</th>              
                 <th>Acciones</th>             
             </tr>
             <?php
@@ -241,9 +220,7 @@
                             <td style="text-align: center;"><?= $Fila['Cantidad'] ?></td>
                             <td style="text-align: center;"><?= $Fila['Codigo_Producto'] ?></td>
                             <td><?= $Fila['Nombre_producto'] ?></td>
-                            <td style="text-align: center"><?= $Fila['Numero_Montacargas'] ?? 'No Aplica' ?></td>
                             <td style="text-align: center;"><?= $Fila['N_Factura'] ?? '' ?></td>
-                            <td style="text-align: center;"><textarea style="width: 96%; height: 40px;"><?= $Fila['Observaciones'] ?? '' ?></textarea></td>
                             <td style="text-align: center;">
                             <form method="post" onsubmit="disableButton(this)" style="display: inline-block; margin: 0;">
                                 <input type="hidden" name="Usuario" value="<?= $_SESSION['ID'] ?>">

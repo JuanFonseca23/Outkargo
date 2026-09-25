@@ -58,6 +58,15 @@
             return $stmt->execute();
         }
 
+        public function AsignarMecanico($ID_Mantenimiento, $ID_Mecanico, $Estado_Firma){
+            $sql = "INSERT INTO mantenimiento_correctivo_mecanicos (ID_Mantenimiento, ID_Mecanico, Firma_Mecanico, Fecha_Firma_Mecanico, Estado_Firma_Mecanico) VALUES (:ID_Mantenimiento, :ID_Mecanico, NULL, NULL, :Estado_Firma)";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Mantenimiento', $ID_Mantenimiento);
+            $stmt->bindValue(':ID_Mecanico', $ID_Mecanico);
+            $stmt->bindValue(':Estado_Firma', $Estado_Firma);
+            return $stmt->execute();
+        }
+
         public function AutorizarOrdenTrabajo($ID_Solicitud, $Firma, $Comentarios, $Fecha_Autorizacion, $Estado_Trabajo){
             $sql = "UPDATE solicitud_orden_trabajo 
                     SET Firma_Autoriza = :Firma_Autoriza, Fecha_Firma_Autoriza = :Fecha_Firma_Autoriza, Comentarios = :Comentarios, Estado_Orden = :Estado_Trabajo 
@@ -93,6 +102,14 @@
             $stmt->bindValue(':q', "%$q%", PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function BuscarMantenimiento($ID_Orden){
+            $sql = "SELECT * FROM mantenimiento_correctivo WHERE ID_Orden_Trabajo = :ID_Orden";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Orden', $ID_Orden);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
         public function BuscarMontacargas($q){
@@ -177,11 +194,86 @@
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
+        public function CrearMantenimiento($ID_Orden, $Codigo, $ID_Supervisor, $ID_Centro, $Hora, $Fecha, $Estado_Firma){
+            $sql = "INSERT INTO mantenimiento_correctivo (Numero, ID_Montacargas, ID_Orden_Trabajo, ID_Centro, ID_Area, ID_Supervisor, ID_Operario, Hora_Inicio, Hora_Finalizacion, Fecha_Realizado, Firma_Operario, Firma_Supervisor, Estado_Firma_Supervisor, Estado_Firma_Operario, Fecha_Firma_Operario, Fecha_Firma_Supervisor) 
+                    VALUES (:Codigo, NULL, :ID_Orden, :ID_Centro, NULL, :ID_Supervisor, NULL, :Hora, NULL, :Fecha, NULL, NULL, :Estado_Firma, NULL, NULL, NULL)";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Orden', $ID_Orden);
+            $stmt->bindValue(':Codigo', $Codigo);
+            $stmt->bindValue(':ID_Supervisor', $ID_Supervisor);
+            $stmt->bindValue(':ID_Centro', $ID_Centro);
+            $stmt->bindValue(':Hora', $Hora);
+            $stmt->bindValue(':Fecha', $Fecha);
+            $stmt->bindValue(':Estado_Firma', $Estado_Firma);
+            if ($stmt->execute()) {
+                $ID_Mantenimiento = $this->PDO->lastInsertId();
+                return $ID_Mantenimiento;
+            } else {
+                return false;
+            }
+        }
+
         public function EliminarDetalleInsumoTemp($ID_Orden, $ID_Insumo){
             $sql = "DELETE FROM detalles_temp_insumos_orden_trabajo WHERE ID_Orden_Trabajo = :ID_Orden AND ID = :ID_Insumo";
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindValue(':ID_Orden',  $ID_Orden);
             $stmt->bindValue(':ID_Insumo', $ID_Insumo);
+            return $stmt->execute();
+        }
+
+        public function EliminarDetalleMantenimiento($ID_Mantenimiento, $ID_Detalle){
+            $sql = "DELETE FROM detalles_mantenimiento_correctivo WHERE ID_Detalle = :ID_Detalle AND ID_Mantenimiento = :ID_Mantenimiento";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Detalle',  $ID_Detalle);
+            $stmt->bindValue(':ID_Mantenimiento',  $ID_Mantenimiento);
+            return $stmt->execute();
+        }
+
+        public function EliminarImagenesOrden($ID_Trabajo, $ID_Detalle){
+            $sql = "DELETE FROM orden_trabajo_imagenes WHERE ID_Orden_Trabajo = :ID_Trabajo AND ID_Detalle = :ID_Detalle";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Trabajo',  $ID_Trabajo);
+            $stmt->bindValue(':ID_Detalle',  $ID_Detalle);
+            return $stmt->execute();
+        }
+
+        public function EliminarImagenesMantenimiento($ID_Mantenimiento, $ID_Detalle){
+            $sql = "DELETE FROM mantenimiento_correctivo_imagenes WHERE ID_Mantenimiento = :ID_Mantenimiento AND ID_Detalle = :ID_Detalle";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Mantenimiento',  $ID_Mantenimiento);
+            $stmt->bindValue(':ID_Detalle',  $ID_Detalle);
+            return $stmt->execute();
+        }
+
+        public function FirmarMantenimiento($ID_Mantenimiento, $ID_Mecanico, $Firma, $FechaFirma, $EstadoFirmaMecanico){
+            $sql = "UPDATE mantenimiento_correctivo_mecanicos
+                    SET Firma_Mecanico = :Firma, 
+                        Fecha_Firma_Mecanico = :FechaFirma,
+                        Estado_Firma_Mecanico = :EstadoFirmaMecanico
+                    WHERE ID_Mantenimiento  = :ID_Mantenimiento AND ID_Mecanico = :ID_Mecanico";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Mantenimiento', $ID_Mantenimiento);
+            $stmt->bindValue(':ID_Mecanico', $ID_Mecanico);
+            $stmt->bindValue(':Firma', value: $Firma);
+            $stmt->bindValue(':FechaFirma', $FechaFirma);
+            $stmt->bindValue(':EstadoFirmaMecanico', $EstadoFirmaMecanico);
+            return $stmt->execute();
+        }
+
+        public function FirmarMantenimientoS($ID_Mantenimiento, $ID_Orden, $ID_Mecanico, $Firma, $FechaFirma, $EstadoFirmaMecanico, $Hora_Firma){
+            $sql = "UPDATE mantenimiento_correctivo
+                    SET Hora_Finalizacion = :Hora_Firma, Firma_Supervisor = :Firma,
+                        Estado_Firma_Supervisor = :EstadoFirmaMecanico,
+                        Fecha_Firma_Supervisor = :FechaFirma
+                    WHERE ID = :ID_Mantenimiento AND ID_Orden_Trabajo = :ID_Orden AND ID_Supervisor = :ID_Mecanico";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Mantenimiento', $ID_Mantenimiento);
+            $stmt->bindValue(':ID_Mecanico', $ID_Mecanico);
+            $stmt->bindValue(':ID_Orden', $ID_Orden);
+            $stmt->bindValue(':Firma', $Firma);
+            $stmt->bindValue(':FechaFirma', $FechaFirma);
+            $stmt->bindValue(':EstadoFirmaMecanico', $EstadoFirmaMecanico);
+            $stmt->bindValue(':Hora_Firma', $Hora_Firma);
             return $stmt->execute();
         }
 
@@ -209,6 +301,18 @@
             $stmt->bindValue(':Cantidad', $CantidadF);
             $stmt->bindValue(':Medida', $Medida);
             $stmt->bindValue(':ID_Usuario', $ID_Usuario);
+            return $stmt->execute();
+        }
+
+        Public function InsertarDetalleMantenimiento($ID_Mantenimiento, $ID_Detalle, $DescripcionFalla, $DescripcionT, $Falla){
+            $sql = "INSERT INTO detalles_mantenimiento_correctivo (ID_Mantenimiento, ID_Detalle, Horometro, Descripcion_Falla, Reparacion_Realizada, FallaC, Fecha_Correcion, Pendiente, Observaciones) 
+                    VALUES (:ID_Mantenimiento, :ID_Detalle, NULL, :DescripcionFalla, :DescripcionT, :Falla, NULL, NULL, NULL)";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Mantenimiento', $ID_Mantenimiento);
+            $stmt->bindValue(':ID_Detalle', $ID_Detalle);
+            $stmt->bindValue(':DescripcionFalla', $DescripcionFalla);
+            $stmt->bindValue(':DescripcionT', $DescripcionT);
+            $stmt->bindValue(':Falla', $Falla);
             return $stmt->execute();
         }
 
@@ -277,6 +381,15 @@
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
+        public function ObtenerImagenesOrden($ID_Trabajo, $ID_Detalle) {
+            $sql = "SELECT Evidencia_Fotografica FROM orden_trabajo_imagenes WHERE ID_Orden_Trabajo = :ID_Trabajo AND ID_Detalle = :ID_Detalle";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Trabajo', $ID_Trabajo);
+            $stmt->bindValue(':ID_Detalle', $ID_Detalle);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public function ObtenerTrabajos($Tipo_Trabajo, $ID){
             $sql = "SELECT * FROM trabajos_overhauling WHERE ID_Overhauling = :ID AND Tipo_Trabajo = :Tipo_Trabajo AND Estado_Trabajo = 2";
             $stmt = $this->PDO->prepare($sql);
@@ -328,6 +441,14 @@
             return $result ? $result['Numero'] : null;
         }
 
+        public function ObtenerUltimoCodigoMantenimiento() {
+            $sql = "SELECT Numero FROM mantenimiento_correctivo ORDER BY ID DESC LIMIT 1";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result ? $result['Numero'] : null;
+        }
+
         public function RegistrarDetalleInsumo($ID_Orden, $ID_Insumo, $Cantidad_Solicitadad, $Medida){
             $sql = "INSERT INTO detalles_insumos_orden_trabajo (ID_Orden_Trabajo, ID_Producto, Cantidad, Medida) 
                     VALUES (:ID_Orden, :ID_Insumo, :Cantidad, :Medida)";
@@ -339,7 +460,7 @@
             return $stmt->execute();
         }
 
-         public function RegistrarDetalleOrden($ID_Orden, $ID_Trabajo){
+        public function RegistrarDetalleOrden($ID_Orden, $ID_Trabajo){
             $sql = "INSERT INTO detalles_orden_trabajo (ID_Orden_Trabajo, ID_Trabajo, Descripcion)
                     VALUES(:ID_Orden_Trabajo, :ID_Trabajo, NULL)";
             $stmt = $this->PDO->prepare($sql);
@@ -358,6 +479,37 @@
             $stmt->bindValue(':Descripcion', $Descripcion);
             $stmt->bindValue(':Tipo_Producto', $TipoEquipo);
             $stmt->bindValue(':Estado_Trabajo', $EstadoTrabajo);
+            return $stmt->execute();
+        }
+
+        public function RegistrarEvidencia($ID_Mantenimiento, $ID_Detalle, $Categoria, $uploadFile){
+            $sql = "INSERT INTO mantenimiento_correctivo_imagenes (ID_Mantenimiento, ID_Detalle, Categoria, Evidencia_Fotografica) VALUES (:ID_Mantenimiento, :ID_Detalle, :Categoria, :Archivo)";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Mantenimiento', $ID_Mantenimiento);
+            $stmt->bindValue(':ID_Detalle', $ID_Detalle);
+            $stmt->bindValue(':Categoria', $Categoria);
+            $stmt->bindValue(':Archivo', $uploadFile);
+            return $stmt->execute();
+        }
+
+        public Function RegistrarEvidenciaOrden($ID_Trabajo, $ID_Detalle, $uploadFile){
+            $sql = "INSERT INTO orden_trabajo_imagenes (ID_Orden_Trabajo, ID_Detalle, Evidencia_Fotografica) VALUES (:ID_Trabajo, :ID_Detalle, :Archivo)";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Trabajo', $ID_Trabajo);
+            $stmt->bindValue(':ID_Detalle', $ID_Detalle);
+            $stmt->bindValue(':Archivo', $uploadFile);
+            return $stmt->execute();
+        }
+
+        public function RegistrarMantenimientoInsumo($ID_Mantenimiento, $ID_Insumo, $Cantidad, $Medida, $Tipo){
+            $sql = "INSERT INTO detalles_insumos_mantenimientos (ID_Mantenimiento, ID_Insumo, Cantidad, Medida, Tipo_Mantenimiento)
+                    VALUES (:ID_Mantenimiento, :ID_Insumo, :Cantidad, :Medida, :Tipo_Mantenimiento)";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Mantenimiento', $ID_Mantenimiento);
+            $stmt->bindValue(':ID_Insumo', $ID_Insumo);
+            $stmt->bindValue(':Cantidad', $Cantidad);
+            $stmt->bindValue(':Medida', $Medida);
+            $stmt->bindValue(':Tipo_Mantenimiento', $Tipo);
             return $stmt->execute();
         }
 
@@ -418,6 +570,16 @@
             $stmt->bindValue(':ID_Tecnico', $ID_Tecnico );
             $stmt->bindValue(':EstadoFirmaVerifica', $EstadoFirmaVerifica);
             return $stmt->execute();
+        }
+
+       public function TraerMantenimientosC($ID_Centro) {
+            $sql = "SELECT o.ID, o.Numero, M.Serie, M.Modelo, M.Marca, M.Numero AS NumeroMontacargas FROM mantenimiento_correctivo o
+                    LEFT JOIN montacargas M ON o.ID_Montacargas = M.ID WHERE o.ID_Centro = :ID_Centro";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Centro', $ID_Centro, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public function TraerSolicitud() {

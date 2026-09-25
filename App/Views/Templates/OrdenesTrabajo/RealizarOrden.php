@@ -14,11 +14,17 @@
     $DataMecanicos = $OrdenesTrabajoController->VerMecanicos($_GET['ID']);
     $DataMontacargas = $OrdenesTrabajoController->VerMontacargas($_GET['ID']);
     $DataInsumoTemp = $OrdenesTrabajoController->VerDetalleInsumoTemp($_GET['ID']);
+    $Mantenimiento = $OrdenesTrabajoController->BuscarMantenimiento($_GET['ID']);
     $Fecha = date("d/m/Y");
 
     if($DataOrden['Estado_Orden'] === 'Pendiente'){
         $Fecha_FinO = NULL;
         $OrdenesTrabajoController->CambiarFecha($_GET['ID'], $Fecha, $Fecha_FinO);
+    }
+    if (!$Mantenimiento) {
+        $ID_Mantenimiento = $OrdenesTrabajoController->CrearMantenimiento($_GET['ID'], $DataMecanicos, $DataOrden['ID_Genera'], $DataOrden['ID_Centro'], $Fecha);
+    }else{
+        $ID_Mantenimiento = $Mantenimiento['ID'];
     }
 
     if ($DataOrden['Estado_Orden'] === 'Pendiente' || $DataOrden['Estado_Orden'] === 'Pausada') {
@@ -72,6 +78,7 @@
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <!-- CSS -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link href="../App/Views/Css/bootstrap.min.dashboard.css" rel="stylesheet">
     <!-- Default theme -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 
@@ -342,13 +349,37 @@
         }
 
         /* Cancelar */
-        .modal-contenido button[type="button"] {
+        .modal-contenido .btn-cancelar{
             background: #dc3545;
             color: white;
         }
 
-        .modal-contenido button[type="button"]:hover {
+        .modal-contenido .btn-cancelar:hover {
             background: #c82333;
+        }
+
+        /*Tomar Foto */
+        .modal-contenido .btn-tomar {
+            background: #ffffff; 
+            border: 1px solid #ff5000; 
+            color: #ff5000;
+        }
+
+        .modal-contenido .btn-tomar:hover {
+            background: #ff5000;
+            color: #ffffff;
+        }
+
+        /*Cargar  Foto */
+        .modal-contenido .btn-cargar {
+            background: #ffffff; 
+            border: 1px solid #6c757d;  
+            color: #6c757d;
+        }
+
+        .modal-contenido .btn-cargar:hover {
+            background: #5a6268;
+            color: #ffffff;
         }
 
         .img-check {
@@ -359,6 +390,101 @@
 
         .oculto {
             visibility: hidden;
+        }
+
+        .ts-dropdown {
+            background-color: white !important;
+            border: 1px solid #ced4da !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+            border-radius: 8px !important;
+            margin-top: 4px !important;
+        }
+
+        .ts-dropdown .option {
+            padding: 10px 12px !important;
+            color: #212529 !important;
+            border-bottom: 1px solid #eee;
+        }
+
+        .ts-dropdown .option:hover,
+        .ts-dropdown .option.active {
+            background-color: #e3f2fd !important;
+            color: #1976d2 !important;
+        }
+
+        .ts-control {
+            border: none !important;
+            border-bottom: 2px solid #adb5bd !important;
+            border-radius: 0 !important;
+            padding: 8px 0 !important;
+            box-shadow: none !important;
+        }
+
+        .ts-control .placeholder {
+            color: #6c757d !important;
+            font-size: 1.1rem;
+        }
+
+        /* Adjuntos */
+        .adjunto-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .adjunto-nombre {
+            font-weight: 600;
+        }
+
+        .adjunto-desc {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        /* Fondo del lightbox */
+        .lightbox-bg {
+            background: rgba(0, 0, 0, 0.90);
+            z-index: 9999;
+        }
+
+        /* Imagen del lightbox */
+        .lightbox-img {
+            max-height: 95vh;
+            max-width: 95vw;
+            object-fit: contain;
+            cursor: default;
+        }
+
+        /* Botones de navegación (prev y next) */
+        .nav-btn {
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: black !important;
+            color: white !important;
+            width: 40px;
+            height: 40px;
+            font-size: 2rem;
+            padding: 0;
+            border-radius: 50%;
+
+            display: flex;              
+            align-items: center;      
+            justify-content: center;
+        }
+
+        /* Botón cerrar */
+        .close-btn {
+            background-color: black !important;
+            color: white !important;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            padding: 0;
+            border-radius: 50%;
         }
 
         .ts-dropdown {
@@ -939,7 +1065,7 @@
                                 <td><?= $d['DescripcionFalla'] ?></td>
                                 <td>
                                     <?php if ($d['EstadoTrabajo'] === 2){?>
-                                        <button class="btn-guardar" data-id="<?= $d['ID'] ?>" data-idtrabajo="<?= $d['IDTrabajo'] ?? '' ?>" onclick="abrirModal(this)">
+                                        <button class="btn-guardar" data-id="<?= $d['ID'] ?>" data-idtrabajo="<?= $d['IDTrabajo'] ?? '' ?>" data-descripcionfalla="<?= $d['DescripcionFalla'] ?>" onclick="abrirModal(this)">
                                             Registrar
                                         </button>
                                     <?php }?>
@@ -951,9 +1077,16 @@
                     <!-- ================= REPUESTOS ================= -->
                     <?php
                         $tieneMontacargas = false;
+                        $tieneRepuestos = false;
                         foreach ($DataOrdenDetalles as $d) {
                             if ($d['Tipo_Producto'] === 'Montacargas') {
                                 $tieneMontacargas = true;
+                                break;
+                            }
+                        }
+                        foreach ($DataOrdenDetalles as $d) {
+                            if ($d['Tipo_Producto'] === 'Repuestos') {
+                                $tieneRepuestos = true;
                                 break;
                             }
                         }
@@ -989,7 +1122,7 @@
                                     <td colspan="2"><?= $d['DescripcionFalla'] ?></td>
                                     <td>
                                         <?php if ($d['EstadoTrabajo'] === 2){?>
-                                            <button class="btn-guardar" data-id="<?= $d['ID'] ?>" data-idtrabajo="<?= $d['IDTrabajo'] ?? '' ?>" onclick="abrirModal(this)">
+                                            <button class="btn-guardar" data-id="<?= $d['ID'] ?>" data-idtrabajo="<?= $d['IDTrabajo'] ?? '' ?>" data-descripcionfalla="<?= $d['DescripcionFalla'] ?>" onclick="abrirModal(this)">
                                                 Registrar
                                             </button>
                                         <?php }?>
@@ -1001,44 +1134,46 @@
                     <?php endif; ?>
 
                     <!-- -------- PRODUCTOS -------- -->
-                    <thead>
-                        <tr>
-                            <th colspan="7" style="background-color:#e6e6e6;text-align:center;">
-                                TRABAJOS A REALIZAR EN PRODUCTOS
-                            </th>
-                        </tr>
-                        <tr>
-                            <th style="width: 20px; text-align: center;">#</th>
-                            <th style="width: 60px; text-align: center;">Código</th>
-                            <th style="width: 90px; text-align: center;">Serie</th>
-                            <th style="width: 90px; text-align: center;">Parte</th>
-                            <th style="text-align: center;">Descripción de Falla</th>
-                            <th style="width: 60px; text-align: center;">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            $n = 0;
-                            foreach ($DataOrdenDetalles as $d) {
-                                if ($d['Tipo_Producto'] !== 'Montacargas') {
-                                    $n++;
-                        ?>
+                    <?php if ($tieneRepuestos): ?>
+                        <thead>
                             <tr>
-                                <td style="width: 20px; text-align: center;"><?= $n ?></td>
-                                <td style="width: 60px; text-align: center;">DTR<?= $d['ID'] ?></td>
-                                <td style="width: 90px; text-align: center;"><?= $d['Serie'] ?? '' ?></td>
-                                <td style="width: 90px; text-align: center;"><?= $d['Parte'] ?? '' ?></td>
-                                <td><?= $d['DescripcionFalla'] ?></td>
-                                <td>
-                                    <?php if ($d['EstadoTrabajo'] === 2){?>
-                                        <button class="btn-guardar" data-id="<?= $d['ID'] ?>" data-idtrabajo="<?= $d['IDTrabajo'] ?? '' ?>" onclick="abrirModal(this)">
-                                            Registrar
-                                        </button>
-                                    <?php }?>
-                                </td>
+                                <th colspan="7" style="background-color:#e6e6e6;text-align:center;">
+                                    TRABAJOS A REALIZAR EN PRODUCTOS
+                                </th>
                             </tr>
-                        <?php }} ?>
-                    </tbody>
+                            <tr>
+                                <th style="width: 20px; text-align: center;">#</th>
+                                <th style="width: 60px; text-align: center;">Código</th>
+                                <th style="width: 90px; text-align: center;">Serie</th>
+                                <th style="width: 90px; text-align: center;">Parte</th>
+                                <th style="text-align: center;">Descripción de Falla</th>
+                                <th style="width: 60px; text-align: center;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $n = 0;
+                                foreach ($DataOrdenDetalles as $d) {
+                                    if ($d['Tipo_Producto'] !== 'Montacargas') {
+                                        $n++;
+                            ?>
+                                <tr>
+                                    <td style="width: 20px; text-align: center;"><?= $n ?></td>
+                                    <td style="width: 60px; text-align: center;">DTR<?= $d['ID'] ?></td>
+                                    <td style="width: 90px; text-align: center;"><?= $d['Serie'] ?? '' ?></td>
+                                    <td style="width: 90px; text-align: center;"><?= $d['Parte'] ?? '' ?></td>
+                                    <td><?= $d['DescripcionFalla'] ?></td>
+                                    <td>
+                                        <?php if ($d['EstadoTrabajo'] === 2){?>
+                                            <button class="btn-guardar" data-id="<?= $d['ID'] ?>" data-idtrabajo="<?= $d['IDTrabajo'] ?? '' ?>" data-descripcionfalla="<?= $d['DescripcionFalla'] ?>" onclick="abrirModal(this)">
+                                                Registrar
+                                            </button>
+                                        <?php }?>
+                                    </td>
+                                </tr>
+                            <?php }} ?>
+                        </tbody>
+                    <?php endif; ?>
 
                 <?php endif; ?>
             </table>
@@ -1096,7 +1231,7 @@
                 
                 <form method="POST">
                     <tr>
-                        <td width="90px">
+                        <td colspan="2">
                             <input type="number" id="cantidad" name="Cantidad" class="form-control" min="1" placeholder="Cantidad">
                         </td>
 
@@ -1123,11 +1258,11 @@
                 </form>
 
                 <tr>
-                    <th width="50px">#</th>
+                    <th style="width: 60px; text-align: center;">#</th>
                     <th width="60px">Cantidad</th>
-                    <th width="60px"></th>
-                    <th width="70px">Codigo</th>
-                    <th>Descripción</th>
+                    <th width="50px"></th>
+                    <th style="width: 80px; text-align: center;">Codigo</th>
+                    <th colspan="2">Descripción</th>
                     <th width="60px">Acciones</th>
                 </tr>
                 
@@ -1145,7 +1280,7 @@
                     <td style="width: 60px; text-align: center;"><?= $DataInsumo['Cantidad'] ?></td>
                     <td style="width: 60px; text-align: center;"><?= $DataInsumo['Medida'] ?></td>
                     <td style="width: 60px; text-align: center;"><?= $DataInsumo['CodigoInsumo'] ?></td>
-                    <td><?= $DataInsumo['NombreInsumo'] ?></td>
+                    <td colspan="2"><?= $DataInsumo['NombreInsumo'] ?></td>
                     <td width="60px" style="align-items: center;">
                         <form method="POST">
                             <input type="hidden" name="ID_Insumo" value="<?= $DataInsumo['ID'] ?>">
@@ -1210,14 +1345,21 @@
         <div class="modal-contenido">
             <h3>Registrar Trabajo Realizado</h3>
 
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="ID_Detalle" id="ID_Detalle">
                 <input type="hidden" name="ID_Trabajo" id="ID_Trabajo">
-
+                <input type="hidden" name="DescripcionFalla" id="DescripcionFalla">
                 <textarea name="DescripcionTrabajo" rows="8" style="width:100%" required></textarea>
+                <label class="form-label">Subir Imágenes de la reparación</label>
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn-tomar" id="btnTomarFoto">Tomar Foto</button>
+                    <button type="button" class="btn-cargar" id="btnCargarImagen">Cargar Imágenes</button>
+                </div>
+                <input type="file" id="imagenesDetalle" name="imagenesDetalle[]" accept="image/*" multiple  style="display:none;">
+                <div id="previewimagenesDetalle" class="mt-3 d-flex flex-wrap gap-2"></div>
                 <br><br>
                 <button type="submit" name="GuardarTrabajo">Guardar</button>
-                <button type="button" onclick="cerrarModal()">Cancelar</button>
+                <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
             </form>
         </div>
     </div>
@@ -1232,9 +1374,22 @@
                 <textarea name="DescripcionPausar" rows="8" style="width:100%" required></textarea>
                 <br><br>
                 <button type="submit" name="GuardarPausa">Guardar</button>
-                <button type="button" onclick="cerrarModal1()">Cancelar</button>
+                <button type="button" class="btn-cancelar" onclick="cerrarModal1()">Cancelar</button>
             </form>
         </div>
+    </div>
+
+    <!-- LIGHTBOX DE REPARACIÓN -->
+    <div id="lightbox" class="d-none position-fixed top-0 start-0 w-100 h-100 lightbox-bg">
+
+        <div class="d-flex justify-content-center align-items-center h-100 px-3 position-relative">
+            <button id="btnPrev" class="btn nav-btn position-absolute start-0"> ‹ </button>
+            <img id="lightboxImg" src="" class="img-fluid rounded shadow lightbox-img">
+            <button id="btnNext" class="btn nav-btn position-absolute end-0"> › </button>
+        </div>
+
+        <!-- Botón cerrar -->
+        <button id="close" type="button" class="btn close-btn position-absolute top-0 end-0 m-4"> × </button>
     </div>
 
     <?php
@@ -1244,9 +1399,11 @@
                 $Tipo_Trabajo = $DataOrden['Tipo_Trabajo'];
                 $ID_Detalle = $_POST['ID_Detalle'];
                 $ID_Trabajo = $_POST['ID_Trabajo'];
+                $DescripcionFalla = $_POST['DescripcionFalla'];
                 $DescripcionT = $_POST['DescripcionTrabajo'];
+                $Imagenes = $_FILES['imagenesDetalle'];
                 $Estado_Trabajo = 1;
-                $resultado = $OrdenesTrabajoController->ActualizarOrden($ID_Trabajo, $ID_Detalle, $DescripcionT, $Tipo_Trabajo, $Estado_Trabajo);
+                $resultado = $OrdenesTrabajoController->ActualizarOrden($ID_Trabajo, $ID_Detalle, $DescripcionT, $DescripcionFalla,$Tipo_Trabajo, $Estado_Trabajo, $Imagenes, $ID_Mantenimiento);
 
                 if ($resultado) {
                     echo "<script>
@@ -1305,9 +1462,11 @@
                 $Tipo_Trabajo = $DataOrden['Tipo_Trabajo'];
                 $ID_Detalle = $_POST['ID_Detalle'];
                 $ID_Trabajo = $_POST['ID_Trabajo'];
-                $DescripcionT = NUll;
+                $DescripcionT = NULL;
+                $DescripcionFalla = NULL;
+                $Imagenes = 'Eliminar';
                 $Estado_Trabajo = 2;
-                $resultado = $OrdenesTrabajoController->ActualizarOrden($ID_Trabajo, $ID_Detalle, $DescripcionT, $Tipo_Trabajo, $Estado_Trabajo);
+                $resultado = $OrdenesTrabajoController->ActualizarOrden($ID_Trabajo, $ID_Detalle, $DescripcionT, $DescripcionFalla,$Tipo_Trabajo, $Estado_Trabajo, $Imagenes, $ID_Mantenimiento);
 
                 if ($resultado) {
                     echo "<script>
@@ -1361,7 +1520,7 @@
                 $Estado_Trabajo = 'En verificacion';
                 $ID_Centro = $DataOrden['ID_Centro'];
                 $ID_Verifica = $DataOrden['ID_Genera'];
-                $Resultado = $OrdenesTrabajoController->FirmarOrden($ID_Orden, $ID_Mecanicos, $FirmasMecanicos, $Estado_Trabajo, $ID_Centro, $ID_Verifica, $Numero);
+                $Resultado = $OrdenesTrabajoController->FirmarOrden($ID_Orden, $ID_Mecanicos, $FirmasMecanicos, $Estado_Trabajo, $ID_Centro, $ID_Verifica, $Numero, $ID_Mantenimiento);
                 if ($Resultado) {
                     echo "
                     <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
@@ -1427,7 +1586,146 @@
                     this.refreshOptions(false);
                 }
             });
+            
+            /*============= FUNCIÓN REUTILIZABLE PARA MANEJO DE GALERÍAS =============*/
+            function crearGaleria(config) {
+                const {input, preview, btnFoto, btnCargar, lightbox, lightboxImg, btnNext, btnPrev, btnClose} = config;
 
+                let imagenes = [];           
+                let dt = new DataTransfer(); 
+                let indexActual = 0;
+
+                /* Botón tomar foto */
+                btnFoto.addEventListener("click", () => {
+                    input.removeAttribute('multiple');
+                    input.setAttribute("capture", "environment");
+                    input.click();
+                });
+
+                /* Botón cargar imágenes */
+                btnCargar.addEventListener("click", () => {
+                    input.setAttribute('multiple', 'true');
+                    input.removeAttribute("capture");
+                    input.click();
+                });
+
+                /* Renderizar miniaturas */
+                function renderMiniaturas() {
+                    preview.innerHTML = "";
+
+                    imagenes.forEach((src, i) => {
+                        const cont = document.createElement("div");
+                        cont.className = "position-relative d-inline-block me-2 mb-2";
+
+                        const img = document.createElement("img");
+                        img.src = src;
+                        img.className = "img-thumbnail";
+                        img.style.cssText = "height: 100px; cursor: zoom-in; object-fit: cover;";
+                        img.addEventListener("click", () => {
+                            indexActual = i;
+                            mostrarImagen();
+                        });
+
+                        /* Botón eliminar */
+                        const btnEliminar = document.createElement("button");
+                        btnEliminar.innerHTML = "×";
+                        btnEliminar.className = "btn close-btn position-absolute top-0 end-0";
+                        btnEliminar.style.cssText = `
+                            border-radius: 50%;
+                            width: 20px;
+                            height: 20px;
+                            padding: 0;
+                            font-size: 14px;
+                            line-height: 18px;
+                        `;
+
+                        btnEliminar.addEventListener("click", (ev) => {
+                            ev.stopPropagation();
+
+                            // ELIMINAR BASE64
+                            imagenes.splice(i, 1);
+
+                            // ELIMINAR ARCHIVO REAL
+                            dt.items.remove(i);
+                            input.files = dt.files;
+
+                            // RECONSTRUIR MINIATURAS
+                            renderMiniaturas();
+                        });
+
+                        cont.appendChild(img);
+                        cont.appendChild(btnEliminar);
+                        preview.appendChild(cont);
+                    });
+                }
+
+                /* Cargar imágenes */
+                input.addEventListener("change", () => {
+                    Array.from(input.files).forEach(file => {
+
+                        dt.items.add(file); 
+
+                        const reader = new FileReader();
+                        reader.onload = e => {
+                            imagenes.push(e.target.result);
+                            renderMiniaturas();
+                        };
+                        reader.readAsDataURL(file);
+                    });
+
+                    input.files = dt.files; 
+                });
+
+                /* Función mostrar imagen */
+                function mostrarImagen() {
+                    lightboxImg.src = imagenes[indexActual];
+                    lightbox.classList.remove("d-none");
+                    document.body.style.overflow = "hidden";
+                }
+
+                /* Navegación Lightbox */
+                btnNext.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    indexActual = (indexActual + 1) % imagenes.length;
+                    mostrarImagen();
+                });
+
+                btnPrev.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    indexActual = (indexActual - 1 + imagenes.length) % imagenes.length;
+                    mostrarImagen();
+                });
+
+                btnClose.addEventListener("click", () => {
+                    lightbox.classList.add("d-none");
+                    document.body.style.overflow = "";
+                });
+
+                lightbox.addEventListener("click", e => {
+                    if (e.target === lightbox) btnClose.click();
+                });
+
+                document.addEventListener("keydown", (e) => {
+                    if (!lightbox.classList.contains("d-none")) {
+                        if (e.key === "ArrowRight") btnNext.click();
+                        if (e.key === "ArrowLeft") btnPrev.click();
+                        if (e.key === "Escape") btnClose.click();
+                    }
+                });
+            }
+
+            /*=============== GALERÍA 1 – FALLA ===============*/
+            crearGaleria({
+                input: document.getElementById("imagenesDetalle"),
+                preview: document.getElementById("previewimagenesDetalle"),
+                btnFoto: document.getElementById("btnTomarFoto"),
+                btnCargar: document.getElementById("btnCargarImagen"),
+                lightbox: document.getElementById("lightbox"),
+                lightboxImg: document.getElementById("lightboxImg"),
+                btnNext: document.getElementById("btnNext"),
+                btnPrev: document.getElementById("btnPrev"),
+                btnClose: document.getElementById("close")
+            });
         });
     </script>
 
@@ -1539,9 +1837,11 @@
         function abrirModal(btn){ 
             let idDetalle = btn.getAttribute("data-id");
             let idTrabajo = btn.getAttribute("data-idtrabajo");
+            let descripcionFalla = btn.getAttribute("data-descripcionfalla");
 
             document.getElementById("ID_Detalle").value = idDetalle;
             document.getElementById("ID_Trabajo").value = idTrabajo;
+            document.getElementById("DescripcionFalla").value = descripcionFalla;
 
             document.getElementById("modalTrabajo").style.display = "block";
         }

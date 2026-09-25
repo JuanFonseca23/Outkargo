@@ -393,9 +393,16 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
             <!-- ================= REPUESTOS ================= -->
             <?php
                 $tieneMontacargas = false;
+                $tieneRepuestos = false;
                 foreach ($DataOrdenDetalles as $d) {
                     if ($d['Tipo_Producto'] === 'Montacargas') {
                         $tieneMontacargas = true;
+                        break;
+                    }
+                }
+                foreach ($DataOrdenDetalles as $d) {
+                    if ($d['Tipo_Producto'] === 'Repuestos') {
+                        $tieneRepuestos = true;
                         break;
                     }
                 }
@@ -435,37 +442,38 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
             <?php endif; ?>
 
             <!-- -------- PRODUCTOS -------- -->
-            <thead>
-                <tr>
-                    <th colspan="6" style="background-color:#e6e6e6;text-align:center;">
-                        TRABAJOS A REALIZAR EN PRODUCTOS
-                    </th>
-                </tr>
-                <tr>
-                    <th style="width: 20px; text-align: center;">#</th>
-                    <th style="width: 60px; text-align: center;">Código</th>
-                    <th style="width: 90px; text-align: center;">Serie</th>
-                    <th style="width: 90px; text-align: center;">Parte</th>
-                    <th style="text-align: center;" colspan="2">Descripción de Falla</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    $n = 0;
-                    foreach ($DataOrdenDetalles as $d) {
-                        if ($d['Tipo_Producto'] !== 'Montacargas') {
-                            $n++;
-                ?>
+            <?php if ($tieneRepuestos): ?>
+                <thead>
                     <tr>
-                        <td style="width: 20px; text-align: center;"><?= $n ?></td>
-                        <td style="width: 60px; text-align: center;">DTR<?= $d['ID'] ?></td>
-                        <td style="width: 90px; text-align: center;"><?= $d['Serie'] ?? '' ?></td>
-                        <td style="width: 90px; text-align: center;"><?= $d['Parte'] ?? '' ?></td>
-                        <td colspan="2"><?= $d['DescripcionFalla'] ?></td>
+                        <th colspan="6" style="background-color:#e6e6e6;text-align:center;">
+                            TRABAJOS A REALIZAR EN PRODUCTOS
+                        </th>
                     </tr>
-                <?php }} ?>
-            </tbody>
-
+                    <tr>
+                        <th style="width: 20px; text-align: center;">#</th>
+                        <th style="width: 60px; text-align: center;">Código</th>
+                        <th style="width: 90px; text-align: center;">Serie</th>
+                        <th style="width: 90px; text-align: center;">Parte</th>
+                        <th style="text-align: center;" colspan="2">Descripción de Falla</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $n = 0;
+                        foreach ($DataOrdenDetalles as $d) {
+                            if ($d['Tipo_Producto'] !== 'Montacargas') {
+                                $n++;
+                    ?>
+                        <tr>
+                            <td style="width: 20px; text-align: center;"><?= $n ?></td>
+                            <td style="width: 60px; text-align: center;">DTR<?= $d['ID'] ?></td>
+                            <td style="width: 90px; text-align: center;"><?= $d['Serie'] ?? '' ?></td>
+                            <td style="width: 90px; text-align: center;"><?= $d['Parte'] ?? '' ?></td>
+                            <td colspan="2"><?= $d['DescripcionFalla'] ?></td>
+                        </tr>
+                    <?php }} ?>
+                </tbody>
+            <?php endif; ?>
         <?php endif; ?>
     </table>
 

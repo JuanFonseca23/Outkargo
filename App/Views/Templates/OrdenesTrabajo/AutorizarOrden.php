@@ -14,6 +14,8 @@
     $DataMecanicos = $OrdenesTrabajoController->VerMecanicos($_GET['ID']);
     $DataMontacargas = $OrdenesTrabajoController->VerMontacargas($_GET['ID']);
     $DataInsumos = $OrdenesTrabajoController->VerDetallesInsumosOrden($_GET['ID']);
+    $Mantenimiento = $OrdenesTrabajoController->BuscarMantenimiento($_GET['ID']);
+    $ID_Mantenimiento = $Mantenimiento['ID'];
     $Fecha = date("d/m/Y");
 
     if($DataOrden['Tipo_Trabajo'] === 'MantenimientoP'){
@@ -723,9 +725,16 @@
                     <!-- ================= REPUESTOS ================= -->
                     <?php
                         $tieneMontacargas = false;
+                        $tieneRepuestos = false;
                         foreach ($DataOrdenDetalles as $d) {
                             if ($d['Tipo_Producto'] === 'Montacargas') {
                                 $tieneMontacargas = true;
+                                break;
+                            }
+                        }
+                        foreach ($DataOrdenDetalles as $d) {
+                            if ($d['Tipo_Producto'] === 'Repuestos') {
+                                $tieneRepuestos = true;
                                 break;
                             }
                         }
@@ -744,6 +753,7 @@
                                 <th style="width: 60px; text-align: center;">Código</th>
                                 <th style="width: 60px; text-align: center;">Numero</th>
                                 <th colspan="2">Descripción de Falla</th>
+                                <th style="width: 60px; text-align: center;">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -758,6 +768,13 @@
                                     <td style="width: 60px; text-align: center;">DTR<?= $d['ID'] ?></td>
                                     <td style="width: 60px; text-align: center;"><?= $d['NumeroMontacargas'] ?></td>
                                     <td colspan="2"><?= $d['DescripcionFalla'] ?></td>
+                                    <td>
+                                        <?php if ($d['EstadoTrabajo'] === 2){?>
+                                            <button class="btn-guardar" data-id="<?= $d['ID'] ?>" data-idtrabajo="<?= $d['IDTrabajo'] ?? '' ?>" data-descripcionfalla="<?= $d['DescripcionFalla'] ?>" onclick="abrirModal(this)">
+                                                Registrar
+                                            </button>
+                                        <?php }?>
+                                    </td>
                                 </tr>
                             <?php }} ?>
                         </tbody>
@@ -765,36 +782,46 @@
                     <?php endif; ?>
 
                     <!-- -------- PRODUCTOS -------- -->
-                    <thead>
-                        <tr>
-                            <th colspan="7" style="background-color:#e6e6e6;text-align:center;">
-                                TRABAJOS A REALIZAR EN PRODUCTOS
-                            </th>
-                        </tr>
-                        <tr>
-                            <th style="width: 20px; text-align: center;">#</th>
-                            <th style="width: 60px; text-align: center;">Código</th>
-                            <th style="width: 90px; text-align: center;">Serie</th>
-                            <th style="width: 90px; text-align: center;">Parte</th>
-                            <th style="text-align: center;">Descripción de Falla</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            $n = 0;
-                            foreach ($DataOrdenDetalles as $d) {
-                                if ($d['Tipo_Producto'] !== 'Montacargas') {
-                                    $n++;
-                        ?>
+                    <?php if ($tieneRepuestos): ?>
+                        <thead>
                             <tr>
-                                <td style="width: 20px; text-align: center;"><?= $n ?></td>
-                                <td style="width: 60px; text-align: center;">DTR<?= $d['ID'] ?></td>
-                                <td style="width: 90px; text-align: center;"><?= $d['Serie'] ?? '' ?></td>
-                                <td style="width: 90px; text-align: center;"><?= $d['Parte'] ?? '' ?></td>
-                                <td><?= $d['DescripcionFalla'] ?></td>
+                                <th colspan="7" style="background-color:#e6e6e6;text-align:center;">
+                                    TRABAJOS A REALIZAR EN PRODUCTOS
+                                </th>
                             </tr>
-                        <?php }} ?>
-                    </tbody>
+                            <tr>
+                                <th style="width: 20px; text-align: center;">#</th>
+                                <th style="width: 60px; text-align: center;">Código</th>
+                                <th style="width: 90px; text-align: center;">Serie</th>
+                                <th style="width: 90px; text-align: center;">Parte</th>
+                                <th style="text-align: center;">Descripción de Falla</th>
+                                <th style="width: 60px; text-align: center;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $n = 0;
+                                foreach ($DataOrdenDetalles as $d) {
+                                    if ($d['Tipo_Producto'] !== 'Montacargas') {
+                                        $n++;
+                            ?>
+                                <tr>
+                                    <td style="width: 20px; text-align: center;"><?= $n ?></td>
+                                    <td style="width: 60px; text-align: center;">DTR<?= $d['ID'] ?></td>
+                                    <td style="width: 90px; text-align: center;"><?= $d['Serie'] ?? '' ?></td>
+                                    <td style="width: 90px; text-align: center;"><?= $d['Parte'] ?? '' ?></td>
+                                    <td><?= $d['DescripcionFalla'] ?></td>
+                                    <td>
+                                        <?php if ($d['EstadoTrabajo'] === 2){?>
+                                            <button class="btn-guardar" data-id="<?= $d['ID'] ?>" data-idtrabajo="<?= $d['IDTrabajo'] ?? '' ?>" data-descripcionfalla="<?= $d['DescripcionFalla'] ?>" onclick="abrirModal(this)">
+                                                Registrar
+                                            </button>
+                                        <?php }?>
+                                    </td>
+                                </tr>
+                            <?php }} ?>
+                        </tbody>
+                    <?php endif; ?>
 
                 <?php endif; ?>
             </table>
@@ -914,7 +941,7 @@
                 $ID_Verifica = $DataOrden['ID_Genera'];
                 $Numero = $DataOrden['Numero'];
                 $Nombre = $_SESSION['NombreCompleto'];
-                $Resultado = $OrdenesTrabajoController->FirmarOrdenVerificada($ID_Orden, $ID_Verifica, $Estado_Trabajo, $FirmaVerifica, $Numero, $Nombre);
+                $Resultado = $OrdenesTrabajoController->FirmarOrdenVerificada($ID_Orden, $ID_Verifica, $Estado_Trabajo, $FirmaVerifica, $Numero, $Nombre, $ID_Mantenimiento);
                 if ($Resultado) {
                     echo "
                     <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
@@ -950,7 +977,6 @@
 
             }
         }
-
     ?>
 
     <script>

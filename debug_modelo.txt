@@ -1,0 +1,11 @@
+INSUMO: Array
+(
+    [id] => 37
+    [nombre] => ORING P
+    [codigo] => P-000324
+    [cantidad] => 1
+    [medida] => Und
+    [enBD] => 
+)
+
+❌ ERROR: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`app_outkargo`.`detalles_insumos_mantenimientos`, CONSTRAINT `detalles_insumos_mantenimientos_ibfk_1` FOREIGN KEY (`ID_Mantenimiento`) REFERENCES `mantenimiento_correctivo` (`ID`) ON DELETE CA)

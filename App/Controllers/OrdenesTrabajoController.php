@@ -30,16 +30,25 @@
             $this->Controller_Usuarios = new UsuarioController();
         }
 
-        public function ActualizarOrden($ID_Trabajo, $ID_Detalle, $DescripcionT, $Tipo_Trabajo, $Estado_Trabajo){
+        public function ActualizarOrden($ID_Trabajo, $ID_Detalle, $DescripcionT, $DescripcionFalla, $Tipo_Trabajo, $Estado_Trabajo, $Imagenes, $ID_Mantenimiento){
 
             $actualizoDescripcion = $this->Modelo_OrdenesTrabajo->ActualizarOrden($ID_Detalle, $DescripcionT);
 
             if ($actualizoDescripcion) {
                 $actualizoEstado = $this->Modelo_OrdenesTrabajo->ActualizarEstado($ID_Trabajo, $Estado_Trabajo, $Tipo_Trabajo);
                 if ($actualizoEstado) {
-                    return true;   
-                } else {
-                    return false;  
+                    if ($Imagenes !== 'Eliminar') {
+                        $Falla = 'Si';
+                        $this->Modelo_OrdenesTrabajo->InsertarDetalleMantenimiento($ID_Mantenimiento, $ID_Detalle, $DescripcionFalla, $DescripcionT, $Falla);
+                        $this->RegistrarImagenesOrden($ID_Trabajo, $ID_Mantenimiento, $ID_Detalle, $Imagenes);
+                        return true;   
+                    } else {
+                        $this->Modelo_OrdenesTrabajo->EliminarDetalleMantenimiento($ID_Mantenimiento, $ID_Detalle);
+                        $this->EliminarImagenesOrden($ID_Trabajo, $ID_Mantenimiento, $ID_Detalle);
+                        return true;  
+                    }
+                }else{
+                    return false;
                 }
             } else {
                 return false;     
@@ -124,6 +133,12 @@
             echo json_encode($Resultados);
             exit;
         }
+
+        public function BuscarMantenimiento($ID_Orden){
+            $Resultado = $this->Modelo_OrdenesTrabajo->BuscarMantenimiento($ID_Orden);
+            return $Resultado ? $Resultado : false;
+
+        }
         
         public function BuscarMontacargas(){
             header('Content-Type: application/json; charset=utf-8');
@@ -177,12 +192,54 @@
             return $Resultado ? $Resultado : 0;
         }
 
+        public function CrearMantenimiento($ID_Orden, $ID_Mecanicos, $ID_Supervisor, $ID_Centro, $Fecha){
+            $Hora = date("H:i");
+            $Estado_Firma = 0;
+            $ultimoCodigo = $this->Modelo_OrdenesTrabajo->ObtenerUltimoCodigoMantenimiento();
+            if($ultimoCodigo){
+                $NuevoCodigo = str_pad(intval(substr($ultimoCodigo, 2)) + 1, 6, "0", STR_PAD_LEFT);
+            }else{
+                $NuevoCodigo = '000001';
+            }
+            if($ID = $this->Modelo_OrdenesTrabajo->CrearMantenimiento($ID_Orden,  $NuevoCodigo, $ID_Supervisor, $ID_Centro, $Hora, $Fecha, $Estado_Firma)){
+                $ID_Mantenimiento = $ID;
+                foreach ($ID_Mecanicos as $ID_Mecanico) {
+                    $this->Modelo_OrdenesTrabajo->AsignarMecanico($ID_Mantenimiento, $ID_Mecanico['ID_Mecanico'], $Estado_Firma);
+                }
+                return $ID_Mantenimiento;
+            }
+            return false;
+        }
+
         public function EliminarDetalleInsumoTemp($ID_Orden, $ID_Insumo){
             if($this->Modelo_OrdenesTrabajo->EliminarDetalleInsumoTemp($ID_Orden, $ID_Insumo)){
                 return true; 
             }else{
                 return false; 
             }
+        }
+
+        public function EliminarImagenesOrden($ID_Trabajo, $ID_Mantenimiento, $ID_Detalle){
+            $Imagenes = $this->Modelo_OrdenesTrabajo->ObtenerImagenesOrden($ID_Trabajo, $ID_Detalle);
+
+            if (!empty($Imagenes)) {
+                foreach ($Imagenes as $img) {
+
+                    if (!empty($img['Evidencia_Fotografica'])) {
+
+
+                        $rutaFisica = $img['Evidencia_Fotografica'];
+
+                        if (file_exists($rutaFisica) && is_file($rutaFisica)) {
+                            unlink($rutaFisica);
+                        }
+                    }
+                }
+            }
+
+            $this->Modelo_OrdenesTrabajo->EliminarImagenesOrden($ID_Trabajo, $ID_Detalle);
+
+            $this->Modelo_OrdenesTrabajo->EliminarImagenesMantenimiento($ID_Mantenimiento, $ID_Detalle);
         }
 
         public function EnviarCorreo($ID_Solicitud, $Correo_Supervisor, $Nombre_Supervisor, $CodigoSolicitud){
@@ -845,7 +902,7 @@
             }
         }
 
-        public function FirmarOrden($ID_Orden, $ID_Mecanicos, $FirmasMecanicos, $Estado_Trabajo, $ID_Centro, $ID_Verifica, $Numero){
+        public function FirmarOrden($ID_Orden, $ID_Mecanicos, $FirmasMecanicos, $Estado_Trabajo, $ID_Centro, $ID_Verifica, $Numero, $ID_Mantenimiento){
             $totalFirmas = count($FirmasMecanicos);
             $firmasGuardadas = 0;
             $FechaInicio = Null;
@@ -854,6 +911,7 @@
             foreach ($FirmasMecanicos as $Mecanico => $Firma) {
                 if (!empty($Firma)) {
                     $ID_Mecanico = $ID_Mecanicos[$Mecanico];
+                    $this->Modelo_OrdenesTrabajo->FirmarMantenimiento($ID_Mantenimiento, $ID_Mecanico, $Firma, $FechaFirma, $EstadoFirmaMecanico);
                     $Resultado = $this->Modelo_OrdenesTrabajo->FirmarOrden($ID_Orden, $ID_Mecanico, $Firma, $FechaFirma, $EstadoFirmaMecanico);
                     if ($Resultado) {
                         $firmasGuardadas++;
@@ -932,6 +990,7 @@
                         
                             //Registramos los Detalles
                             $this->Modelo_Inventario->RegistrarDetalleSalida($Mecanico, $ID_Salida, $ID_Insumo, $Usar, $Producto['N_Factura'], $Producto['N_Lote'], $Producto['valor_unitario']);
+                            
                             $Cantidad_Solicitadad -= $Usar;
                         }
 
@@ -940,6 +999,8 @@
                         }
 
                         if($this->Modelo_OrdenesTrabajo->RegistrarDetalleInsumo($ID_Orden, $ID_Insumo, $Insumo['Cantidad'], $Insumo['Medida'])){
+                            $Tipo = 'MantenimientoCorrectivo';
+                            $this->Modelo_OrdenesTrabajo->RegistrarMantenimientoInsumo($ID_Mantenimiento, $ID_Insumo, $Insumo['Cantidad'], $Insumo['Medida'],$Tipo);
                             $this->Modelo_OrdenesTrabajo->EliminarDetalleInsumoTemp($ID_Orden, $Insumo['ID']);
                         }
                     }
@@ -963,10 +1024,12 @@
             }
         }
 
-        public function FirmarOrdenVerificada($ID_Orden, $ID_Verifica, $Estado_Trabajo, $FirmaVerifica, $Numero, $Nombre){
+        public function FirmarOrdenVerificada($ID_Orden, $ID_Verifica, $Estado_Trabajo, $FirmaVerifica, $Numero, $Nombre, $ID_Mantenimiento){
             $FechaFirma = date("d/m/Y");
             $Estado_Firma_Trabajo = 1;
+            $Hora_Firma = date("H:i");
             if($this->Modelo_OrdenesTrabajo->VerficarOrden($ID_Orden, $ID_Verifica, $Estado_Trabajo, $FirmaVerifica, $Estado_Firma_Trabajo)){
+                $this->Modelo_OrdenesTrabajo->FirmarMantenimientoS($ID_Mantenimiento, $ID_Orden, $ID_Verifica, $FirmaVerifica, $FechaFirma, $Estado_Firma_Trabajo, $Hora_Firma);
                 $ID_Usuario1 = $ID_Verifica;
                 $ID_Usuario2 = Null;
                 $Creo = 'autorizo';
@@ -1037,6 +1100,40 @@
             }
         }
 
+        public function RegistrarImagenesOrden($ID_Trabajo, $ID_Mantenimiento, $ID_Detalle, $Imagenes){
+            $uploadDir = 'App/Views/Upload/Img/OrdenTrabajo/'; 
+            $allowedTypes = ['image/png', 'image/jpeg', 'image/gif']; 
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+            // ⚙️ Función reutilizable para evitar repetir código
+            $subirArchivos = function($Categoria, $archivos) use ($ID_Trabajo, $ID_Mantenimiento, $ID_Detalle, $uploadDir, $allowedTypes){
+                $contador = 1;
+                if(empty($archivos['name'][0])) return;
+                foreach ($archivos['tmp_name'] as $key => $tmp_name) {
+                    $fileType = $archivos['type'][$key];
+                    if (in_array($fileType, $allowedTypes)) {
+                        $extension = pathinfo($archivos['name'][$key], PATHINFO_EXTENSION);
+                        $NombreFoto  = "OrdenTrabajo{$ID_Mantenimiento}_{$contador}." . $extension;
+                        $uploadFile = $uploadDir . $NombreFoto;
+
+                        if (move_uploaded_file($tmp_name, $uploadFile)) {
+                            $this->Modelo_OrdenesTrabajo->RegistrarEvidenciaOrden($ID_Trabajo, $ID_Detalle, $uploadFile);
+                            $this->Modelo_OrdenesTrabajo->RegistrarEvidencia($ID_Mantenimiento, $ID_Detalle, $Categoria, $uploadFile);
+                            $contador++;
+                        } else {
+                            // Error al mover el archivo
+                            echo "❌ Error al cargar la imagen: $uploadFile<br>";
+                        }
+                    }else {
+                        echo "⚠️ Tipo de archivo no permitido: {$archivos['name'][$key]}<br>";
+                    }
+                }
+            };
+
+            $subirArchivos(null, $Imagenes);
+        }
+
         public function RegistrarOrdenTrabajo ($ID_Usuario, $NombreCreo, $Tipo_Trabajo, $Prioridad, $ID_Tecnicos, $Centro_Trabajo, $Fecha_InicioF, $Fecha_FinF, $Trabajos){
             $Fecha_Generado = date("d/m/Y");
             $EstadoFirmaVerifica = 0;
@@ -1104,6 +1201,13 @@
                 return $ID_Solicitud;
             }
                 
+        }
+
+        public function TraerMantenimientosC($ID_Centro){ 
+            if (!$ID_Centro) {
+                return [];
+            }
+            return $this->Modelo_OrdenesTrabajo->TraerMantenimientosC($ID_Centro);
         }
 
         public function TraerSolicitud() {

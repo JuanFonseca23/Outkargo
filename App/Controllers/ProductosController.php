@@ -815,7 +815,7 @@
             $this->Modelo_Productos->EliminarUltimoRegistroSalida($ID_Usuario);
         }
 
-        public function InsertarSalidaTemp($Codigo, $ValorCantidad, $Medida, $No_Documento, $Observaciones, $ID_Centro, $CentroTrabajo, $ID_Montacarga, $ID_Usuario) {
+        public function InsertarSalidaTemp($Codigo, $ValorCantidad, $Medida, $No_Documento, $ID_Centro, $CentroTrabajo, $ID_Usuario) {
             if (!empty($Codigo)) {
                 // Obtener el ID del producto
                 $this->Modelo_Productos->EliminarUltimoRegistroSalida($ID_Usuario); 
@@ -855,11 +855,12 @@
                     
                         if ($CantidadDisponible > 0) { 
                             $ID_Producto_Seleccionado = $factura['ID'];
+                            $N_Lote = $factura['N_Lote'];
                             $N_Factura = $factura['N_Factura'];
                             $ValorUnitario = $factura['valor_unitario'];
                             $ValorTotal = $CantidadDisponible * $ValorUnitario;
                     
-                            $this->Modelo_Productos->insertarSalidaTemp($ID_Usuario, $ID_Producto, $CantidadDisponible,  $Medida, $ID_Montacarga, $N_Factura, $Observaciones, $ValorUnitario, $ValorTotal, $ID_Producto_Seleccionado);
+                            $this->Modelo_Productos->insertarSalidaTemp($ID_Usuario, $ID_Producto, $CantidadDisponible,  $Medida, $N_Lote, $N_Factura, $ValorUnitario, $ValorTotal, $ID_Producto_Seleccionado);
                             $cantidadRestante -= $CantidadDisponible;
                         }
                     }                   

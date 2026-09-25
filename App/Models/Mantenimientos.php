@@ -11,6 +11,285 @@
         }
 
         // Métodos
+        public function ActualizarID_Salida($ID_Salida, $ID_Mantenimiento, $ID_Mecanico, $Firma, $FechaFirma, $EstadoFirmaMecanico){
+            $sql = "UPDATE salida_insumos 
+                    SET  Fecha_Firma_Recibe = :FechaFirma, Firma_Recibe = :Firma,  Firma_Estado_Recibe = :EstadoFirmaMecanico
+                    WHERE ID_Origen = :ID_Mantenimiento AND ID_Recibe  = :ID_Mecanico AND ID = :ID_Salida";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID_Salida', $ID_Salida);
+            $stmt->bindParam(':ID_Mantenimiento', $ID_Mantenimiento);
+            $stmt->bindParam(':ID_Mecanico', $ID_Mecanico);
+            $stmt->bindParam(':Firma', $Firma);
+            $stmt->bindParam(':FechaFirma', $FechaFirma);
+            $stmt->bindParam(':EstadoFirmaMecanico', $EstadoFirmaMecanico);
+            return $stmt->execute();
+        }
+
+        public function CrearDetalleMantenimientoBorrador($ID_Mantenimiento){
+            $sql = "INSERT INTO detalles_mantenimiento_preventivo (ID_Mantenimiento) VALUES (:ID_Mantenimiento)";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID_Mantenimiento', $ID_Mantenimiento);
+            if($stmt->execute()) {
+                return $this->PDO->lastInsertId(); 
+            } else {
+                return false; 
+            }
+        }
+
+        public function CrearMantenimientoBorrador($ID_Usuario, $NuevoCodigo, $ID_Montacargas, $ID_Centro, $ID_Area, $ID_Operario, $Fecha, $Estado_Firma, $Externo, $Operario_Externo, $TipoMontacargas, $TipoMantenimiento){
+            $sql = "INSERT INTO mantenimiento_preventivo (ID_Usuario, Numero, ID_Montacargas, ID_Centro, ID_Area, ID_Supervisor, ID_Operario, Hora_Inicio, Hora_Finalizacion, Fecha_Realizado, Firma_Operario, Firma_Supervisor, Estado_Firma_Supervisor, Estado_Firma_Operario, Fecha_Firma_Operario, Fecha_Firma_Supervisor, Tipo, Tipo_Mantenimiento, Externo, Nombre_Externo, Estado)
+                    VALUES (:ID_Usuario, :Numero, :ID_Montacargas, :ID_Centro, :ID_Area, NULL, :ID_Operario, NULL, NULL, :Fecha, NULL, NULL, :Estado_Firma, :Estado_Firma, NULL, NULL, :TipoMontacargas, :TipoMantenimiento, :Externo, :Operario_Externo, 'BORRADOR')";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID_Usuario', $ID_Usuario);
+            $stmt->bindParam(':Numero', $NuevoCodigo);
+            $stmt->bindParam(':ID_Montacargas', $ID_Montacargas);
+            $stmt->bindParam(':ID_Centro', $ID_Centro);
+            $stmt->bindParam(':ID_Area', $ID_Area);
+            $stmt->bindParam(':ID_Operario', $ID_Operario);
+            $stmt->bindParam(':Fecha', $Fecha);
+            $stmt->bindParam(':Estado_Firma', $Estado_Firma);
+            $stmt->bindParam(':Externo', $Externo);
+            $stmt->bindParam(':Operario_Externo', $Operario_Externo);
+            $stmt->bindParam(':TipoMontacargas', $TipoMontacargas);
+            $stmt->bindParam(':TipoMantenimiento', $TipoMantenimiento);
+            if($stmt->execute()) {
+                return $this->PDO->lastInsertId(); 
+            } else {
+                return false; 
+            }
+        }
+
+        public function EliminarInsumo($ID_Mantenimiento, $ID_Insumo, $Tipo_Mantenimiento) {
+            try {
+                $sql = "DELETE FROM detalles_insumos_mantenimientos 
+                        WHERE ID_Mantenimiento = :ID_Mantenimiento 
+                        AND ID_Insumo = :ID_Insumo
+                        AND Tipo_Mantenimiento = :Tipo_Mantenimiento";
+
+                $stmt = $this->PDO->prepare($sql);
+                $stmt->execute([
+                    ':ID_Mantenimiento' => $ID_Mantenimiento,
+                    ':ID_Insumo' => $ID_Insumo,
+                    ':Tipo_Mantenimiento' => $Tipo_Mantenimiento
+                ]);
+
+                if ($stmt->rowCount() === 0) {
+                    error_log("NO se eliminó ningún registro");
+                    return false;
+                }
+
+                return true;
+
+            } catch (Exception $e) {
+                error_log("Error al eliminar insumo: " . $e->getMessage());
+                return false;
+            }
+        }
+
+        public function EliminarNovedad($ID_Mantenimiento, $ID_Novedad, $Tipo_Mantenimiento) {
+            try {
+                $sql = "DELETE FROM novedades_mantenimiento 
+                        WHERE ID_Mantenimiento = :ID_Mantenimiento 
+                        AND ID = :ID_Novedad
+                        AND Tipo_Mantenimiento = :Tipo_Mantenimiento";
+
+                $stmt = $this->PDO->prepare($sql);
+                $stmt->execute([
+                    ':ID_Mantenimiento' => $ID_Mantenimiento,
+                    ':ID_Novedad' => $ID_Novedad,
+                    ':Tipo_Mantenimiento' => $Tipo_Mantenimiento
+                ]);
+
+                if ($stmt->rowCount() === 0) {
+                    error_log("NO se eliminó ningún registro");
+                    return false;
+                }
+
+                return true;
+
+            } catch (Exception $e) {
+                error_log("Error al eliminar novedad: " . $e->getMessage());
+                return false;
+            }
+        }
+
+        public function EliminarTecnico($ID_Mantenimiento, $ID_Tecnico){
+            try {
+                $sql = "DELETE FROM mantenimiento_preventivo_mecanicos 
+                        WHERE ID_Mantenimiento = :ID_Mantenimiento 
+                        AND ID_Mecanico = :ID_Tecnico";
+
+                $stmt = $this->PDO->prepare($sql);
+                $stmt->execute([
+                    ':ID_Mantenimiento' => $ID_Mantenimiento,
+                    ':ID_Tecnico' => $ID_Tecnico
+                ]);
+
+                if ($stmt->rowCount() === 0) {
+                    error_log("NO se eliminó ningún registro");
+                    return false;
+                }
+
+                return true;
+
+            } catch (Exception $e) {
+                error_log("Error al eliminar técnico: " . $e->getMessage());
+                return false;
+            }
+        }
+
+        public function GuardarInsumos($ID_Mantenimiento, $Insumos, $Tipo_Mantenimiento) {
+            try {
+                $this->PDO->beginTransaction();
+                $sqlInsert = "INSERT INTO detalles_insumos_mantenimientos (ID_Mantenimiento, ID_Insumo, Cantidad, Medida, Tipo_Mantenimiento)
+                              VALUES (:ID_Mantenimiento, :ID_Insumo, :Cantidad, :Medida, :Tipo_Mantenimiento)";
+                $stmt = $this->PDO->prepare($sqlInsert);
+                foreach ($Insumos as $Insumo) {
+                    try {
+                        $stmt->execute([
+                            ':ID_Mantenimiento' => $ID_Mantenimiento,
+                            ':ID_Insumo' => $Insumo['id'],
+                            ':Cantidad' => $Insumo['cantidad'],
+                            ':Medida' => $Insumo['medida'],
+                            ':Tipo_Mantenimiento' => $Tipo_Mantenimiento
+                        ]);
+
+                    } catch (PDOException $e) {
+                        throw $e;
+                    }
+                }
+                $this->PDO->commit();
+                return true;
+            } catch (Exception $e) {
+                $this->PDO->rollBack();
+                error_log("Error al guardar insumos: " . $e->getMessage());
+                return false;
+            }
+        }
+
+        public function GuardarNovedades($ID_Mantenimiento, $Novedades, $ID_Montacargas, $Estado, $FechaReporte, $Tipo_Mantenimiento) {
+            try {
+                $this->PDO->beginTransaction();
+                $sqlInsert = "INSERT INTO novedades_mantenimiento (ID_Mantenimiento, ID_Montacargas, Descripcion, Estado_Novedad, Fecha_Reporte, Fecha_Correcion, Tipo_Mantenimiento) 
+                              VALUES (:ID_Mantenimiento, :ID_Montacargas, :Descripcion, :Estado_Novedad, :Fecha_Reporte, NULL, :Tipo_Mantenimiento)";
+                $stmt = $this->PDO->prepare($sqlInsert);
+                $NovedadesGuardadas = [];
+                foreach ($Novedades as $Novedad) {
+                    try {
+                        $stmt->execute([
+                            ':Descripcion' => $Novedad['txt'],
+                            ':ID_Mantenimiento' => $ID_Mantenimiento,
+                            ':ID_Montacargas' => $ID_Montacargas,
+                            ':Estado_Novedad' => $Estado,
+                            ':Fecha_Reporte' => $FechaReporte,
+                            ':Tipo_Mantenimiento' => $Tipo_Mantenimiento
+                        ]);
+                        $ID_Generado = $this->PDO->lastInsertId();
+                        $NovedadesGuardadas[] =[
+                            'id' => $ID_Generado,
+                            'txt' => $Novedad['txt'],
+                        ];
+                    } catch (PDOException $e) {
+                        if ($e->errorInfo[1] == 1062) {
+                            continue;
+                        } else {
+                            throw $e; 
+                        }
+                    }
+                }
+                $this->PDO->commit();
+                return [
+                    'success' => true,
+                    'novedades' => $NovedadesGuardadas
+                ];
+            } catch (Exception $e) {
+                $this->PDO->rollBack();
+                error_log("Error al guardar novedades: " . $e->getMessage());
+                return [
+                    'success' => false,
+                    'novedades' => [],
+                    'message' => $e->getMessage()
+                ];
+            }
+        }
+
+        public function GuardarTecnicos($ID_Mantenimiento, $ID_Tecnicos){
+            $Estado_Firma_Mecanico = 0;
+
+            try {
+                $this->PDO->beginTransaction();
+
+                $sqlInsert = "INSERT INTO mantenimiento_preventivo_mecanicos (ID_Mantenimiento, ID_Mecanico, Firma_Mecanico, Fecha_Firma_Mecanico, Estado_Firma_Mecanico) 
+                              VALUES (:ID_Mantenimiento, :ID_Tecnico, NULL, NULL, :Estado_Firma_Mecanico)";
+
+                $stmt = $this->PDO->prepare($sqlInsert);
+
+                foreach ($ID_Tecnicos as $ID_Tecnico) {
+                    try {
+                        $stmt->execute([
+                            ':ID_Mantenimiento' => $ID_Mantenimiento,
+                            ':ID_Tecnico' => $ID_Tecnico,
+                            ':Estado_Firma_Mecanico' => $Estado_Firma_Mecanico
+                        ]);
+                    } catch (PDOException $e) {
+
+                        if ($e->errorInfo[1] == 1062) {
+                            
+                            continue;
+                        } else {
+                            throw $e; 
+                        }
+                    }
+                }
+
+                $this->PDO->commit();
+                return true;
+
+            } catch (Exception $e) {
+                $this->PDO->rollBack();
+                error_log("Error al guardar técnicos: " . $e->getMessage());
+                return false;
+            }
+        }
+
+        public function ObtenerDatos($ID_Mantenimiento) {
+            $sql = "SELECT No_montacargas.Numero AS NumeroM, 
+                           No_montacargas.Serie AS SerieM, 
+                           No_montacargas.Modelo AS ModeloM, 
+                           No_montacargas.Voltaje AS VoltajeM,
+                           No_montacargas.Horquillas AS LongitudH,
+                           Bateria.Numero_Interno AS NumeroB, 
+                           Centro.Nombre AS NombreCentro, 
+                           Area.Nombre AS NombreArea, 
+                           COALESCE(Operario.NombreCompleto, mantenimiento_preventivo.Nombre_Externo) AS NombreOperario,
+                           GROUP_CONCAT(Tecnico.ID SEPARATOR ',') AS ID_Tecnicos,
+                           GROUP_CONCAT(Tecnico.NombreCompleto SEPARATOR ', ') AS NombreTecnicos,
+                           mantenimiento_preventivo.*
+                    FROM mantenimiento_preventivo 
+                    LEFT JOIN montacargas AS No_montacargas ON mantenimiento_preventivo.ID_Montacargas = No_montacargas.ID 
+                    LEFT JOIN baterias AS Bateria ON No_montacargas.ID_Bateria = Bateria.ID 
+                    LEFT JOIN centrot AS Centro ON mantenimiento_preventivo.ID_Centro = Centro.ID 
+                    LEFT JOIN area AS Area ON mantenimiento_preventivo.ID_Area = Area.ID 
+                    LEFT JOIN usuario AS Operario ON mantenimiento_preventivo.ID_Operario = Operario.ID
+                    LEFT JOIN mantenimiento_preventivo_mecanicos AS Mecanicos ON mantenimiento_preventivo.ID = Mecanicos.ID_Mantenimiento
+                    LEFT JOIN usuario AS Tecnico ON Mecanicos.ID_Mecanico = Tecnico.ID
+                    WHERE mantenimiento_preventivo.ID = :ID_Mantenimiento
+                    GROUP BY mantenimiento_preventivo.ID";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID_Mantenimiento', $ID_Mantenimiento, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public function TraerAreas($ID_Centro){
+            $sql = "SELECT * FROM area WHERE ID_Centro = :ID_Centro";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID_Centro', $ID_Centro);
+            $stmt->execute();
+            $DataOperarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $DataOperarios;
+        }
+        
         public function TraerMontacargas($ID_Centro){
             $sql = "SELECT * FROM montacargas WHERE ID_Centro = :ID_Centro";
             $stmt = $this->PDO->prepare($sql);
@@ -29,13 +308,12 @@
             return $DataOperarios;
         }
 
-        public function TraerAreas($ID_Centro){
-            $sql = "SELECT * FROM area WHERE ID_Centro = :ID_Centro";
+        public function TraerTecnicos(){
+            $sql = "SELECT ID, NombreCompleto FROM usuario WHERE (ID_Cargo = 4 OR ID_Cargo = 6 OR ID_Cargo = 8 OR ID_Cargo = 13)";
             $stmt = $this->PDO->prepare($sql);
-            $stmt->bindParam(':ID_Centro', $ID_Centro);
             $stmt->execute();
-            $DataOperarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $DataOperarios;
+            $DataTecnicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $DataTecnicos;
         }
 
         public function TraerSupervisores() {
@@ -45,6 +323,32 @@
             $DataSupervisores = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $DataSupervisores;
         }
+
+        // public function ContarMantenimientos($ID_Centro) {
+        //     $sql = "SELECT COUNT(*) as NoMantenimientos FROM mantenimiento_preventivo WHERE ID_Centro = :ID_Centro";
+        //     $stmt = $this->PDO->prepare($sql);
+        //     $stmt->bindParam(':ID_Centro', $ID_Centro);
+        //     $stmt->execute();
+        //     return $stmt->fetch(PDO::FETCH_ASSOC);
+        // }
+
+        // public function LeerMantenimientos($ID_Centro) {
+        //     $sql = "SELECT usuario_operario.NombreCompleto AS NombreUsuario, 
+        //                    No_montacargas.Numero AS NumeroM, 
+        //                    No_montacargas.Serie AS SerieM,
+        //                    No_montacargas.Horometro AS HorometroA,
+        //                    Detalle_mantenimiento.Horometro AS HorometroM,
+        //                    mantenimiento_preventivo.*
+        //             FROM mantenimiento_preventivo
+        //             JOIN usuario AS usuario_operario ON mantenimiento_preventivo.ID_Operario = usuario_operario.ID
+        //             JOIN montacargas AS No_montacargas ON mantenimiento_preventivo.ID_Montacargas = No_montacargas.ID
+        //             JOIN detalles_mantenimiento_preventivo AS Detalle_mantenimiento ON Detalle_mantenimiento.ID_Mantenimiento = mantenimiento_preventivo.ID
+        //             WHERE mantenimiento_preventivo.ID_Centro = :ID_Centro";
+        //     $stmt = $this->PDO->prepare($sql);
+        //     $stmt->bindParam(':ID_Centro', $ID_Centro);
+        //     $stmt->execute();
+        //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // }
 
         public function ContarMantenimientos($ID_Centro, $Tipo) {
             $sql = "SELECT COUNT(*) as NoMantenimientos FROM mantenimiento_preventivo WHERE ID_Centro = :ID_Centro AND Tipo = :Tipo";
@@ -75,7 +379,15 @@
         }
 
         public function ContarMantenimientosC($ID_Centro) {
-            $sql = "SELECT COUNT(*) as NoMantenimientos FROM mantenimiento_correctivo WHERE ID_Centro = :ID_Centro";
+            $sql = "SELECT COUNT(*) as NoMantenimientos FROM mantenimiento_correctivo WHERE ID_Centro = :ID_Centro AND ID_Orden_Trabajo IS NULL";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID_Centro', $ID_Centro);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public function ContarMantenimientosCorrectivoOrden($ID_Centro) {
+            $sql = "SELECT COUNT(*) as NoMantenimientos FROM mantenimiento_correctivo WHERE ID_Centro = :ID_Centro AND ID_Orden_Trabajo IS NOT NULL";
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(':ID_Centro', $ID_Centro);
             $stmt->execute();
@@ -90,10 +402,22 @@
                            Detalle_mantenimiento.Horometro AS HorometroM,
                            mantenimiento_correctivo.*
                     FROM mantenimiento_correctivo
-                    JOIN usuario AS usuario_operario ON mantenimiento_correctivo.ID_Operario = usuario_operario.ID
-                    JOIN montacargas AS No_montacargas ON mantenimiento_correctivo.ID_Montacargas = No_montacargas.ID
-                    JOIN detalles_mantenimiento_correctivo AS Detalle_mantenimiento ON Detalle_mantenimiento.ID_Mantenimiento = mantenimiento_correctivo.ID
-                    WHERE mantenimiento_correctivo.ID_Centro = :ID_Centro";
+                    LEFT JOIN usuario AS usuario_operario ON mantenimiento_correctivo.ID_Operario = usuario_operario.ID
+                    LEFT JOIN montacargas AS No_montacargas ON mantenimiento_correctivo.ID_Montacargas = No_montacargas.ID
+                    LEFT JOIN detalles_mantenimiento_correctivo AS Detalle_mantenimiento ON Detalle_mantenimiento.ID_Mantenimiento = mantenimiento_correctivo.ID
+                    WHERE mantenimiento_correctivo.ID_Centro = :ID_Centro AND mantenimiento_correctivo.ID_Orden_Trabajo IS NULL";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID_Centro', $ID_Centro);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function LeerMantenimientosCorrectivosOrden($ID_Centro) {
+            $sql = "SELECT OrdenTrabajo.Numero AS NumeroO, 
+                           mantenimiento_correctivo.*
+                    FROM mantenimiento_correctivo
+                    LEFT JOIN orden_trabajo AS OrdenTrabajo ON mantenimiento_correctivo.ID_Orden_Trabajo = OrdenTrabajo.ID
+                    WHERE mantenimiento_correctivo.ID_Centro = :ID_Centro AND mantenimiento_correctivo.ID_Orden_Trabajo IS NOT NULL";
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(':ID_Centro', $ID_Centro);
             $stmt->execute();
@@ -163,14 +487,17 @@
                            No_montacargas.Modelo AS ModeloM,
                            No_montacargas.Voltaje AS VoltajeM,
                            Detalle_mantenimiento.Horometro AS HorometroM,
+                           Orden.Numero AS NumeroOrden,
+                           Orden.Prioridad AS PrioridadOrden,
                            mantenimiento_correctivo.*
                     FROM mantenimiento_correctivo
-                    JOIN usuario AS usuario_operario ON mantenimiento_correctivo.ID_Operario = usuario_operario.ID
-                    JOIN usuario AS usuario_Supervisor ON mantenimiento_correctivo.ID_Supervisor = usuario_Supervisor.ID
-                    JOIN centrot AS centro_mantenimiento ON mantenimiento_correctivo.ID_Centro = centro_mantenimiento.ID
-                    JOIN area AS area_mantenimiento ON mantenimiento_correctivo.ID_Area = area_mantenimiento.ID
-                    JOIN montacargas AS No_montacargas ON mantenimiento_correctivo.ID_Montacargas = No_montacargas.ID
-                    JOIN detalles_mantenimiento_correctivo AS Detalle_mantenimiento ON Detalle_mantenimiento.ID_Mantenimiento = mantenimiento_correctivo.ID
+                    LEFT JOIN usuario AS usuario_operario ON mantenimiento_correctivo.ID_Operario = usuario_operario.ID
+                    LEFT JOIN usuario AS usuario_Supervisor ON mantenimiento_correctivo.ID_Supervisor = usuario_Supervisor.ID
+                    LEFT JOIN centrot AS centro_mantenimiento ON mantenimiento_correctivo.ID_Centro = centro_mantenimiento.ID
+                    LEFT JOIN area AS area_mantenimiento ON mantenimiento_correctivo.ID_Area = area_mantenimiento.ID
+                    LEFT JOIN montacargas AS No_montacargas ON mantenimiento_correctivo.ID_Montacargas = No_montacargas.ID
+                    LEFT JOIN detalles_mantenimiento_correctivo AS Detalle_mantenimiento ON Detalle_mantenimiento.ID_Mantenimiento = mantenimiento_correctivo.ID
+                    LEFT JOIN orden_trabajo AS Orden ON mantenimiento_correctivo.ID_Orden_Trabajo = Orden.ID
                     WHERE mantenimiento_correctivo.ID = :ID";
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(':ID', $ID);
@@ -195,14 +522,37 @@
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(':ID', $ID);
             $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public function DataImagenesMC($ID) {
-            $sql = "SELECT mantenimiento_correctivo_imagenes.*  FROM mantenimiento_correctivo_imagenes WHERE mantenimiento_correctivo_imagenes.ID_Mantenimiento = :ID";
+        public function DataInsumosMC($ID) {
+            $sql = "SELECT Insumo.Nombre AS NombreInsumo,
+                           Insumo.Codigo AS CodigoInsumo,
+                           detalles_insumos_mantenimientos.*  
+                    FROM detalles_insumos_mantenimientos 
+                    LEFT JOIN insumos AS Insumo ON detalles_insumos_mantenimientos.ID_Insumo = Insumo.ID
+                    WHERE ID_Mantenimiento = :ID AND Tipo_Mantenimiento = 'MantenimientoCorrectivo'";
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(':ID', $ID);
             $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function DataImagenesMC($ID) {
+            $sql = "SELECT 
+                        ID_Detalle,
+                        Categoria,
+                        Evidencia_Fotografica
+                    FROM mantenimiento_correctivo_imagenes
+                    WHERE ID_Mantenimiento = :ID
+                    ORDER BY 
+                        ID_Detalle ASC,
+                        Categoria ASC";
+
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);
+            $stmt->execute();
+
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
@@ -431,11 +781,12 @@
             return $stmt->execute();
         }
 
-        public function RegistrarMantenimientoCorrectivo($ID_Montacargas,$ID_Area,$ID_Operario,$ID_Centro, $ID_Supervisor, $HoraInicio, $Horafinal, $FechaCreado, $EstadoFirmaOperario, $EstadoFirmaSupervisor){
-            $sql = "INSERT INTO mantenimiento_correctivo(ID_Montacargas, ID_Centro, ID_Area, ID_Supervisor, ID_Operario, Hora_Inicio, Hora_Finalizacion, Fecha_Realizado,
-                                                          Firma_Operario, Firma_Supervisor, Estado_Firma_Supervisor, Estado_Firma_Operario, Fecha_Firma_Operario, Fecha_Firma_Supervisor)
-                    VALUES (:ID_Montacargas, :ID_Centro, :ID_Area, :ID_Supervisor, :ID_Operario, :HoraInicio, :Horafinal, :FechaCreado, NULL, NULL, :EstadoFirmaSupervisor, :EstadoFirmaOperario, NULL, NULL)";
+        public function RegistrarMantenimientoCorrectivo($ID_Montacargas,$ID_Area,$ID_Operario,$ID_Centro, $ID_Supervisor, $HoraInicio, $Horafinal, $FechaCreado, $EstadoFirmaOperario, $EstadoFirmaSupervisor, $NuevoCodigo){
+            $sql = "INSERT INTO mantenimiento_correctivo(Numero, ID_Montacargas, ID_Orden_Trabajo, ID_Centro, ID_Area, ID_Supervisor, ID_Operario, Hora_Inicio, Hora_Finalizacion, Fecha_Realizado,
+                                                         Firma_Operario, Firma_Supervisor, Estado_Firma_Supervisor, Estado_Firma_Operario, Fecha_Firma_Operario, Fecha_Firma_Supervisor)
+                    VALUES (:NuevoCodigo, :ID_Montacargas, NULL, :ID_Centro, :ID_Area, :ID_Supervisor, :ID_Operario, :HoraInicio, :Horafinal, :FechaCreado, NULL, NULL, :EstadoFirmaSupervisor, :EstadoFirmaOperario, NULL, NULL)";
             $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(":NuevoCodigo", $NuevoCodigo);
             $stmt->bindParam(":ID_Montacargas", $ID_Montacargas); 
             $stmt->bindParam(":ID_Area", $ID_Area);
             $stmt->bindParam(":ID_Operario", $ID_Operario);
@@ -464,15 +815,14 @@
             return $stmt->execute();
         }
 
-        public function RegistrarDetallesMantenimientoCorrectivo($ID_Montacargas, $ID_Mantenimiento, $Horometro, $Falla, $Reparacion, $Insumos, $Observaciones, $FechaCorrecion, $FallaC, $Pendiente){
-            $sql = "INSERT INTO detalles_mantenimiento_correctivo (ID_Mantenimiento, Horometro, Descripcion_Falla, Reparacion_Realizada, Insumos_Utilizados, FallaC, Fecha_Correcion, Pendiente, Observaciones)
-                    VALUES (:ID_Mantenimiento, :Horometro, :Falla, :Reparacion, :Insumos, :FallaC, :FechaCorrecion, :Pendiente, :Observaciones)";
+        public function RegistrarDetallesMantenimientoCorrectivo($ID_Montacargas, $ID_Mantenimiento, $Horometro, $Falla, $Reparacion, $Observaciones, $FechaCorrecion, $FallaC, $Pendiente){
+            $sql = "INSERT INTO detalles_mantenimiento_correctivo (ID_Mantenimiento, ID_Detalle, Horometro, Descripcion_Falla, Reparacion_Realizada, FallaC, Fecha_Correcion, Pendiente, Observaciones)
+                    VALUES (:ID_Mantenimiento, NULL, :Horometro, :Falla, :Reparacion, :FallaC, :FechaCorrecion, :Pendiente, :Observaciones)";
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(":ID_Mantenimiento", $ID_Mantenimiento);
             $stmt->bindParam(":Horometro", $Horometro);
             $stmt->bindParam(":Falla", $Falla);
             $stmt->bindParam(":Reparacion", $Reparacion);
-            $stmt->bindParam(":Insumos", $Insumos);
             $stmt->bindParam(":FallaC", $FallaC);
             $stmt->bindParam(":FechaCorrecion", $FechaCorrecion);
             $stmt->bindParam(":Pendiente", $Pendiente);
@@ -491,12 +841,23 @@
         }
 
         public function RegistrarMantenimientoCorrectivoEvidencia($ID_Mantenimiento, $Categoria, $uploadFile){
-            $sql = "INSERT INTO mantenimiento_correctivo_imagenes (ID_Mantenimiento, Categoria, Evidencia_Fotografica) 
-                    VALUES (:ID_Mantenimiento, :Categoria, :Evidencia_Fotografica)";
+            $sql = "INSERT INTO mantenimiento_correctivo_imagenes (ID_Mantenimiento, ID_Detalle, Categoria, Evidencia_Fotografica) 
+                    VALUES (:ID_Mantenimiento, NULL, :Categoria, :Evidencia_Fotografica)";
             $stmt = $this->PDO->prepare($sql);
             $stmt->bindParam(":ID_Mantenimiento", $ID_Mantenimiento);
             $stmt->bindParam(":Categoria", $Categoria);
             $stmt->bindParam(":Evidencia_Fotografica", $uploadFile);
+            return $stmt->execute();
+        }
+
+        public function RegistrarTrabajoPendiente($ID_Mantenimiento, $Descripcion,$Tipo_Trabajo, $Estado_Trabajo){
+            $sql = "INSERT INTO trabajos_overhauling (ID_Overhauling, Seccion, Criterio, Tipo, Descripcion, Tipo_Trabajo, Estado_Trabajo) 
+                    VALUES (:ID_Mantenimiento, NULL, NULL, NULL, :Descripcion, :Tipo_Trabajo, :Estado_Trabajo)";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindParam(":ID_Mantenimiento", $ID_Mantenimiento);
+            $stmt->bindParam(":Descripcion", $Descripcion);
+            $stmt->bindParam(":Tipo_Trabajo", $Tipo_Trabajo);
+            $stmt->bindParam(":Estado_Trabajo", $Estado_Trabajo);
             return $stmt->execute();
         }
 
@@ -519,6 +880,22 @@
             $stmt->execute();
             $DataMantenimiento = $stmt->fetch(PDO::FETCH_ASSOC);
             return $DataMantenimiento;
+        }
+
+        public function ObtenerUltimoCodigoMantenimientoCorrectivo() {
+            $sql = "SELECT Numero FROM mantenimiento_correctivo ORDER BY ID DESC LIMIT 1";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result ? $result['Numero'] : null;
+        }
+
+        public function ObtenerUltimoCodigoMantenimientoPreventivo() {
+            $sql = "SELECT Numero FROM mantenimiento_preventivo ORDER BY ID DESC LIMIT 1";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result ? $result['Numero'] : null;
         }
 
         public function FirmarMantenimiento($ID_Mantenimiento, $ID_Mecanico, $Firma, $FechaFirma, $EstadoFirmaMecanico){

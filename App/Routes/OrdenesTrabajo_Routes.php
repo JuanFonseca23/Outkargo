@@ -11,6 +11,7 @@
         'OrdenesTrabajo/ObtenerTrabajos' => 'Views/Templates/OrdenesTrabajo/Busquedas/ObtenerTrabajos.php',
         'OrdenesTrabajo/AutorizarOrden' => 'Views/Templates/OrdenesTrabajo/AutorizarOrden.php',
         'OrdenesTrabajo/RealizarOrden' => 'Views/Templates/OrdenesTrabajo/RealizarOrden.php',
+        'OrdenesTrabajo/TraerMantenimientosC' => 'Views/Templates/OrdenesTrabajo/Busquedas/TraerMantenimientosC.php',
         'OrdenesTrabajo/TraerSolicitudes' => 'Views/Templates/OrdenesTrabajo/Busquedas/TraerSolcitudes.php',
         'OrdenesTrabajo/TraerOverhauling' => 'Views/Templates/OrdenesCompra/TraerOverhauling.php',
         'OrdenesTrabajo/VerOrden' => 'Views/Templates/OrdenesTrabajo/VerOrden.php',
