@@ -7,6 +7,10 @@ $DataMecanicos = $MantenimientosController->VerMecanicos($_GET['ID']);
 $DataDetalleM = $MantenimientosController->VerDetalleM($_GET['ID']);
 $observaciones = json_decode($DataDetalleM['Observaciones'], true);
 $novedades = $MantenimientosController->ObtenerNovedadesMantenimiento($_GET['ID'], $Tipo);
+$observaciones = json_decode($DataDetalleM['Observaciones'] ?? '[]', true);
+if (!is_array($observaciones)) {
+    $observaciones = [];
+}
 $Insumos = $MantenimientosController->ObtenerInsumosMantenimiento($_GET['ID'], $Tipo);
 $DataImagenesM = $MantenimientosController->VerImagenesM($_GET['ID']);
 $imagenesPorCategoria = [];
@@ -122,7 +126,9 @@ if ($DataMantenimiento['ID_Recibe'] === Null){
                 <th>Código:</th>
                 <td style="color: red; font-weight: bold; text-align: center;"><?= $DataMantenimiento['Numero'] ?></td>
                 <th>Fecha:</th>
-                <td><?= date('d/m/Y', strtotime($DataMantenimiento['Fecha_Realizado'])) ?></td>
+                <td>
+                    <?= date('d/m/Y', strtotime($DataMantenimiento['Fecha_Realizado'])) ?>
+                </td>
             </tr>  
             <tr>
                 <th>Montacargas N°:</th>
@@ -146,7 +152,7 @@ if ($DataMantenimiento['ID_Recibe'] === Null){
             </tr>       
             <tr>
                 <th>Operario ó Supervisor (Quien Reporta):</th>
-                <td colspan="3"><?= $NombreOperario?></td>
+                <td colspan="3"><?= $NombreOperario ?></td>
                 <th>Tecnico(s) Encargado(s):</th>
                 <td colspan="3"><?php
                     if ($DataMecanicos) {
@@ -543,27 +549,36 @@ if ($DataMantenimiento['ID_Recibe'] === Null){
                 <th style="font-size: 12px; width: 50%;">OBSERVACIONES</th>
             </tr>
         </thead>
-
+    
         <tbody>
             <?php
-            // Obtener la cantidad mayor entre novedades y observaciones
             $totalFilas = max(count($novedades), count($observaciones));
-
+    
             for ($i = 0; $i < $totalFilas; $i++):
             ?>
                 <tr>
-                    <!-- NOVEDAD -->
                     <td style="padding: 5px; vertical-align: top;">
-                        <?php if (isset($novedades[$i])): ?>
-                            <?= htmlspecialchars($novedades[$i]['Descripcion']) ?>
-                        <?php endif; ?>
+                        <?php
+                        if (isset($novedades[$i]['Descripcion'])) {
+                            echo htmlspecialchars(
+                                $novedades[$i]['Descripcion'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            );
+                        }
+                        ?>
                     </td>
-
-                    <!-- OBSERVACIÓN -->
+    
                     <td style="padding: 5px; vertical-align: top;">
-                        <?php if (isset($observaciones[$i])): ?>
-                            <?= htmlspecialchars($observaciones[$i]['observacion']) ?>
-                        <?php endif; ?>
+                        <?php
+                        if (isset($observaciones[$i]['observacion'])) {
+                            echo htmlspecialchars(
+                                $observaciones[$i]['observacion'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            );
+                        }
+                        ?>
                     </td>
                 </tr>
             <?php endfor; ?>

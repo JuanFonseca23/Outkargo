@@ -7,6 +7,10 @@ $DataMecanicos = $MantenimientosController->VerMecanicos($_GET['ID']);
 $DataDetalleM = $MantenimientosController->VerDetalleM($_GET['ID']);
 $observaciones = json_decode($DataDetalleM['Observaciones'], true);
 $novedades = $MantenimientosController->ObtenerNovedadesMantenimiento($_GET['ID'], $Tipo);
+$observaciones = json_decode($DataDetalleM['Observaciones'] ?? '[]', true);
+if (!is_array($observaciones)) {
+    $observaciones = [];
+}
 $Insumos = $MantenimientosController->ObtenerInsumosMantenimiento($_GET['ID'], $Tipo);
 $DataImagenesM = $MantenimientosController->VerImagenesM($_GET['ID']);
 $imagenesPorCategoria = [];
@@ -472,8 +476,7 @@ if ($DataMantenimiento['ID_Recibe'] === Null){
             <tr>
                 <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">SISTEMA DE COMBUSTIÓN</td>
                 <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">REVISION DE EQUIPO</td>
-                <td colspan="2"></td>
-                <td ></td>
+                <td colspan="3" style="background-color: #e6e6e6; font-weight: bold; text-align:center;">ESTADO DE PINTURA</td>
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Cambio de filtro de aire</td>
@@ -549,7 +552,7 @@ if ($DataMantenimiento['ID_Recibe'] === Null){
         </tbody>
     </table>
 
-   <!-- Tabla de observaciones y novedades -->
+    <!-- Tabla de observaciones y novedades -->
     <table border="1">
         <thead style="background-color: #e7e5e5ff;">
             <tr>
@@ -557,27 +560,35 @@ if ($DataMantenimiento['ID_Recibe'] === Null){
                 <th style="font-size: 12px; width: 50%;">OBSERVACIONES</th>
             </tr>
         </thead>
-
         <tbody>
             <?php
-            // Obtener la cantidad mayor entre novedades y observaciones
             $totalFilas = max(count($novedades), count($observaciones));
-
+    
             for ($i = 0; $i < $totalFilas; $i++):
             ?>
                 <tr>
-                    <!-- NOVEDAD -->
                     <td style="padding: 5px; vertical-align: top;">
-                        <?php if (isset($novedades[$i])): ?>
-                            <?= htmlspecialchars($novedades[$i]['Descripcion']) ?>
-                        <?php endif; ?>
+                        <?php
+                        if (isset($novedades[$i]['Descripcion'])) {
+                            echo htmlspecialchars(
+                                $novedades[$i]['Descripcion'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            );
+                        }
+                        ?>
                     </td>
-
-                    <!-- OBSERVACIÓN -->
+    
                     <td style="padding: 5px; vertical-align: top;">
-                        <?php if (isset($observaciones[$i])): ?>
-                            <?= htmlspecialchars($observaciones[$i]['observacion']) ?>
-                        <?php endif; ?>
+                        <?php
+                        if (isset($observaciones[$i]['observacion'])) {
+                            echo htmlspecialchars(
+                                $observaciones[$i]['observacion'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            );
+                        }
+                        ?>
                     </td>
                 </tr>
             <?php endfor; ?>

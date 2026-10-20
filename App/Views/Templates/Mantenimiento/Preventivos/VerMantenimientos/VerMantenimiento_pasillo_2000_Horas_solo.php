@@ -5,8 +5,11 @@ $Tipo = "Preventivo";
 $DataMantenimiento = $MantenimientosController->VerMantenimiento($_GET['ID']);
 $DataMecanicos = $MantenimientosController->VerMecanicos($_GET['ID']);
 $DataDetalleM = $MantenimientosController->VerDetalleM($_GET['ID']);
-$observaciones = json_decode($DataDetalleM['Observaciones'], true);
 $novedades = $MantenimientosController->ObtenerNovedadesMantenimiento($_GET['ID'], $Tipo);
+$observaciones = json_decode($DataDetalleM['Observaciones'] ?? '[]', true);
+if (!is_array($observaciones)) {
+    $observaciones = [];
+}
 $Insumos = $MantenimientosController->ObtenerInsumosMantenimiento($_GET['ID'], $Tipo);
 $DataImagenesM = $MantenimientosController->VerImagenesM($_GET['ID']);
 $imagenesPorCategoria = [];
@@ -657,7 +660,7 @@ if ($DataMantenimiento['ID_Recibe'] === Null){
             <?php endfor; ?>
         </tbody>
     </table>
-
+    
     <!-- Tabla de insumos -->
     <table border="1">
         <thead style="background-color: #e7e5e5ff;">

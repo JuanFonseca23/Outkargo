@@ -5,8 +5,11 @@
     $DataMantenimiento = $MantenimientosController->VerMantenimiento($_GET['ID']);
     $DataMecanicos = $MantenimientosController->VerMecanicos($_GET['ID']);
     $DataDetalleM = $MantenimientosController->VerDetalleM($_GET['ID']);
-    $observaciones = json_decode($DataDetalleM['Observaciones'], true);
     $novedades = $MantenimientosController->ObtenerNovedadesMantenimiento($_GET['ID'], $Tipo);
+    $observaciones = json_decode($DataDetalleM['Observaciones'] ?? '[]', true);
+    if (!is_array($observaciones)) {
+        $observaciones = [];
+    }
     $Insumos = $MantenimientosController->ObtenerInsumosMantenimiento($_GET['ID'], $Tipo);
     $DataImagenesM = $MantenimientosController->VerImagenesM($_GET['ID']);
     $imagenesPorCategoria = [];
@@ -116,10 +119,12 @@
             <tr>
                 <th>Centro de trabajo:</th>
                 <td colspan="3"><?= $DataMantenimiento['CentroMantenimiento'] ?></td>
-                <th>Sección:</th>
-                <td><?= $DataMantenimiento['AreaMantenimiento'] ?></td>         
+                <th>Código:</th>
+                <td style="color: red; font-weight: bold; text-align: center;"><?= $DataMantenimiento['Numero'] ?></td>
                 <th>Fecha:</th>
-                <td><?= date('d/m/Y', strtotime($DataMantenimiento['Fecha_Realizado'])) ?></td>
+                <td>
+                    <?= date('d/m/Y', strtotime($DataMantenimiento['Fecha_Realizado'])) ?>
+                </td>
             </tr>  
             <tr>
                 <th>Montacargas N°:</th>
@@ -132,8 +137,20 @@
                 <td><?= $DataMantenimiento['VoltajeM'] ?></td>
             </tr>
             <tr>
+                <th>Sección:</th>
+                <td><?= $DataMantenimiento['AreaMantenimiento'] ?></td>    
+                <th>Horometro:</th>
+                <td><?= $DataMantenimiento['HorometroM'] ?></td>
+                <th>Hora Inicio:</th>
+                <td><?= $DataMantenimiento['Hora_Inicio'] ?></td>
+                <th>Hora de Finalización:</th>
+                <td><?= $DataMantenimiento['Hora_Finalizacion'] ?></td>
+            </tr>       
+            <tr>
+                <th>Operario ó Supervisor (Quien Reporta):</th>
+                <td colspan="3"><?= $NombreOperario ?></td>
                 <th>Tecnico(s) Encargado(s):</th>
-                <td colspan="5"><?php
+                <td colspan="3"><?php
                     if ($DataMecanicos) {
                         echo '<ul style="list-style-type:none; margin:0; padding:0;">';
                         foreach ($DataMecanicos as $mecanico) {
@@ -143,19 +160,8 @@
                     } else {
                         echo 'No hay técnicos asignados';
                     }
-
                 ?></td>
-                <th>Hora Inicio:</th>
-                <td><?= $DataMantenimiento['Hora_Inicio'] ?></td>
-            </tr>
-            <tr>
-                <th>Operario:</th>
-                <td colspan="3"><?= $NombreOperario ?></td>
-                <th>Horometro:</th>
-                <td><?= $DataMantenimiento['HorometroM'] ?></td>
-                <th>Hora de Finalización:</th>
-                <td><?= $DataMantenimiento['Hora_Finalizacion'] ?></td>
-            </tr>          
+            </tr>   
         </thead>
     </table>
 

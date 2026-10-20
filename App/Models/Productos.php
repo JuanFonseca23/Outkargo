@@ -1412,6 +1412,199 @@
             $stmt->bindParam(':Observaciones', $Observaciones);
             return $stmt->execute();
         }
+
+        /**
+         * Busca una salida ya creada para evitar repetir el descuento si el
+         * usuario vuelve a enviar las firmas después de un reintento.
+         */
+        public function ObtenerSalidaMantenimiento($ID_Mantenimiento, $Mantenimiento){
+            $sql = "SELECT ID FROM salida_insumos
+                    WHERE ID_Origen = :ID_Mantenimiento AND Tipo_Origen = :Tipo_Origen
+                    ORDER BY ID DESC LIMIT 1";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->execute([
+                ':ID_Mantenimiento' => $ID_Mantenimiento,
+                ':Tipo_Origen' => $Mantenimiento,
+            ]);
+            $idSalida = $stmt->fetchColumn();
+            return $idSalida ? (int)$idSalida : null;
+        }
+
+        /**
+         * Crea la salida de mantenimiento y descuenta el inventario en una
+         * única transacción para evitar salidas o descuentos parciales.
+         */
+        public function CrearSalidaMantenimientoAtomica($ID_UsuarioSalida, $ID_Usuario, $ID_SupervisorSalida, $ID_Centro, $ID_Mantenimiento, $No_Formulario, $Mantenimiento, $Fecha_Recibe, $Estado, $FirmaSalida, $Firma_Estado_Salida, $EstadoFirmaMecanico, $Insumos){
+            if (!is_array($Insumos) || count($Insumos) === 0 || (int)$ID_Centro <= 0) {
+                return false;
+            }
+
+            $conversiones = ["1/4" => 0.25, "1/2" => 0.5, "3/4" => 0.75];
+            $cantidadesSolicitadas = [];
+            foreach ($Insumos as $insumo) {
+                $idInsumo = (int)($insumo['id'] ?? 0);
+                $cantidad = $insumo['cantidad'] ?? null;
+                $medida = trim((string)($insumo['medida'] ?? ''));
+                if ($idInsumo <= 0 || !is_numeric($cantidad) || (float)$cantidad <= 0 || $medida === '') {
+                    return false;
+                }
+
+                $cantidadTotal = (float)$cantidad * ($conversiones[$medida] ?? 1);
+                $cantidadesSolicitadas[$idInsumo] = ($cantidadesSolicitadas[$idInsumo] ?? 0) + $cantidadTotal;
+            }
+
+            $idsInsumos = array_keys($cantidadesSolicitadas);
+            sort($idsInsumos, SORT_NUMERIC);
+
+            try {
+                $this->PDO->beginTransaction();
+
+                $placeholders = implode(',', array_fill(0, count($idsInsumos), '?'));
+                $sqlInventario = "SELECT ID, ID_Insumo, Cantidad, N_Factura, N_Lote, valor_unitario
+                                  FROM detalle_inventario_insumos
+                                  WHERE ID_Centro = ? AND ID_Insumo IN ($placeholders) AND Cantidad > 0
+                                  ORDER BY ID_Insumo, Fecha_Ingreso ASC, ID ASC
+                                  FOR UPDATE";
+                $stmtInventario = $this->PDO->prepare($sqlInventario);
+                $stmtInventario->execute(array_merge([(int)$ID_Centro], $idsInsumos));
+                $lotes = $stmtInventario->fetchAll(PDO::FETCH_ASSOC);
+
+                $lotesPorInsumo = [];
+                foreach ($lotes as $lote) {
+                    $lote['CantidadDisponible'] = (float)$lote['Cantidad'];
+                    $lotesPorInsumo[(int)$lote['ID_Insumo']][] = $lote;
+                }
+
+                $asignaciones = [];
+                foreach ($cantidadesSolicitadas as $idInsumo => $cantidadSolicitada) {
+                    $pendiente = $cantidadSolicitada;
+                    foreach ($lotesPorInsumo[$idInsumo] ?? [] as $indice => $lote) {
+                        if ($pendiente <= 0.000001) {
+                            break;
+                        }
+                        $usar = min($lote['CantidadDisponible'], $pendiente);
+                        if ($usar <= 0) {
+                            continue;
+                        }
+                        $asignaciones[] = [
+                            'lote' => $lote,
+                            'idInsumo' => $idInsumo,
+                            'cantidad' => $usar,
+                        ];
+                        $lotesPorInsumo[$idInsumo][$indice]['CantidadDisponible'] -= $usar;
+                        $pendiente -= $usar;
+                    }
+                    if ($pendiente > 0.000001) {
+                        throw new RuntimeException('Stock insuficiente para el insumo ' . $idInsumo);
+                    }
+                }
+
+                $sqlSalida = "INSERT INTO salida_insumos
+                    (ID_Usuario, ID_Recibe, ID_Supervisor, ID_Centro, ID_Destino, ID_Origen, Numero, Tipo_Origen, Fecha_Realizado, Fecha_Firma_Recibe, Fecha_Firma_Supervisor, Estado, Firma_Salida, Firma_Recibe, Firma_Supervisor, Firma_Estado_Salida, Firma_Estado_Recibe, Firma_Supervisor_Estado, Descripcion_Anulacion)
+                    VALUES (:ID_Usuario, :ID_Recibe, :ID_Supervisor, :ID_Centro, :ID_Destino, :ID_Origen, :Numero, :Tipo_Origen, :Fecha_Realizado, :Fecha_Recibe, NULL, :Estado, NULL, :Firma, NULL, :Firma_Estado_Salida, :Firma_Estado_Recibe, :Firma_Estado_Supervisor, NULL)";
+                $stmtSalida = $this->PDO->prepare($sqlSalida);
+                if (!$stmtSalida->execute([
+                    ':ID_Usuario' => $ID_UsuarioSalida,
+                    ':ID_Recibe' => $ID_Usuario,
+                    ':ID_Supervisor' => $ID_SupervisorSalida,
+                    ':ID_Centro' => $ID_Centro,
+                    ':ID_Destino' => $ID_Centro,
+                    ':ID_Origen' => $ID_Mantenimiento,
+                    ':Numero' => $No_Formulario,
+                    ':Tipo_Origen' => $Mantenimiento,
+                    ':Fecha_Realizado' => $Fecha_Recibe,
+                    ':Fecha_Recibe' => $Fecha_Recibe,
+                    ':Estado' => $Estado,
+                    ':Firma' => $FirmaSalida,
+                    ':Firma_Estado_Salida' => $Firma_Estado_Salida,
+                    ':Firma_Estado_Recibe' => $EstadoFirmaMecanico,
+                    ':Firma_Estado_Supervisor' => $Firma_Estado_Salida,
+                ])) {
+                    throw new RuntimeException('No se pudo crear la salida de mantenimiento.');
+                }
+                $idSalida = (int)$this->PDO->lastInsertId();
+
+                $stmtDescontar = $this->PDO->prepare("UPDATE detalle_inventario_insumos
+                    SET Cantidad = Cantidad - :Cantidad
+                    WHERE ID = :ID AND ID_Centro = :ID_Centro AND Cantidad >= :Cantidad");
+                $stmtDetalle = $this->PDO->prepare("INSERT INTO detalles_salida_insumos
+                    (ID_Usuario, ID_Salida, ID_Producto, Cantidad, N_Factura, Lote, valor_unitario, valor_total, Observaciones, ID_Producto_Seleccionado)
+                    VALUES (:ID_Usuario, :ID_Salida, :ID_Producto, :Cantidad, :N_Factura, :Lote, :valor_unitario, :valor_total, :Observaciones, 0)");
+                $observaciones = 'Insumo utilizado en ' . $Mantenimiento;
+
+                foreach ($asignaciones as $asignacion) {
+                    $lote = $asignacion['lote'];
+                    $cantidadUsar = $asignacion['cantidad'];
+                    $stmtDescontar->execute([
+                        ':Cantidad' => $cantidadUsar,
+                        ':ID' => $lote['ID'],
+                        ':ID_Centro' => $ID_Centro,
+                    ]);
+                    if ($stmtDescontar->rowCount() !== 1) {
+                        throw new RuntimeException('No se pudo descontar un lote de inventario.');
+                    }
+
+                    if (!$stmtDetalle->execute([
+                        ':ID_Usuario' => $ID_Usuario,
+                        ':ID_Salida' => $idSalida,
+                        ':ID_Producto' => $asignacion['idInsumo'],
+                        ':Cantidad' => $cantidadUsar,
+                        ':N_Factura' => $lote['N_Factura'],
+                        ':Lote' => $lote['N_Lote'],
+                        ':valor_unitario' => $lote['valor_unitario'],
+                        ':valor_total' => $cantidadUsar * (float)$lote['valor_unitario'],
+                        ':Observaciones' => $observaciones,
+                    ])) {
+                        throw new RuntimeException('No se pudo guardar un detalle de salida.');
+                    }
+                }
+
+                // Registrar los repuestos retirados como dañados únicamente
+                // después de confirmar que la salida de insumos pudo completarse.
+                $tipoRepuesto = stripos($Mantenimiento, 'Preventivo') !== false ? 'Preventivo' : 'Correctivo';
+                $stmtRepuestos = $this->PDO->prepare("SELECT ID_Insumo, ID_Montacargas, Cantidad, Medida, Descripcion
+                    FROM detalles_repuestos_mantenimientos
+                    WHERE ID_Mantenimiento = :ID_Mantenimiento AND Tipo_Mantenimiento = :Tipo_Mantenimiento
+                    ORDER BY ID ASC");
+                $stmtRepuestos->execute([
+                    ':ID_Mantenimiento' => $ID_Mantenimiento,
+                    ':Tipo_Mantenimiento' => $tipoRepuesto,
+                ]);
+                $repuestosRetirados = $stmtRepuestos->fetchAll(PDO::FETCH_ASSOC);
+                if ($repuestosRetirados) {
+                    $stmtDaniado = $this->PDO->prepare("INSERT INTO `detalles_inventario_repuestos_dañados`
+                        (ID_Insumo, ID_Montacargas, ID_Centro, Cantidad, Descripcion, Estado, Fecha_Ingreso)
+                        VALUES (:ID_Insumo, :ID_Montacargas, :ID_Centro, :Cantidad, :Descripcion, :Estado, :Fecha_Ingreso)");
+                    foreach ($repuestosRetirados as $repuesto) {
+                        $cantidadRepuesto = $repuesto['Cantidad'];
+                        if (!is_numeric($cantidadRepuesto) || (float)$cantidadRepuesto <= 0) {
+                            throw new RuntimeException('La cantidad de un repuesto retirado no es válida.');
+                        }
+                        $cantidadDaniada = (float)$cantidadRepuesto * ($conversiones[$repuesto['Medida']] ?? 1);
+                        if (!$stmtDaniado->execute([
+                            ':ID_Insumo' => (int)$repuesto['ID_Insumo'],
+                            ':ID_Montacargas' => $repuesto['ID_Montacargas'] !== null ? (int)$repuesto['ID_Montacargas'] : null,
+                            ':ID_Centro' => (int)$ID_Centro,
+                            ':Cantidad' => $cantidadDaniada,
+                            ':Descripcion' => $repuesto['Descripcion'],
+                            ':Estado' => 'Dañado',
+                            ':Fecha_Ingreso' => date('Y-m-d'),
+                        ])) {
+                            throw new RuntimeException('No se pudo registrar un repuesto retirado.');
+                        }
+                    }
+                }
+
+                $this->PDO->commit();
+                return $idSalida;
+            } catch (Throwable $error) {
+                if ($this->PDO->inTransaction()) {
+                    $this->PDO->rollBack();
+                }
+                error_log('Error en salida atómica de mantenimiento ' . $ID_Mantenimiento . ': ' . $error->getMessage());
+                return false;
+            }
+        }
         
         public function RestarTrasladoTemp($ID_Producto, $ID_Usuario, $ID) {
             // Actualizar la cantidad y el valor total

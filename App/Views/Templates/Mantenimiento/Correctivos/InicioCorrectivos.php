@@ -1,24 +1,5 @@
 <?php
 require_once "App/Views/Templates/Layouts/Header.php";
-include_once "App/Controllers/CentroDeTrabajoController.php";
-include_once "App/Controllers/MantenimientosController.php";
-
-$CentrosDeTrabajo = new CentroDeTrabajoController;
-$MantenimientosController = new MantenimientosController();
-$ListaCentrosDeTrabajo  = $CentrosDeTrabajo->TraerCentrosDeTrabajo();
-
-date_default_timezone_set('America/Bogota');
-$horaFormateada = date("H:i");
-$DataSupervisores = $MantenimientosController->TraerSupervisores();
-
-if ($_SERVER['HTTP_HOST'] == 'localhost') {
-    $baseUrl = 'http://localhost/OUTKARGO/';
-} else {
-    $baseUrl = 'https://outkargo.com.co/';
-}
-$Mantenimientos = $MantenimientosController->LeerMantenimientosCorrectivos();
-$NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos();
-
 ?>
 
 <link rel="stylesheet" href="<?= $baseUrl ?>App/Views/Css/Mantenimientos/Preventivos.css">
@@ -34,7 +15,6 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
 <!-- STAT CARDS -->
 <div class="container-fluid pt-3 pt-md-4 px-2 px-md-4">
     <div class="row g-2 g-md-3">
-
         <div class="col-6 col-xl-3">
             <div class="stat-card">
                 <div class="stat-icon bg-dark-soft">
@@ -48,7 +28,6 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
                 </div>
             </div>
         </div>
-
         <div class="col-6 col-xl-3">
             <div class="stat-card clickable" id="btnCorrectivo" role="button" tabindex="0">
                 <div class="stat-icon bg-orange-soft">
@@ -63,7 +42,6 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
                 </div>
             </div>
         </div>
-
         <div class="col-6 col-xl-3">
             <div class="stat-card clickable" id="btnAbrirBuscarMantenimiento" role="button" tabindex="0" style="cursor:pointer;">
                 <div class="stat-icon bg-dark-soft">
@@ -79,7 +57,6 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
                 </div>
             </div>
         </div>
-
         <div class="col-6 col-xl-3">
             <a href="#" class="stat-card clickable" id="btnAbrirInformesMantenimiento" role="button" tabindex="0" style="cursor:pointer;">
                 <div class="stat-icon bg-orange-soft">
@@ -97,8 +74,8 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
 </div>
 
 <!-- TABLA -->
-<div class="container-fluid pt-4 px-4">
-    <div class="bg-light rounded p-4">
+<div class="container-fluid pt-4 px-2 px-md-4 mantenimiento-listado">
+    <div class="mantenimiento-list-card rounded p-3 p-md-4">
         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-4">
             <div class="d-flex align-items-center flex-wrap gap-2">
                 <h6 class="mb-0">Correctivos Realizados</h6>
@@ -212,11 +189,23 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
 
                     <div class="section-divider"><span>Equipo</span></div>
 
-                    <div class="mb-3">
-                        <label class="form-label-sm">Montacargas</label>
-                        <select class="form-select" name="ID_Montacargas" id="ID_Montacargas" required>
-                            <option value="" disabled selected>Seleccione montacargas</option>
-                        </select>
+                    <div class="row g-2 mb-3">
+                        <div class="col-12 col-sm-6">
+                            <label class="form-label-sm">Montacargas</label>
+                            <select class="form-select" name="ID_Montacargas" id="ID_Montacargas" required>
+                                <option value="" disabled selected>Seleccione montacargas</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label class="form-label-sm">Clase de Montacargas</label>
+                            <select class="form-select" id="tipoMontacargas" name="tipoMontacargas" required>
+                                <option value="" disabled selected>Seleccione</option>
+                                <option value="combustion">Combustión</option>
+                                <option value="contrabalanceada">Eléctrico Contrabalanceada</option>
+                                <option value="pasillo">Pasillo Angosto</option>
+                                <option value="manlift">Manlift</option>
+                            </select>
+                        </div>
                     </div>
 
                     <input type="hidden" name="Tipo" value="DocumentoCorrectivo">
@@ -236,10 +225,10 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
 <div class="modal fade" id="agregarMantenimiento" tabindex="-1" aria-labelledby="agregarMantenimientoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable" style="max-width:min(1200px, calc(100vw - .5rem)); margin:.25rem auto;">
         <div class="modal-content border-0 shadow">
-
             <div class="modal-header modal-header-custom">
                 <div style="min-width:0;">
                     <h5 class="modal-title mb-0" id="agregarMantenimientoModalLabel">Mantenimiento Correctivo</h5>
+                    <small class="text-white-50" id="subtituloModal" style="font-size:.72rem;">—</small>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-md-3 flex-shrink-0">
                     <span id="estadoGuardado" class="text-white-50 d-none d-sm-inline" style="font-size:.7rem;">
@@ -248,7 +237,6 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
             </div>
-
             <!-- Toggle info equipo (solo mobile) -->
             <button class="panel-info-toggle" id="toggleInfoEquipo">
                 <span>📋 Ver información del equipo</span>
@@ -257,7 +245,6 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
 
             <div class="modal-body p-0">
                 <div class="modal-body-inner">
-
                     <!-- PANEL IZQUIERDO -->
                     <div class="panel-izquierdo col-md-3 col-lg-3">
                         <div class="panel-izquierdo-body" id="panelInfoBody">
@@ -384,312 +371,103 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
 
                         </div>
                     </div>
-
-                    <!-- PANEL DERECHO: Criterios -->
                     <!-- PANEL DERECHO -->
-<div class="col-md-9 col-lg-9 panel-derecho p-3 p-md-4">
+                    <div class="col-md-9 col-lg-9 panel-derecho p-3 p-md-4">
+                        <!-- TABLA DESCRIPCIÓN FALLA -->
+                        <div class="section-divider d-flex justify-content-between align-items-center">
+                            <span>Descripción Falla</span>
+                            <button type="button" class="btn btn-sm btn-primary-custom" id="btnAgregarFalla" style="width:32px; height:32px; padding:0; border-radius:8px; font-size:1.2rem; line-height:1;" title="Agregar falla">+</button>
+                        </div>
 
-    <!-- =====================================================
-         TABLA DESCRIPCIÓN FALLA
-         ===================================================== -->
+                        <div class="table-responsive mb-4">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr style="background:var(--color-dark); color:#fff;">
+                                        <th style="font-size:.75rem; padding:.65rem .75rem; border:none; width:120px;">Código</th>
+                                        <th style="font-size:.75rem; padding:.65rem .75rem; border:none; width:120px;">Sección</th>
+                                        <th style="font-size:.75rem; padding:.65rem .75rem; border:none;">Descripción</th>
+                                        <th style="font-size:.75rem; padding:.65rem .75rem; border:none; width:90px; text-align:center;">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bodyFallos">
+                                    <tr id="filaVaciaFallos">
+                                        <td colspan="4" class="text-center text-muted py-4" style="font-size:.82rem;">No hay fallas registradas.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-    <div class="section-divider d-flex justify-content-between align-items-center">
-        <span>Descripción Falla</span>
+                        <!--TABLA DESCRIPCIÓN CORRECCIÓN -->
+                        <div class="section-divider">
+                            <span>Descripción Corrección</span>
+                        </div>
+                        <div class="table-responsive mb-4">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr style="background:var(--color-dark); color:#fff;">
+                                        <th style="font-size:.75rem; padding:.65rem .75rem; border:none; width:120px;">Código</th>
+                                        <th style="font-size:.75rem; padding:.65rem .75rem; border:none; width:120px;" >Sección</th>
+                                        <th style="font-size:.75rem; padding:.65rem .75rem; border:none;">Descripción</th>
+                                        <th style="font-size:.75rem; padding:.65rem .75rem; border:none; width:90px; text-align:center;">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bodyCorrecciones">
+                                    <tr id="filaVaciaCorrecciones">
+                                        <td colspan="4" class="text-center text-muted py-4" style="font-size:.82rem;">No hay correcciones registradas. </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- TARJETAS ESPECIALES -->
+                        <div class="row g-2 g-md-3 mt-1" id="tarjetasEspeciales" style="display:none;">
+                            <!-- Novedades -->
+                            <div class="col-12 col-sm-6 col-xl-4">
+                                <div class="seccion-card" onclick="abrirNovedades()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){abrirNovedades()}">
+                                    <div class="seccion-card-icon" style="background:#fff3cd;">📋</div>
+                                    <div class="seccion-card-body">
+                                        <div class="seccion-card-title" id="titleNovedades">Novedades Pendientes</div>
+                                        <div class="seccion-card-sub" id="subNovedades">0 novedades registradas</div>
+                                    </div>
+                                    <span class="seccion-card-arrow">›</span>
+                                </div>
+                            </div>
 
-        <button
-            type="button"
-            class="btn btn-sm btn-primary-custom"
-            id="btnAgregarFalla"
-            style="
-                width:32px;
-                height:32px;
-                padding:0;
-                border-radius:8px;
-                font-size:1.2rem;
-                line-height:1;
-            "
-            title="Agregar falla">
+                            <!-- Observaciones -->
+                            <div class="col-12 col-sm-6 col-xl-4">
+                                <div class="seccion-card" onclick="abrirObservaciones()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){abrirObservaciones()}">
+                                    <div class="seccion-card-icon" style="background:#cfe2ff;">🔍</div>
+                                    <div class="seccion-card-body">
+                                        <div class="seccion-card-title"  id="titleObservaciones">Observaciones</div>
+                                        <div class="seccion-card-sub" id="subObservaciones">0 observaciones generadas</div>
+                                    </div>
+                                    <span class="seccion-card-arrow">›</span>
+                                </div>
+                            </div>
 
-            +
-        </button>
-    </div>
-
-
-    <div class="table-responsive mb-4">
-
-        <table class="table table-hover align-middle mb-0">
-
-            <thead>
-                <tr style="
-                    background:var(--color-dark);
-                    color:#fff;
-                ">
-
-                    <th style="
-                        font-size:.75rem;
-                        padding:.65rem .75rem;
-                        border:none;
-                        width:120px;
-                    ">
-                        Código
-                    </th>
-
-                    <th style="
-                        font-size:.75rem;
-                        padding:.65rem .75rem;
-                        border:none;
-                    ">
-                        Descripción
-                    </th>
-
-                    <th style="
-                        font-size:.75rem;
-                        padding:.65rem .75rem;
-                        border:none;
-                        width:90px;
-                        text-align:center;
-                    ">
-                        Vista
-                    </th>
-
-                </tr>
-            </thead>
-
-            <tbody id="bodyFallos">
-
-                <tr id="filaVaciaFallos">
-
-                    <td
-                        colspan="3"
-                        class="text-center text-muted py-4"
-                        style="font-size:.82rem;">
-
-                        No hay fallas registradas.
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-
-    <!-- =====================================================
-         TABLA DESCRIPCIÓN CORRECCIÓN
-         ===================================================== -->
-
-    <div class="section-divider">
-
-        <span>Descripción Corrección</span>
-
-    </div>
-
-
-    <div class="table-responsive mb-4">
-
-        <table class="table table-hover align-middle mb-0">
-
-            <thead>
-                <tr style="
-                    background:var(--color-dark);
-                    color:#fff;
-                ">
-
-                    <th style="
-                        font-size:.75rem;
-                        padding:.65rem .75rem;
-                        border:none;
-                        width:120px;
-                    ">
-                        Código
-                    </th>
-
-                    <th style="
-                        font-size:.75rem;
-                        padding:.65rem .75rem;
-                        border:none;
-                    ">
-                        Descripción
-                    </th>
-
-                    <th style="
-                        font-size:.75rem;
-                        padding:.65rem .75rem;
-                        border:none;
-                        width:90px;
-                        text-align:center;
-                    ">
-                        Vista
-                    </th>
-
-                </tr>
-            </thead>
-
-            <tbody id="bodyCorrecciones">
-
-                <tr id="filaVaciaCorrecciones">
-
-                    <td
-                        colspan="3"
-                        class="text-center text-muted py-4"
-                        style="font-size:.82rem;">
-
-                        No hay correcciones registradas.
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-
-    <!-- =====================================================
-         TARJETAS ESPECIALES
-         ===================================================== -->
-
-    <div
-        class="row g-2 g-md-3 mt-1"
-        id="tarjetasEspeciales"
-        style="display:none;">
-
-        <!-- Novedades -->
-        <div class="col-12 col-sm-6 col-xl-4">
-
-            <div
-                class="seccion-card"
-                onclick="abrirNovedades()"
-                role="button"
-                tabindex="0"
-                onkeydown="if(event.key==='Enter'||event.key===' '){abrirNovedades()}">
-
-                <div
-                    class="seccion-card-icon"
-                    style="background:#fff3cd;">
-                    📋
-                </div>
-
-                <div class="seccion-card-body">
-
-                    <div
-                        class="seccion-card-title"
-                        id="titleNovedades">
-
-                        Novedades Pendientes
-
+                            <!-- Insumos -->
+                            <div class="col-12 col-sm-6 col-xl-4">
+                                <div class="seccion-card" onclick="abrirInsumos()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){abrirInsumos()}">
+                                    <div class="seccion-card-icon" style="background:#f7debc;">🛢</div>
+                                    <div class="seccion-card-body">
+                                        <div class="seccion-card-title" id="titleInsumos">Insumos y Repuestos</div>
+                                        <div class="seccion-card-sub" id="subInsumos">0 insumos utilizados</div>
+                                    </div>
+                                    <span class="seccion-card-arrow">›</span>
+                                </div>
+                            </div>
+                            <!-- Repuestos Retirados -->
+                            <div class="col-12 col-sm-6 col-xl-4">
+                                <div class="seccion-card" onclick="abrirRepuestos()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){abrirRepuestos()}">
+                                    <div class="seccion-card-icon" style="background:#f7debc;">🛢</div>
+                                    <div class="seccion-card-body">
+                                        <div class="seccion-card-title" id="titleRepuestos">Repuestos Retirados</div>
+                                        <div class="seccion-card-sub" id="subRepuestos">0 repuestos retirados</div>
+                                    </div>
+                                    <span class="seccion-card-arrow">›</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div
-                        class="seccion-card-sub"
-                        id="subNovedades">
-
-                        0 novedades registradas
-
-                    </div>
-
-                </div>
-
-                <span class="seccion-card-arrow">›</span>
-
-            </div>
-
-        </div>
-
-
-        <!-- Observaciones -->
-        <div class="col-12 col-sm-6 col-xl-4">
-
-            <div
-                class="seccion-card"
-                onclick="abrirObservaciones()"
-                role="button"
-                tabindex="0"
-                onkeydown="if(event.key==='Enter'||event.key===' '){abrirObservaciones()}">
-
-                <div
-                    class="seccion-card-icon"
-                    style="background:#cfe2ff;">
-                    🔍
-                </div>
-
-                <div class="seccion-card-body">
-
-                    <div
-                        class="seccion-card-title"
-                        id="titleObservaciones">
-
-                        Observaciones
-
-                    </div>
-
-                    <div
-                        class="seccion-card-sub"
-                        id="subObservaciones">
-
-                        0 observaciones generadas
-
-                    </div>
-
-                </div>
-
-                <span class="seccion-card-arrow">›</span>
-
-            </div>
-
-        </div>
-
-
-        <!-- Insumos -->
-        <div class="col-12 col-sm-6 col-xl-4">
-
-            <div
-                class="seccion-card"
-                onclick="abrirInsumos()"
-                role="button"
-                tabindex="0"
-                onkeydown="if(event.key==='Enter'||event.key===' '){abrirInsumos()}">
-
-                <div
-                    class="seccion-card-icon"
-                    style="background:#f7debc;">
-                    🛢
-                </div>
-
-                <div class="seccion-card-body">
-
-                    <div
-                        class="seccion-card-title"
-                        id="titleInsumos">
-
-                        Insumos
-
-                    </div>
-
-                    <div
-                        class="seccion-card-sub"
-                        id="subInsumos">
-
-                        0 insumos utilizados
-
-                    </div>
-
-                </div>
-
-                <span class="seccion-card-arrow">›</span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
                 </div>
             </div>
 
@@ -706,7 +484,6 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -741,12 +518,8 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
                     </table>
                 </div>
                 <div class="d-flex gap-2 mt-3 align-items-start">
-                    <textarea id="textoNovedad" class="form-control form-control-sm" rows="2"
-                        placeholder="Describe el trabajo o novedad pendiente…"
-                        style="border-radius:8px;font-size:.83rem;resize:vertical;"></textarea>
-                    <button type="button" onclick="agregarNovedad()"
-                        class="btn-primary-custom btn btn-sm flex-shrink-0"
-                        style="padding:.45rem .9rem;font-size:1.1rem;line-height:1;">+</button>
+                    <textarea id="textoNovedad" class="form-control form-control-sm" rows="2" placeholder="Describe el trabajo o novedad pendiente…" style="border-radius:8px;font-size:.83rem;resize:vertical;"></textarea>
+                    <button type="button" onclick="agregarNovedad()"class="btn-primary-custom btn btn-sm flex-shrink-0" style="padding:.45rem .9rem;font-size:1.1rem;line-height:1;">+</button>
                 </div>
             </div>
             <div class="modal-footer p-2 p-md-3" style="background:#f8f9fc;border-top:1px solid #e8e8f0;">
@@ -762,7 +535,7 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
     </div>
 </div>
 
-<!-- MODAL 4 — OBSERVACIONES (solo lectura) -->
+<!-- MODAL 4 — OBSERVACIONES -->
 <div class="modal fade" id="modalObservaciones" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" style="max-width:min(700px, calc(100vw - .5rem)); margin:.25rem auto;">
         <div class="modal-content border-0 shadow">
@@ -777,25 +550,31 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
                         <thead>
                             <tr style="background:var(--color-dark);color:#fff;">
                                 <th style="font-size:.75rem;padding:.6rem .75rem;border:none;width:40px;">#</th>
-                                <th style="font-size:.75rem;padding:.6rem .75rem;border:none;">Criterio</th>
-                                <th style="font-size:.75rem;padding:.6rem .75rem;border:none;width:90px;text-align:center;">Estado</th>
                                 <th style="font-size:.75rem;padding:.6rem .75rem;border:none;">Descripción</th>
+                                <th colspan="2" style="font-size:.75rem;padding:.6rem .75rem;border:none;width:60px;text-align:center;">Acción</th>
                             </tr>
                         </thead>
                         <tbody id="bodyObservaciones">
                             <tr id="filaVaciaObservaciones">
-                                <td colspan="4" class="text-center text-muted py-4" style="font-size:.82rem;">
-                                    Se generan al marcar un criterio distinto a <strong>Conforme</strong> o <strong>N/A</strong>.
+                                <td colspan="3" class="text-center text-muted py-4" style="font-size:.82rem;">
+                                    No hay observaciones. Usa el botón <strong>+</strong> para agregar.
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                <div class="d-flex gap-2 mt-3 align-items-start">
+                    <textarea id="textoObservaciones" class="form-control form-control-sm" rows="2" placeholder="Escribe la Observacion" style="border-radius:8px;font-size:.83rem;resize:vertical;"></textarea>
+                    <button type="button" onclick="agregarObservaciones()" class="btn-primary-custom btn btn-sm flex-shrink-0" style="padding:.45rem .9rem;font-size:1.1rem;line-height:1;">+</button>
+                </div>
             </div>
             <div class="modal-footer p-2 p-md-3" style="background:#f8f9fc;border-top:1px solid #e8e8f0;">
                 <div class="d-flex justify-content-between align-items-center w-100 flex-wrap gap-2">
-                    <span id="contadorObservaciones" style="font-size:.72rem;color:#6c757d;">0 observaciones</span>
-                    <button type="button" class="btn-outline-custom btn btn-sm" id="btnVolverObservaciones">← Volver</button>
+                    <span id="contadorObservaciones" style="font-size:.72rem;color:#6c757d;">0 Observaciones</span>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn-outline-custom btn btn-sm" id="btnVolverObservaciones">← Volver</button>
+                        <button type="button" class="btn-primary-custom btn btn-sm" id="btnGuardarObservaciones">Guardar ✓</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -862,6 +641,71 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
                     <div class="d-flex gap-2">
                         <button type="button" class="btn-outline-custom btn btn-sm" id="btnVolverInsumos">← Volver</button>
                         <button type="button" class="btn-primary-custom btn btn-sm" id="btnGuardarInsumos">Guardar ✓</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL 5 — REPUESTOS RETIRADOS -->
+<div class="modal fade" id="modalRepuestos" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" style="max-width:min(1000px, calc(100vw - .5rem)); margin:.25rem auto;">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header modal-header-custom">
+                <div style="min-width:0;">
+                    <h5 class="modal-title mb-0">🛢 Repuestos retirados</h5>
+                    <small class="text-white-50" style="font-size:.72rem;">Repuestos en el mantenimiento</small>
+                </div>
+            </div>
+            <div class="modal-body p-3 p-md-4">
+                <div class="row g-3 mb-3">
+                    <label for="nombreSolicita1">Repuestos Retirados:</label>
+                    <div class="col-12 col-md-2">
+                        <input type="number" id="cantidad1" class="form-control" placeholder="Cantidad" min="1" step="1" >
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <select id="tipoMedida1" name="tipoMedida1" class="form-select">
+                            <option value="">medida</option>
+                            <option value="Und">Und</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-5">
+                        <select  id="select-para1" class="form-control" placeholder="Escribe nombre o codigo..."></select>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <input type="text" id="descripcion" class="form-control" placeholder="Descripcion falla">
+                    </div>
+                    <div class="col-12 col-md-1 d-grid">
+                        <button type="button" class="btn btn-success" onclick="agregarFila1()">Agregar</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="tablaSolicitud1">
+                        <thead class="table-dark">
+                            <tr>
+                                <th style="width: 40px;">#</th>
+                                <th >Codigo</th>
+                                <th style="width: 50px;">Cantidad</th>
+                                <th style="width: 50px;"></th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer p-2 p-md-3" style="background:#f8f9fc;border-top:1px solid #e8e8f0;">
+                <div class="d-flex justify-content-between align-items-center w-100 flex-wrap gap-2">
+                    <span id="contadorRepuestos" style="font-size:.72rem;color:#6c757d;">0 repuestos</span>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn-outline-custom btn btn-sm" id="btnVolverRepuestos">← Volver</button>
+                        <button type="button" class="btn-primary-custom btn btn-sm" id="btnGuardarRepuestos">Guardar ✓</button>
                     </div>
                 </div>
             </div>
@@ -1027,17 +871,6 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
                             <input type="text" class="form-control" id="buscarMontacargas" placeholder="Número, marca, modelo o serie">
                         </div>
 
-                        <!-- TIPO MANTENIMIENTO -->
-                        <div class="col-12 col-md-6">
-                            <label class="form-label-sm"> Tipo de mantenimiento</label>
-                            <select class="form-select" id="buscarTipoMantenimiento">
-                                <option value="">Todos</option>
-                                <option value="250_Horas">250 Horas</option>
-                                <option value="1000_Horas">1000 Horas</option>
-                                <option value="2000_Horas">2000 Horas</option>
-                            </select>
-                        </div>
-
                         <!-- TIPO MONTACARGAS -->
                         <div class="col-12 col-md-6">
                             <label class="form-label-sm">Tipo de montacargas</label>
@@ -1087,7 +920,6 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
                                     <th>Mantenimiento</th>
                                     <th>Montacargas</th>
                                     <th>Centro</th>
-                                    <th>Tipo</th>
                                     <th>Fecha</th>
                                     <th>Accion</th>
                                 </tr>
@@ -1212,208 +1044,122 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientosCorrectivos()
 </div>
 
 <!--  MODAL 11 - REGISTRAR FALLA Y CORRECCIÓN -->
-
-<div
-    class="modal fade"
-    id="modalFallaCorreccion"
-    tabindex="-1"
-    aria-labelledby="modalFallaCorreccionLabel"
-    aria-hidden="true">
-
-    <div
-        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-
+<div class="modal fade" id="modalFallaCorreccion" tabindex="-1" aria-labelledby="modalFallaCorreccionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content border-0 shadow">
-
             <div class="modal-header modal-header-custom">
-
                 <div>
-                    <h5
-                        class="modal-title mb-0"
-                        id="modalFallaCorreccionLabel">
-
-                        🔧 Registrar Falla y Corrección
-
-                    </h5>
-
-                    <small
-                        class="text-white-50"
-                        style="font-size:.72rem;">
-
-                        Registre la falla encontrada y la corrección realizada.
-
-                    </small>
+                    <h5 class="modal-title mb-0" id="modalFallaCorreccionLabel">🔧 Registrar Falla y Corrección</h5>
+                    <small class="text-white-50" style="font-size:.72rem;">Registre la falla encontrada y la corrección realizada.</small>
                 </div>
-
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Cerrar">
-                </button>
-
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
-
-
             <div class="modal-body p-3 p-md-4">
-
-                <!-- =================================================
-                     FALLA
-                     ================================================= -->
-
+                <!-- FALLA -->
                 <div class="section-divider">
-
                     <span>Falla</span>
-
                 </div>
-
-
                 <div class="mb-3">
-
-                    <label
-                        class="form-label-sm">
-
-                        Descripción de la falla
-
-                    </label>
-
-                    <textarea
-                        class="form-control"
-                        id="descripcionFalla"
-                        rows="4"
-                        placeholder="Describa detalladamente la falla encontrada..."
-                        style="resize:vertical;"
-                    ></textarea>
-
+                    <label class="form-label-sm">Seccion</label>
+                    <select class="form-select" name="Seccion" id="Seccion" required>
+                        <option value="" disabled selected>Seleccione seccion</option>
+                    </select>
                 </div>
-
-
-                <div class="mb-4">
-
-                    <label
-                        class="form-label-sm">
-
-                        Fotos de la falla
-                        <span class="text-muted">
-                            (Opcionales)
+                <div class="mb-3">
+                    <label class="form-label-sm">Descripción de la falla</label>
+                    <textarea class="form-control" id="descripcionFalla" rows="4" placeholder="Describa detalladamente la falla encontrada..."style="resize:vertical;"></textarea>
+                </div>
+                <!-- IMÁGENES FALLA -->
+                <div class="img-uploader" id="uploaderFalla">
+                    <div class="img-uploader-header">
+                        <span style="font-size:.72rem;font-weight:700;color:#6c757d;text-transform:uppercase;letter-spacing:.4px;">
+                            📷 Imágenes de falla <span class="badge bg-secondary ms-1" id="imgCountFalla">0</span>
                         </span>
-
-                    </label>
-
-                    <input
-                        type="file"
-                        class="form-control"
-                        id="imagenesFalla"
-                        name="imagenesFalla[]"
-                        accept="image/*"
-                        multiple>
-
-                    <small
-                        class="text-muted"
-                        style="font-size:.72rem;">
-
-                        Puede seleccionar una o varias fotografías.
-
-                    </small>
+                        <label for="imgInputFalla" class="btn btn-sm" style="border:1.5px dashed var(--color-orange);
+                            color:var(--color-orange); border-radius:8px; font-size:.72rem; background:transparent; cursor:pointer; padding:3px 10px;">
+                            + Agregar foto
+                        </label>
+                        <input type="file" id="imgInputFalla" name="imagenesFalla[]" accept="image/*"
+                            multiple class="d-none img-file-input" data-slug="falla" onchange="previsualizarImagenes(this)">
+                    </div>
+                    <div class="img-preview-wrap d-flex flex-wrap gap-2 mt-2" id="imgPreviewFalla"></div>
 
                 </div>
-
-
-                <!-- =================================================
-                     CORRECCIÓN
-                     ================================================= -->
-
+                <!-- CORRECCIÓN -->
                 <div class="section-divider">
-
                     <span>Corrección</span>
-
                 </div>
-
-
                 <div class="mb-3">
-
-                    <label
-                        class="form-label-sm">
-
-                        Descripción de la corrección
-
-                    </label>
-
-                    <textarea
-                        class="form-control"
-                        id="descripcionCorreccion"
-                        rows="4"
-                        placeholder="Describa la corrección realizada..."
-                        style="resize:vertical;"
-                    ></textarea>
-
+                    <label class="form-label-sm">Descripción de la corrección</label>
+                    <textarea class="form-control" id="descripcionCorreccion" rows="4" placeholder="Describa la corrección realizada..." style="resize:vertical;"></textarea>
                 </div>
-
-
-                <div class="mb-3">
-
-                    <label
-                        class="form-label-sm">
-
-                        Fotos de la corrección
-                        <span class="text-muted">
-                            (Opcionales)
-                        </span>
-
-                    </label>
-
-                    <input
-                        type="file"
-                        class="form-control"
-                        id="imagenesCorreccion"
-                        name="imagenesCorreccion[]"
-                        accept="image/*"
-                        multiple>
-
-                    <small
-                        class="text-muted"
-                        style="font-size:.72rem;">
-
-                        Puede seleccionar una o varias fotografías.
-
-                    </small>
-
+                <!-- IMÁGENES CORRECCIÓN -->
+                <div class="img-uploader" id="uploaderCorreccion">
+                        <div class="img-uploader-header">
+                            <span style="font-size:.72rem;font-weight:700;color:#6c757d;text-transform:uppercase;letter-spacing:.4px;">📷 Imágenes de corrección 
+                                <span class="badge bg-secondary ms-1" id="imgCountCorreccion"> 0 </span>
+                            </span>
+                            <label for="imgInputCorreccion" class="btn btn-sm" style="border:1.5px dashed var(--color-orange); color:var(--color-orange); border-radius:8px; font-size:.72rem; background:transparent; cursor:pointer; padding:3px 10px;">
+                                + Agregar foto
+                            </label>
+                            <input type="file" id="imgInputCorreccion" name="imagenesCorreccion[]" accept="image/*" multiple
+                                class="d-none img-file-input" data-slug="correccion" onchange="previsualizarImagenes(this)">
+                        </div>
+                        <div class="img-preview-wrap d-flex flex-wrap gap-2 mt-2" id="imgPreviewCorreccion"></div>
                 </div>
-
             </div>
 
-
-            <div
-                class="modal-footer p-2 p-md-3"
-                style="
-                    background:#f8f9fc;
-                    border-top:1px solid #e8e8f0;
-                ">
-
-                <button
-                    type="button"
-                    class="btn-outline-custom btn btn-sm"
-                    data-bs-dismiss="modal">
-
-                    Cancelar
-
-                </button>
-
-                <button
-                    type="button"
-                    class="btn-primary-custom btn btn-sm"
-                    id="btnGuardarFallaCorreccion">
-
-                    Guardar ✓
-
-                </button>
-
+            <div class="modal-footer p-2 p-md-3" style=" background:#f8f9fc; border-top:1px solid #e8e8f0;">
+                <button type="button" class="btn-outline-custom btn btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn-primary-custom btn btn-sm" id="btnGuardarFallaCorreccion"> Guardar ✓</button>
             </div>
-
         </div>
-
     </div>
+</div>
 
+<!-- MODAL 12 - EDITAR FALLA / CORRECCIÓN -->
+<div class="modal fade" id="modalEditarDetalle" tabindex="-1" aria-labelledby="modalEditarDetalleLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarDetalleLabel">✏️ Editar detalle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editarIDDetalle">
+                <input type="hidden" id="editarCategoria">
+                <!-- SECCION -->
+                <div class="mb-3">
+                    <label class="form-label-sm">Seccion</label>
+                    <select class="form-select" name="Seccion" id="Seccion1" required>
+                        <option value="" disabled selected>Seleccione seccion</option>
+                    </select>
+                </div>
+                <!-- DESCRIPCIÓN -->
+                <div class="mb-3">
+                    <label for="editarDescripcionDetalle" class="form-label fw-bold" id="editarLabelDescripcion">Descripción </label>
+                    <textarea id="editarDescripcionDetalle" class="form-control" rows="4" placeholder="Ingrese la descripción..."> </textarea>
+                </div>
+                <!-- IMÁGENES  EVIDENCIAS -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">📷 Evidencias</label>
+                    <!-- Fotos existentes y fotos nuevas -->
+                    <div id="editarImagenesDetalle" class="d-flex flex-wrap gap-2 mb-3" style="min-height:80px;"></div>
+                    <div id="sinImagenesDetalle" class="text-muted text-center py-2" style="display:none;">No hay imágenes para este detalle.</div>
+                    <!-- Botón para agregar fotos -->
+                    <label for="editarNuevasImagenes" class="btn btn-outline-primary btn-sm"><i class="fas fa-camera"></i>Agregar fotos</label>
+                    <input type="file" id="editarNuevasImagenes" accept="image/*" multiple hidden>
+                    <small class="form-text text-muted d-block mt-2">Puedes agregar varias fotos al detalle.</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="guardarEdicionDetalle()">
+                    <i class="fas fa-save"></i> Guardar cambios
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- LIGHTBOX — VER IMAGEN GRANDE -->

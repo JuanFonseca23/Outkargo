@@ -799,24 +799,9 @@ function crearThumb(src, slug, id = null) {
     thumb.dataset.id = id || '';
     thumb.style.cssText ='width:64px;height:64px;border-radius:8px;overflow:hidden;' + 'border:1px solid #e8e8f0;flex-shrink:0;';
     thumb.innerHTML = `
-        <img src="${src}"
-             alt="img"
-             style="width:100%;height:100%;object-fit:cover;"
-             onclick="abrirLightbox('${src}')">
-
-        <button
-            type="button"
-            onclick="eliminarThumb(this,'${slug}')"
-            style="position:absolute;top:2px;right:2px;
-                   background:rgba(0,0,0,.55);border:none;
-                   border-radius:50%;width:18px;height:18px;
-                   color:#fff;font-size:10px;line-height:1;
-                   cursor:pointer;display:flex;
-                   align-items:center;justify-content:center;">
-            ✕
-        </button>
-    `;
-
+        <img src="${src}" alt="img" style="width:100%;height:100%;object-fit:cover;" onclick="abrirLightbox('${src}')">
+        <button type="button" onclick="eliminarThumb(this,'${slug}')" style="position:absolute;top:2px;right:2px; background:rgba(0,0,0,.55);border:none;
+            border-radius:50%;width:18px;height:18px; color:#fff;font-size:10px;line-height:1; cursor:pointer;display:flex; align-items:center;justify-content:center;">✕</button>`;
     return thumb;
 }
 
@@ -877,17 +862,13 @@ async function previewImagenes(input) {
         }
 
         // 3. ASIGNAR ID DE BD AL THUMB
-
         thumb.dataset.id = resultado.id;
 
         // 4. GUARDAR ESTADO LOCAL
-
         window._imagenesSeccion[slugSeccion] = window._imagenesSeccion[slugSeccion] || [];
         window._imagenesSeccion[slugSeccion].push({
             id: resultado.id,
-            // preview local para mostrar
             src: previewSrc,
-            // ruta física/URL guardada en servidor
             ruta: resultado.ruta,
             categoria: categoria,
             enBD: true
@@ -1274,50 +1255,99 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    /* ── CARGA DINÁMICA ── */
+   /* ── CARGA DINÁMICA ── */
+    let solicitudCentro = 0;
     window.cargarMontacargas = function () {
-        const ID_Centro = document.getElementById('ID_Centro1').value
-        if (!ID_Centro) return;
+        const ID_Centro = document.getElementById('ID_Centro1').value;
+        window.ID_Centro = ID_Centro || null;
+        // Nueva solicitud
+        solicitudCentro++;
+        const solicitudActual = solicitudCentro;
+        // Referencias
+        const $montacargas = $('#ID_Montacargas');
+        const $operario = $('#ID_Operario');
+        const $operario1 = $('#ID_Operario1');
+        const $area = $('#ID_Area');
 
-        $.get(`TraerMontacargas?ID_Centro=${ID_Centro}`, function(data) {
+        // LIMPIAR INMEDIATAMENTE LOS SELECTS
+        $montacargas.empty().append('<option value="" disabled selected>Seleccione montacargas</option>');
+        $operario.empty().append('<option value="" disabled selected>Seleccione operario</option>');
+        $operario1.empty().append('<option value="" disabled selected>Seleccione operario</option>');
+        $area.empty().append('<option value="" disabled selected>Seleccione área</option>');
+
+        // Si no hay centro, terminamos
+        if (!ID_Centro) {
+            return;
+        }
+        // MONTACARGAS
+        $.get(`TraerMontacargas?ID_Centro=${encodeURIComponent(ID_Centro)}`, function(data) {
+            // Si esta respuesta pertenece a un centro anterior,
+            // NO hacemos nada.
+            if (solicitudActual !== solicitudCentro) {
+                return;
+            }
             try {
                 const lista = Array.isArray(data) ? data : JSON.parse(data);
-                const sel = $('#ID_Montacargas').empty()
-                    .append('<option value="" disabled selected>Seleccione montacargas</option>');
-                lista.forEach(m => sel.append(
-                    `<option value="${m.ID}" data-modelo="${m.Modelo}" data-voltaje="${m.Voltaje}"
-                     data-horometro="${m.Horometro}" data-longitudh="${m.Horquillas}">
-                     ${m.Numero} — ${m.Serie}</option>`
-                ));
-            } catch(e) { console.error('Montacargas:', e); }
+                lista.forEach(m => {
+                    $montacargas.append(`
+                        <option value="${m.ID}" data-modelo="${m.Modelo}" data-voltaje="${m.Voltaje}"
+                            data-horometro="${m.Horometro}"
+                            data-longitudh="${m.Horquillas}">
+                            ${m.Numero} — ${m.Serie}
+                        </option>`
+                    );
+                });
+            } catch(e) {
+                console.error('Montacargas:', e);
+            }
+        }).fail(function(xhr) {
+            if (solicitudActual !== solicitudCentro) {
+                return;
+            }
+            console.error('Error cargando montacargas:', xhr.status, xhr.responseText);
         });
-
-        $.get(`TraerOperarios?ID_Centro=${ID_Centro}`, function(data) {
+        // OPERARIOS
+        $.get(`TraerOperarios?ID_Centro=${encodeURIComponent(ID_Centro)}`, function(data) {
+            if (solicitudActual !== solicitudCentro) {
+                return;
+            }
             try {
                 const lista = Array.isArray(data) ? data : JSON.parse(data);
-                const sel = $('#ID_Operario').empty()
-                    .append('<option value="" disabled selected>Seleccione operario</option>');
-                lista.forEach(o => sel.append(`<option value="${o.ID}">${o.NombreCompleto}</option>`));
-            } catch(e) { console.error('Operarios:', e); }
+                lista.forEach(o => {
+                    const opcion = `<option value="${o.ID}"> ${o.NombreCompleto} </option>`;
+                    $operario.append(opcion);
+                    $operario1.append(opcion);
+                });
+            } catch(e) {
+                console.error('Operarios:', e);
+            }
+        }).fail(function(xhr) {
+            if (solicitudActual !== solicitudCentro) {
+                return;
+            }
+            console.error('Error cargando operarios:', xhr.status, xhr.responseText);
+        });
+        //  ÁREAS
+        $.get(`TraerAreas?ID_Centro=${encodeURIComponent(ID_Centro)}`, function(data) {
+            if (solicitudActual !== solicitudCentro) {
+                return;
+            }
+            try {
+                const lista = Array.isArray(data)? data : JSON.parse(data);
+                lista.forEach(a => {
+                    $area.append(`<option value="${a.ID}"> ${a.Nombre} </option>`);
+                });
+            } catch(e) {
+                console.error('Áreas:', e);
+            }
+
+        }).fail(function(xhr) {
+            if (solicitudActual !== solicitudCentro) {
+                return;
+            }
+            console.error('Error cargando áreas:', xhr.status,  xhr.responseText);
         });
 
-        $.get(`TraerOperarios?ID_Centro=${ID_Centro}`, function(data) {
-            try {
-                const lista = Array.isArray(data) ? data : JSON.parse(data);
-                const sel = $('#ID_Operario1').empty()
-                    .append('<option value="" disabled selected>Seleccione operario</option>');
-                lista.forEach(o => sel.append(`<option value="${o.ID}">${o.NombreCompleto}</option>`));
-            } catch(e) { console.error('Operarios:', e); }
-        });
-
-        $.get(`TraerAreas?ID_Centro=${ID_Centro}`, function(data) {
-            try {
-                const lista = Array.isArray(data) ? data : JSON.parse(data);
-                const sel = $('#ID_Area').empty()
-                    .append('<option value="" disabled selected>Seleccione área</option>');
-                lista.forEach(a => sel.append(`<option value="${a.ID}">${a.Nombre}</option>`));
-            } catch(e) { console.error('Áreas:', e); }
-        });
     };
 
     /* ── SUBMIT MODAL 1 → abre Modal 2 ── */
@@ -1545,9 +1575,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('btnRechazarBorrador')?.addEventListener('click', function () {
         const id = window._borradorPendienteID;
-        bootstrap.Modal
-            .getInstance(document.getElementById('modalBorradorPreventivo'))
-            ?.hide();
+        bootstrap.Modal.getInstance(document.getElementById('modalBorradorPreventivo')) ?.hide();
         if (!id) return;
 
         fetch('EliminarBorrador', {
@@ -1621,9 +1649,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //Eliminar novedad (temporal o en BD)
     window.eliminarNovedad = function (index) {
-
         const novedadesTemp = window._novedadesTemp || [];
-
         // Buscar la novedad utilizando el índice
         const novedad = novedadesTemp[index];
 
@@ -1647,12 +1673,8 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(r => r.json())
             .then(resp => {
                 if (resp.success) {
-                    window._novedades =
-                        (window._novedades || [])
-                        .filter(n => n.id != novedad.id);
-                    window._novedadesTemp =
-                        (window._novedadesTemp || [])
-                        .filter(n => n.id != novedad.id);
+                    window._novedades = (window._novedades || []) .filter(n => n.id != novedad.id);
+                    window._novedadesTemp = (window._novedadesTemp || []) .filter(n => n.id != novedad.id);
                     renderTablaNovedades();
                     actualizarContadorNovedades();
                 } else {
@@ -1695,9 +1717,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         fetch(`${window.baseUrl}Mantenimiento/GuardarNovedades`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 Novedades: nuevasNovedades,
                 ID_Mantenimiento: window.ID_Mantenimiento,
@@ -1896,7 +1916,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             load: function(query, callback) {
                                 if (query.length < 2) return callback();
                                 const baseUrl = window.baseUrl || '';
-                                fetch(`${baseUrl}OrdenesTrabajo/BuscarInsumos?q=${encodeURIComponent(query)}`)
+                                fetch(`${baseUrl}OrdenesTrabajo/BuscarInsumosConStock?q=${encodeURIComponent(query)}&ID_Centro=${encodeURIComponent(window.ID_Centro || '')}`)
                                     .then(r => r.json())
                                     .then(data => {
 
@@ -2346,8 +2366,7 @@ document.addEventListener('DOMContentLoaded', function () {
         window.ID_Detalle        = det.ID;
         window.ID_Montacargas    = m.ID_Montacargas;
         window.Tipo_Mantenimiento = m.Tipo_Mantenimiento;
-        window.Tipo_Montacargas = m.Tipo;
-
+        window.Tipo_Montacargas = m.Tipo_Montacargas;
 
         /* Panel izquierdo (mismos campos que en CrearMantenimiento) */
         const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
@@ -2480,7 +2499,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         tecnicos.forEach((tecnico, index) => {
-            contenedor.innerHTML += `
+            contenedor.insertAdjacentHTML('beforeend', `
                 <div class="card mb-4">
                     <div class="card-header">
                         <strong> Mecánico ${index + 1} </strong>
@@ -2508,7 +2527,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         </button>
                     </div>
                 </div>
-            `;
+            `);
         });
 
         // Inicializar los canvas después de crearlos
@@ -2657,11 +2676,16 @@ document.addEventListener('DOMContentLoaded', function () {
         return true;
     }
 
-    document.getElementById('btnGuardarFirmas')?.addEventListener('click', function () {
+    document.getElementById('btnGuardarFirmas')?.addEventListener('click', function (event) {
+        const botonGuardar = event.currentTarget;
+        if (botonGuardar.disabled) return;
 
         if (!validarFirmasMecanicos()) {
             return;
         }
+        const textoOriginal = botonGuardar.textContent;
+        botonGuardar.disabled = true;
+        botonGuardar.textContent = 'Guardando...';
 
         // Obtener firmas
         const firmas = [];
@@ -2706,18 +2730,31 @@ document.addEventListener('DOMContentLoaded', function () {
                         icon: 'success',
                         title: '¡Correcto!',
                         text: data.message || 'Firmas guardadas correctamente.',
-                        timer: 1500,
-                        showConfirmButton: false
+                        confirmButtonText: 'Entendido',
+                        showConfirmButton: true,
+                        allowOutsideClick: false
                     }).then(() => {
                         location.reload();
                     });
+                } else if (data.estado_revertido) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Salida no creada',
+                        text: data.message,
+                        confirmButtonText: 'Entendido',
+                        allowOutsideClick: false
+                    }).then(() => location.reload());
                 } else {
                     alert('Error al guardar firmas: ' + data.message);
+                    botonGuardar.disabled = false;
+                    botonGuardar.textContent = textoOriginal;
                 }
             })
             .catch(error => {
                 console.error('Error al guardar firmas:',error);
                 alert('Error al guardar firmas');
+                botonGuardar.disabled = false;
+                botonGuardar.textContent = textoOriginal;
             });
     });
 
@@ -2809,7 +2846,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 `${encodeURIComponent(TipoMantenimiento)}` +
                 `?ID=${encodeURIComponent(ID_Mantenimiento)}`;
 
-            console.log('URL del mantenimiento:', url);
 
             window.open(url, '_blank');
         const inputMecanico = document.getElementById('ID_MecanicoFirma');
@@ -2868,13 +2904,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Verificar que exista una firma
         const imagenCanvas = canvasFirma1.toDataURL('image/png');
 
-        console.log('================================');
-        console.log('Guardando firma...');
-        console.log('ID Mantenimiento:', ID_Mantenimiento2);
-        console.log('Tipo:', tipo);
-        console.log('ID Mecánico:', ID_Mecanico2);
-        console.log('Firma:', imagenCanvas);
-        console.log('================================');
 
         // AQUÍ irá el fetch para guardar las firmas
         fetch(`${window.baseUrl}Mantenimiento/FirmarMantenimientoPreventivo`, {
@@ -2927,7 +2956,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //BUSCAR
     const btnBuscar = document.getElementById('btnAbrirBuscarMantenimiento');
-
     if (btnBuscar) {
         btnBuscar.addEventListener('click', function () {
 
@@ -2947,7 +2975,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
     // EJECUTAR BÚSQUEDA
     document.getElementById('formBuscarMantenimiento') ?.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -3012,8 +3039,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             mostrarResultadosBusqueda(resultados);
-     });
-
+    });
     // MOSTRAR RESULTADOS   
     function mostrarResultadosBusqueda(resultados) {
 
@@ -3068,7 +3094,6 @@ document.addEventListener('DOMContentLoaded', function () {
             tbody.appendChild(tr);
         });
     }
-
     // FORMATEAR TIPO
     function formatearTipoMantenimiento(tipo) {
         switch (tipo) {
@@ -3078,7 +3103,6 @@ document.addEventListener('DOMContentLoaded', function () {
             default: return tipo || '';
         }
     }
-
     // LIMPIAR
     document.getElementById('btnLimpiarBusqueda')?.addEventListener('click', function () {
         document.getElementById('formBuscarMantenimiento') ?.reset();
@@ -3091,7 +3115,6 @@ document.addEventListener('DOMContentLoaded', function () {
             tbody.innerHTML = '';
         }
     });
-
     window.verMantenimientoBuscado = function (ID) {
         const mantenimiento = (window.MANTENIMIENTOS_DATA || []).find(m => String(m.ID) === String(ID));
         if (!mantenimiento) {
@@ -3102,10 +3125,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const url =`${window.baseUrl}Mantenimiento/VerMantenimientoPreventivo` + `${encodeURIComponent(mantenimiento.TipoMontacargas)}` + `${encodeURIComponent(TipoMantenimiento)}` + `?ID=${encodeURIComponent(mantenimiento.ID)}`;
         window.open(url, '_blank');
     };
-
+    
     //INFORMES
     const btnInforme = document.getElementById('btnAbrirInformesMantenimiento');
-
     if (btnInforme) {
         btnInforme.addEventListener('click', function () {
 
@@ -3125,7 +3147,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
     // GENERAR INFORME
     document.getElementById('formInformeMantenimiento')?.addEventListener('submit', function (e) {
 
@@ -3207,17 +3228,21 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        console.log('Informe:', tipoInforme);
-        console.log('Formato:', formato);
-        console.log('URL:', url);
-
         // ABRIR INFORME
         window.open(url, '_blank');
 
     });
-
     //LIMPIAR MODAL INFORME
     document.getElementById('btnLimpiarInforme')?.addEventListener('click', function () {
         document.getElementById('formInformeMantenimiento') ?.reset();
     });
+
+    // $(document).ready(function () {
+    //     const $centro = $('#ID_Centro1');
+    //     // Seleccionar Bodega Principal
+    //     $centro.val('1');
+    //     // Cargar automáticamente la información del centro 1
+    //     cargarMontacargas();
+
+    // });
 });

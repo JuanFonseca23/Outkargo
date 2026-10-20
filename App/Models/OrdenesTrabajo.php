@@ -104,6 +104,22 @@
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function BuscarInsumosConStock($q, $ID_Centro){
+            $sql = "SELECT i.ID AS id, i.Nombre AS nombre, i.Codigo AS codigo
+                    FROM insumos i
+                    INNER JOIN detalle_inventario_insumos d ON d.ID_Insumo = i.ID
+                    WHERE d.ID_Centro = :ID_Centro
+                      AND (i.Nombre LIKE :q OR i.Codigo LIKE :q)
+                    GROUP BY i.ID, i.Nombre, i.Codigo
+                    HAVING SUM(CAST(d.Cantidad AS DECIMAL(12,2))) > 0
+                    ORDER BY i.Nombre";
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(':ID_Centro', $ID_Centro, PDO::PARAM_INT);
+            $stmt->bindValue(':q', "%$q%", PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public function BuscarMantenimiento($ID_Orden){
             $sql = "SELECT * FROM mantenimiento_correctivo WHERE ID_Orden_Trabajo = :ID_Orden";
             $stmt = $this->PDO->prepare($sql);
@@ -129,7 +145,11 @@
         }
 
         public function BuscarUsuario(){
-            $sql = "SELECT ID AS ID_Usuario, NombreCompleto AS Nombre, ID_Cargo AS Cargo, Correo, Documento FROM usuario WHERE ID_Cargo = 2 Or ID_Cargo = 11";
+            $sql = "SELECT ID AS ID_Usuario, 
+                           NombreCompleto AS Nombre, 
+                           ID_Cargo AS Cargo,
+                           ID_Centro as Centro, 
+                           Correo, Documento FROM usuario";
             $stmt = $this->PDO->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

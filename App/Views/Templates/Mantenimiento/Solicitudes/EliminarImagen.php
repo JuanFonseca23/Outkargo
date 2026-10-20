@@ -39,11 +39,8 @@ if (!isset($data['ID']) || empty($data['ID'])) {
 
     exit;
 }
-
 $ID = $data['ID'];
-
-$resultado =
-    $MantenimientosController->EliminarImagen($ID);
+$resultado = $MantenimientosController->EliminarImagen($ID);
 
 if ($resultado) {
 

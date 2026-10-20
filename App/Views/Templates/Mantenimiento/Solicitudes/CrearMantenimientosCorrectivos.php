@@ -21,9 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $Operario_Externo = $_POST['OperarioExterno'] ?? null;
         $ID_Operario = null;
     }
+    $Tipo_Montacargas = $_POST['tipoMontacargas'];
     $Fecha = date('Y-m-d');
     try {
-        $Resultados = $MantenimientosController->CrearMantenimientoCorrectivoBorrador($ID_Usuario, $ID_Montacargas, $ID_Centro, $ID_Area, $ID_Operario, $Fecha, $Externo, $Operario_Externo);    
+        $Resultados = $MantenimientosController->CrearMantenimientoCorrectivoBorrador($ID_Usuario, $ID_Montacargas, $ID_Centro, $ID_Area, $ID_Operario, $Fecha, $Externo, $Operario_Externo, $Tipo_Montacargas);    
         $ID_Mantenimiento = $Resultados[0];
         $Detalles = $Resultados[1];
         $Novedades = $Resultados[2];

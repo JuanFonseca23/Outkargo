@@ -1,27 +1,5 @@
 <?php
 require_once "App/Views/Templates/Layouts/Header.php";
-include_once "App/Controllers/CentroDeTrabajoController.php";
-include_once "App/Controllers/MantenimientosController.php";
-include_once "App/Views/Templates/Mantenimiento/Preventivos/CriteriosMantenimientos.php";
-
-$criteriosJSON = json_encode($Criterios, JSON_UNESCAPED_UNICODE);
-$CentrosDeTrabajo = new CentroDeTrabajoController;
-$MantenimientosController = new MantenimientosController();
-$ListaCentrosDeTrabajo  = $CentrosDeTrabajo->TraerCentrosDeTrabajo();
-
-date_default_timezone_set('America/Bogota');
-$horaFormateada = date("H:i");
-
-$DataSupervisores = $MantenimientosController->TraerSupervisores();
-
-if ($_SERVER['HTTP_HOST'] == 'localhost') {
-    $baseUrl = 'http://localhost/OUTKARGO/';
-} else {
-    $baseUrl = 'https://outkargo.com.co/';
-}
-$Mantenimientos = $MantenimientosController->LeerMantenimientos();
-$NoMantenimientos = $MantenimientosController->ContarMantenimientos();
-
 ?>
 
 <link rel="stylesheet" href="<?= $baseUrl ?>App/Views/Css/Mantenimientos/Preventivos.css">
@@ -101,8 +79,8 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientos();
 </div>
 
 <!-- TABLA -->
-<div class="container-fluid pt-4 px-4">
-    <div class="bg-light rounded p-4">
+<div class="container-fluid pt-4 px-2 px-md-4 mantenimiento-listado">
+    <div class="mantenimiento-list-card rounded p-3 p-md-4">
         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-4">
             <div class="d-flex align-items-center flex-wrap gap-2">
                 <h6 class="mb-0">Preventivos Realizados</h6>
@@ -993,18 +971,17 @@ $NoMantenimientos = $MantenimientosController->ContarMantenimientos();
                         <input type="hidden" class="form-control" id="informeNombre" value="<?= htmlspecialchars($_SESSION['NombreCompleto']) ?>">
                         <div class="col-12 col-md-12">
                             <label class="form-label-sm">Centro de trabajo</label>
-                            <select class="form-select" id="informeCentro">
-                                <option value="">Todos</option>
+                            <select class="form-select" name="ID_Centro1" id="ID_Centro1" onchange="cargarMontacargas()" required>
+                                <option value="" disabled>Seleccione centro de trabajo</option>
                                 <?php
                                     if ($ListaCentrosDeTrabajo) {
-                                        foreach ($ListaCentrosDeTrabajo as $centro) {
-                                            echo "
-                                                <option value='" . $centro['ID'] . "'>
-                                                    " . htmlspecialchars($centro['Nombre']) . "
-                                                </option>";
+                                        foreach ($ListaCentrosDeTrabajo as $c) {
+                                            $selected = ($c['ID'] == 1) ? 'selected' : '';
+                                            echo "<option value='{$c['ID']}' {$selected}>{$c['Nombre']}</option>";
                                         }
                                     }
                                 ?>
+
                             </select>
                         </div>
                         <!-- MONTACARGAS -->

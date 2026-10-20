@@ -4,6 +4,7 @@
         'OrdenesTrabajo/BuscarBateria' => 'Views/Templates/OrdenesTrabajo/Busquedas/BuscarBateria.php',
         'OrdenesTrabajo/BuscarCargadores' => 'Views/Templates/OrdenesTrabajo/Busquedas/BuscarCargadores.php',
         'OrdenesTrabajo/BuscarInsumos' => 'Views/Templates/OrdenesTrabajo/Busquedas/BuscarInsumos.php',
+        'OrdenesTrabajo/BuscarInsumosConStock' => 'Views/Templates/OrdenesTrabajo/Busquedas/BuscarInsumosConStock.php',
         'OrdenesTrabajo/BuscarMontacargas' => 'Views/Templates/OrdenesTrabajo/Busquedas/BuscarMontacargas.php',
         'OrdenesTrabajo/BuscarTecnicos' => 'Views/Templates/OrdenesTrabajo/Busquedas/BuscarTecnicos.php',
         'OrdenesTrabajo/InicioOrden' => 'Views/Templates/OrdenesTrabajo/InicioOrden.php',

@@ -4,10 +4,6 @@
     <div class="dropdown-menu bg-transparent border-0">
         <a href="../Mantenimiento/Inicio" class="dropdown-item">Inicio</a>
         <a href="../Mantenimiento/InicioPreventivo" class="dropdown-item">Preventivos</a>
-        <a href="../Mantenimiento/InicioCombustion" class="dropdown-item">Combustión</a>
-        <a href="../Mantenimiento/InicioPreventivos" class="dropdown-item">Contrabalanceada</a>
-        <a href="../Mantenimiento/InicioManlift" class="dropdown-item">Manlift</a>
-        <a href="../Mantenimiento/InicioPasillo" class="dropdown-item">Pasillo Angosto</a>
         <a href="../Mantenimiento/InicioCorrectivos" class="dropdown-item">Correctivo</a>
     </div>
 </div>

@@ -86,66 +86,42 @@ if (!in_array($Archivo['type'], $allowedTypes, true)) {
 }
 
 // Obtener extensión
-$extension = strtolower(
-    pathinfo($Archivo['name'], PATHINFO_EXTENSION)
-);
+$extension = strtolower( pathinfo($Archivo['name'], PATHINFO_EXTENSION));
 
 // Generar nombre único
-$NombreFoto =
-    'Mantenimiento' .
-    $ID_Mantenimiento .
-    '_' .
-    preg_replace('/[^a-zA-Z0-9_-]/', '_', $Categoria) .
-    '_' .
-    uniqid() .
-    '.' .
-    $extension;
-
+$NombreFoto ='Mantenimiento' . $ID_Mantenimiento . '_' . preg_replace('/[^a-zA-Z0-9_-]/', '_', $Categoria) .'_' . uniqid() .'.' . $extension;
 $uploadFile = $uploadDir . $NombreFoto;
-
 error_log("Archivo destino: " . $uploadFile);
 
 // Mover archivo
 if (!move_uploaded_file($Archivo['tmp_name'], $uploadFile)) {
-
     echo json_encode([
         'success' => false,
         'message' => 'No se pudo guardar físicamente la imagen'
     ]);
-
     exit;
 }
 
 // Guardar registro en BD
-$resultado = $MantenimientosController->GuardarImagen(
-    $ID_Mantenimiento,
-    $Categoria,
-    $uploadFile
-);
-
+$resultado = $MantenimientosController->GuardarImagen($ID_Mantenimiento, $Categoria, $uploadFile);
 if ($resultado) {
-
     echo json_encode([
         'success' => true,
         'message' => 'Imagen guardada correctamente',
         'id'      => $resultado['id'],
         'ruta'    => $resultado['ruta']
     ]);
-
 } else {
-
     // Si falló el INSERT, eliminamos el archivo
     // para no dejarlo huérfano.
     if (file_exists($uploadFile)) {
         unlink($uploadFile);
     }
-
     echo json_encode([
         'success' => false,
         'message' => 'Error al guardar imagen'
     ]);
 }
-
 error_log("===== FIN GUARDAR IMAGEN =====");
 
 ?>

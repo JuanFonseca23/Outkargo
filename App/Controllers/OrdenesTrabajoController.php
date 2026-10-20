@@ -134,6 +134,19 @@
             exit;
         }
 
+        public function BuscarInsumosConStock(){
+            header('Content-Type: application/json; charset=utf-8');
+            $Q = $_GET['q'] ?? '';
+            $ID_Centro = filter_input(INPUT_GET, 'ID_Centro', FILTER_VALIDATE_INT);
+            if (strlen($Q) < 2 || !$ID_Centro) {
+                echo json_encode([]);
+                exit;
+            }
+            $Resultados = $this->Modelo_OrdenesTrabajo->BuscarInsumosConStock($Q, $ID_Centro);
+            echo json_encode($Resultados);
+            exit;
+        }
+
         public function BuscarMantenimiento($ID_Orden){
             $Resultado = $this->Modelo_OrdenesTrabajo->BuscarMantenimiento($ID_Orden);
             return $Resultado ? $Resultado : false;
